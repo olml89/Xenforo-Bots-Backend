@@ -187,7 +187,7 @@ return [
          */
 
         /*
-         * Application Service Providers...
+         * Default Application Service Providers...
          */
         \olml89\XenforoBots\Infrastructure\Laravel\Providers\AppServiceProvider::class,
         \olml89\XenforoBots\Infrastructure\Laravel\Providers\AuthServiceProvider::class,
@@ -195,6 +195,12 @@ return [
         \olml89\XenforoBots\Infrastructure\Laravel\Providers\EventServiceProvider::class,
         \olml89\XenforoBots\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
 
+        /*
+        * Application Service Providers...
+        */
+        \olml89\XenforoBots\Infrastructure\Xenforo\ApiConsumerServiceProvider::class,
+        \olml89\XenforoBots\Infrastructure\Hasher\HasherServiceProvider::class,
+        \olml89\XenforoBots\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
     ],
 
     /*
