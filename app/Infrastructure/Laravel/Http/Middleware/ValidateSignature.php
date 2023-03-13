@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Laravel\Http\Middleware;
+namespace olml89\XenforoBots\Infrastructure\Laravel\Http\Middleware;
 
 use Illuminate\Routing\Middleware\ValidateSignature as Middleware;
 

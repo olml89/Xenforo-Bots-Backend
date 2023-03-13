@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Laravel\Providers;
+namespace olml89\XenforoBots\Infrastructure\Laravel\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        // 'olml89\XenforoBots\Models\Model' => 'olml89\XenforoBots\Policies\ModelPolicy',
     ];
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Laravel\Providers;
+namespace olml89\XenforoBots\Infrastructure\Laravel\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;

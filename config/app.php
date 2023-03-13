@@ -189,11 +189,11 @@ return [
         /*
          * Application Service Providers...
          */
-        \App\Infrastructure\Laravel\Providers\AppServiceProvider::class,
-        \App\Infrastructure\Laravel\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        \App\Infrastructure\Laravel\Providers\EventServiceProvider::class,
-        \App\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
+        \olml89\XenforoBots\Infrastructure\Laravel\Providers\AppServiceProvider::class,
+        \olml89\XenforoBots\Infrastructure\Laravel\Providers\AuthServiceProvider::class,
+        // olml89\XenforoBots\Providers\BroadcastServiceProvider::class,
+        \olml89\XenforoBots\Infrastructure\Laravel\Providers\EventServiceProvider::class,
+        \olml89\XenforoBots\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
 
     ],
 
@@ -209,7 +209,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        // 'ExampleClass' => olml89\XenforoBots\Example\ExampleClass::class,
     ])->toArray(),
 
 ];

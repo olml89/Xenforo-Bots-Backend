@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Infrastructure\Laravel\Http\Middleware;
+namespace olml89\XenforoBots\Infrastructure\Laravel\Http\Middleware;
 
-use App\Infrastructure\Laravel\Providers\RouteServiceProvider;
+use olml89\XenforoBots\Infrastructure\Laravel\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

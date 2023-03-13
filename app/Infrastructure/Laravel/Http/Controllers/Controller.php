@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Laravel\Http\Controllers;
+namespace olml89\XenforoBots\Infrastructure\Laravel\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
