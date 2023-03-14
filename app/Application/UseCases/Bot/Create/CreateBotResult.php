@@ -13,9 +13,9 @@ final class CreateBotResult extends JsonSerializable
     public readonly string $registeredAt;
 
     public function __construct(Bot $bot) {
-        $this->id = $bot->id()->value;
-        $this->userId = $bot->userId()->value;
-        $this->name = $bot->name()->value;
-        $this->registeredAt = $bot->registeredAt()->value->format('c');
+        $this->id = (string)$bot->id();
+        $this->userId = $bot->userId()->toInt();
+        $this->name = (string)$bot->name();
+        $this->registeredAt = $bot->registeredAt()->format('c');
     }
 }

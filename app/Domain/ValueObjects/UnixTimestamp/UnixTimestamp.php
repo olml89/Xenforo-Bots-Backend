@@ -4,18 +4,16 @@ namespace olml89\XenforoBots\Domain\ValueObjects\UnixTimestamp;
 
 use DateTimeImmutable;
 
-final class UnixTimestamp
+final class UnixTimestamp extends DateTimeImmutable
 {
-    public readonly DateTimeImmutable $value;
-
-    public function __construct(int $timestamp)
+    public static function fromUnixTimestamp(int $timestamp): self
     {
-        $dateTime = DateTimeImmutable::createFromFormat('U', (string)$timestamp);
+        $dateTime = parent::createFromFormat('U', (string)$timestamp);
 
         if (!$dateTime) {
             throw new InvalidUnixTimestampException($timestamp);
         }
 
-        $this->value = $dateTime;
+        return $dateTime;
     }
 }

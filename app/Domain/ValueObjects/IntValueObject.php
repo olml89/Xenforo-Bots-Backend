@@ -5,6 +5,11 @@ namespace olml89\XenforoBots\Domain\ValueObjects;
 abstract class IntValueObject
 {
     public function __construct(
-        public readonly int $value,
+        protected readonly int $value,
     ) {}
+
+    public function toInt(): int
+    {
+        return $this->value;
+    }
 }
