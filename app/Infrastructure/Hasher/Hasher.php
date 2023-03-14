@@ -16,8 +16,8 @@ final class Hasher implements HasherContract
         return $this->laravelHasher->make($password);
     }
 
-    public function check(string $password): bool
+    public function check(string $password, string $hash): bool
     {
-        return $this->laravelHasher->check($password);
+        return $this->laravelHasher->check($password, $hash);
     }
 }

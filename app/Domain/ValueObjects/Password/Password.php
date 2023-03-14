@@ -2,21 +2,17 @@
 
 namespace olml89\XenforoBots\Domain\ValueObjects\Password;
 
-use olml89\XenforoBots\Domain\ValueObjects\StringValueObject;
-
-final class Password extends StringValueObject
+final class Password
 {
-    private readonly Hasher $hasher;
+    private readonly string $hash;
 
     public function __construct(string $password, Hasher $hasher)
     {
-        $this->hasher = $hasher;
-
-        parent::__construct($this->hasher->hash($password));
+        $this->hash = $hasher->hash($password);
     }
 
-    public function check($password): bool
+    public function check($password, Hasher $hasher): bool
     {
-        return $this->hasher->check($password);
+        return $hasher->check($password, $this->hash);
     }
 }

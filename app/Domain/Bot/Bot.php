@@ -4,7 +4,6 @@ namespace olml89\XenforoBots\Domain\Bot;
 
 use olml89\XenforoBots\Domain\ValueObjects\AutoId\AutoId;
 use olml89\XenforoBots\Domain\ValueObjects\Password\Password;
-use olml89\XenforoBots\Domain\ValueObjects\StringValueObject;
 use olml89\XenforoBots\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBots\Domain\ValueObjects\Uuid\Uuid;
 
@@ -13,7 +12,7 @@ final class Bot
     public function __construct(
         private readonly Uuid $id,
         private readonly AutoId $userId,
-        private readonly StringValueObject $name,
+        private readonly Username $name,
         private readonly Password $password,
         private readonly UnixTimestamp $registeredAt,
     ) {}
@@ -28,9 +27,14 @@ final class Bot
         return $this->userId;
     }
 
-    public function name(): StringValueObject
+    public function name(): Username
     {
         return $this->name;
+    }
+
+    public function password(): Password
+    {
+        return $this->password;
     }
 
     public function registeredAt(): UnixTimestamp
