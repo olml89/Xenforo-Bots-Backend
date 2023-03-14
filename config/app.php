@@ -201,6 +201,7 @@ return [
         \olml89\XenforoBots\Infrastructure\Xenforo\ApiConsumerServiceProvider::class,
         \olml89\XenforoBots\Infrastructure\Hasher\HasherServiceProvider::class,
         \olml89\XenforoBots\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
+        \olml89\XenforoBots\Infrastructure\Doctrine\DoctrineServiceProvider::class,
     ],
 
     /*

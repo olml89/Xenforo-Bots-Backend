@@ -4,5 +4,8 @@ namespace olml89\XenforoBots\Domain\Bot;
 
 interface BotRepository
 {
+    /**
+     * @throws BotStorageException
+     */
     public function save(Bot $bot): void;
 }
