@@ -5,12 +5,13 @@ namespace olml89\XenforoBots\Infrastructure\Hasher;
 use Illuminate\Foundation\Application;
 use Illuminate\Hashing\HashManager;
 use Illuminate\Support\ServiceProvider;
+use olml89\XenforoBots\Domain\ValueObjects\Password\Hasher as HasherContract;
 
 final class HasherServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app->singleton(ApiConsumer::class, function(Application $app): Hasher {
+        $this->app->singleton(HasherContract::class, function(Application $app): Hasher {
 
             /** @var HashManager $hashManager */
             $hashManager = $app->get(HashManager::class);

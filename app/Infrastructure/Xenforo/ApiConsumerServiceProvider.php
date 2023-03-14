@@ -3,19 +3,26 @@
 namespace olml89\XenforoBots\Infrastructure\Xenforo;
 
 use GuzzleHttp\Client;
-use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use olml89\XenforoBots\Domain\Bot\BotCreator as BotCreatorContract;
+use olml89\XenforoBots\Infrastructure\Xenforo\BotCreator\BotCreator;
 
 final class ApiConsumerServiceProvider extends ServiceProvider
 {
+    public function register(): void
+    {
+        $this->app->bind(
+            BotCreatorContract::class,
+            BotCreator::class,
+        );
+    }
+
     public function boot(): void
     {
-        /** @var Repository $config */
-        $config = $this->app->get('config');
-
-        $apiUrl = $config->get('xenforo.api_url');
-        $apiKey = $config->get('xenforo.api_key');
+        $config = $this->app['config']->get('xenforo');
+        $apiUrl = $config['api_url'];
+        $apiKey = $config['api_key'];
 
         $this->app->singleton(Client::class, function() use ($apiKey): Client {
             return new Client([

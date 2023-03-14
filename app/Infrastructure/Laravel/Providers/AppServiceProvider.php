@@ -11,18 +11,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
-            \olml89\XenforoBots\Domain\Bot\BotCreator::class,
-            \olml89\XenforoBots\Infrastructure\Xenforo\BotCreator\BotCreator::class,
-        );
-        $this->app->bind(
-            \olml89\XenforoBots\Domain\ValueObjects\Password\Hasher::class,
-            \olml89\XenforoBots\Infrastructure\Hasher\Hasher::class,
-        );
-        $this->app->bind(
-            \olml89\XenforoBots\Domain\ValueObjects\Uuid\UuidManager::class,
-            \olml89\XenforoBots\Infrastructure\UuidManager\UuidManager::class,
-        );
+        //
     }
 
     /**
