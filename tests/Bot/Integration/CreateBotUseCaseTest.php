@@ -26,6 +26,7 @@ final class CreateBotUseCaseTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->migrate();
 
         $this->botFactory = $this->app->get(BotFactory::class);
