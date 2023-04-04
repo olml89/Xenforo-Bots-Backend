@@ -5,15 +5,51 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="olml89\XenforoBots\Bot\Domain\Bot" table="bots">
+
         <indexes>
-            <index name="idx_id" columns="id"/>
+            <index
+                name="idx_id"
+                columns="id"
+            />
         </indexes>
 
-        <id name="id" column="id" type="string"></id>
-        <field name="userId" column="user_id" type="AutoId" nullable="false" unique="true" />
-        <field name="name" column="name" type="string" column-definition="VARCHAR(50) NOT NULL" unique="true" />
-        <field name="password" column="password" type="password" column-definition="VARCHAR(72) NOT NULL" />
-        <field name="registeredAt" column="registered_at" type="datetime" nullable="false" />
+        <id
+            name="id"
+            column="id"
+            type="uuid"
+        />
+
+        <field
+            name="userId"
+            column="user_id"
+            type="auto_id"
+            unique="true"
+        >
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </field>
+
+        <field
+            name="name"
+            column="name"
+            type="username"
+            length="50"
+            unique="true"
+        />
+
+        <field
+            name="password"
+            column="password"
+            type="password"
+            length="72"
+        />
+
+        <field
+            name="registeredAt"
+            column="registered_at"
+            type="datetime"
+        />
 
     </entity>
 

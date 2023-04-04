@@ -20,13 +20,13 @@ final class PasswordType extends Type
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return 'string';
+        return $platform->getStringTypeDeclarationSQL($column);
     }
 
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
         if (!($value instanceof Password)) {
-            throw ConversionException::conversionFailed($value, Password::class);
+            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), Password::class);
         }
 
         try {
@@ -44,7 +44,7 @@ final class PasswordType extends Type
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): Password
     {
         if (!is_string($value)) {
-            throw ConversionException::conversionFailed($value, $this->getName());
+            throw ConversionException::conversionFailedFormat($value, Password::class, $this->getName());
         }
 
         try {
@@ -57,7 +57,7 @@ final class PasswordType extends Type
             return $password;
         }
         catch (ReflectionException) {
-            throw ConversionException::conversionFailed($value, $this->getName());
+            throw ConversionException::conversionFailedFormat($value, Password::class, $this->getName());
         }
     }
 }

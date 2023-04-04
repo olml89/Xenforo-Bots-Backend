@@ -9,7 +9,7 @@ use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
 
 final class AutoIdType extends Type
 {
-    private const NAME = 'AutoId';
+    private const NAME = 'auto_id';
 
     public function getName(): string
     {
@@ -18,7 +18,7 @@ final class AutoIdType extends Type
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return 'integer';
+        return $platform->getIntegerTypeDeclarationSQL($column);
     }
 
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): int

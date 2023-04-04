@@ -8,6 +8,8 @@ use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\Migrat
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\ResetCommand;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\AutoIdType;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\PasswordType;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UsernameType;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UuidType;
 
 return [
 
@@ -39,7 +41,9 @@ return [
     'filters' => [],
 
     'custom_types' => [
+        UuidType::class,
         AutoIdType::class,
+        UsernameType::class,
         PasswordType::class,
     ],
 
