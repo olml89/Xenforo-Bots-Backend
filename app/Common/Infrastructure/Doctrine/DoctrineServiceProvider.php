@@ -5,6 +5,7 @@ namespace olml89\XenforoBots\Common\Infrastructure\Doctrine;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
 use Doctrine\Migrations\Configuration\Migration\ConfigurationArray;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\ORM\EntityManager;
@@ -58,6 +59,11 @@ final class DoctrineServiceProvider extends ServiceProvider
         /** @var class-string<Type> $typeClass */
         foreach ($customTypes as $typeClass) {
             $type = new $typeClass();
+
+            if (Type::hasType($type->getName())) {
+                continue;
+            }
+
             Type::getTypeRegistry()->register($type->getName(), $type);
         }
     }
@@ -113,7 +119,9 @@ final class DoctrineServiceProvider extends ServiceProvider
                 configurationLoader: new ConfigurationArray(
                     $this->config->get('doctrine.migrations.default')
                 ),
-                emLoader: $app->get(EntityManagerInterface::class),
+                emLoader: new ExistingEntityManager(
+                    $app->get(EntityManagerInterface::class)
+                ),
             );
         });
     }

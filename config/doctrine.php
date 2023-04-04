@@ -5,6 +5,7 @@ use olml89\XenforoBots\Bot\Infrastructure\Persistence\DoctrineBotRepository;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\ExecuteCommand;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\MigrateCommand;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\ResetCommand;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\AutoIdType;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\PasswordType;
 
@@ -77,6 +78,7 @@ return [
             DiffCommand::class,
             ExecuteCommand::class,
             MigrateCommand::class,
+            ResetCommand::class,
         ],
 
     ],

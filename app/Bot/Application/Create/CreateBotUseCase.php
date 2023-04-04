@@ -7,7 +7,7 @@ use olml89\XenforoBots\Bot\Domain\BotCreator;
 use olml89\XenforoBots\Bot\Domain\BotRepository;
 use olml89\XenforoBots\Bot\Domain\BotStorageException;
 
-final class CreateBot
+final class CreateBotUseCase
 {
     public function __construct(
         private readonly BotCreator $botCreator,

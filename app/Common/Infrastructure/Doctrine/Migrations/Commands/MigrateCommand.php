@@ -46,7 +46,8 @@ class MigrateCommand extends BaseCommand
                 input: $this->getDoctrineInput($command),
                 output: $this->output->getOutput(),
             );
-        } catch (ExceptionInterface $e) {
+        }
+        catch (ExceptionInterface $e) {
             $this->error($e->getMessage());
             return 0;
         }

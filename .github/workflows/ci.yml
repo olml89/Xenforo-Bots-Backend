@@ -1,0 +1,56 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    env:
+      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3.4.0
+
+      - name: Set up Mysql
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: ${{ env.DB_PORT }}
+          container port: ${{ env.DB_PORT }}
+          mysql database: ${{ env.DB_DATABASE }}
+          mysql user: ${{ env.DB_USERNAME }}
+          mysql password: ${{ env.DB_PASSWORD }}
+
+      - name: Install composer and dependencies
+        uses: php-actions/composer@v6
+
+      - name: Copy .env file from .env.example file
+        run: cp .env.example .env
+
+      - name: Initialize Laravel application
+        run: |
+          php artisan key:generate
+          php artisan cache:clear
+          php artisan config:clear
+
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@v3
+        env:
+          XDEBUG_MODE: coverage
+          XF_API_URL: ${{ secrets.XF_API_URL }}
+          XF_API_KEY: ${{ secrets.XF_API_KEY }}
+          DOCTRINE_DRIVER: ${{ secrets.DOCTRINE_DRIVER }}
+        with:
+          bootstrap: vendor/autoload.php
+          configuration: phpunit.xml
+          php_extensions: xdebug pdo_mysql
+          args: tests --coverage-clover ./coverage.xml
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          verbose: true

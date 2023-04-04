@@ -4,7 +4,7 @@ namespace olml89\XenforoBots\Common\Domain\ValueObjects;
 
 use Stringable;
 
-abstract class StringValueObject implements Stringable
+class StringValueObject implements Stringable
 {
     public function __construct(
         protected readonly string $value,

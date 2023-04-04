@@ -3,7 +3,7 @@
 namespace olml89\XenforoBots\Bot\Infrastructure\Console;
 
 use Illuminate\Console\Command;
-use olml89\XenforoBots\Bot\Application\Create\CreateBot as CreateBotUseCase;
+use olml89\XenforoBots\Bot\Application\Create\CreateBotUseCase as CreateBotUseCase;
 use olml89\XenforoBots\Bot\Domain\BotCreationException;
 use olml89\XenforoBots\Bot\Domain\BotStorageException;
 
@@ -28,9 +28,9 @@ class CreateBotCommand extends Command
      *
      * @throws BotCreationException | BotStorageException
      */
-    public function handle(CreateBotUseCase $createBotUseCase): void
+    public function handle(CreateBotUseCase $createBot): void
     {
-        $createBotResult = $createBotUseCase->create(
+        $createBotResult = $createBot->create(
             $this->argument('name'),
             $this->argument('password'),
         );
