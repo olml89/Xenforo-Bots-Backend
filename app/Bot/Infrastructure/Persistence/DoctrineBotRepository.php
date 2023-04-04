@@ -20,6 +20,9 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
         );
     }
 
+    /**
+     * @throws BotStorageException
+     */
     public function save(Bot $bot): void
     {
         try {

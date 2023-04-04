@@ -27,10 +27,16 @@ final class XenforoBotCreator implements BotCreator
         private readonly UuidManager $uuidManager,
     ) {}
 
+    /**
+     * @throws BotCreationException
+     */
     public function create(string $name, string $password): Bot
     {
         try {
-            $response = $this->apiConsumer->post('/users', new CreateUserRequestData($name, $password));
+            $response = $this->apiConsumer->post(
+                endpoint: '/users',
+                data: new CreateUserRequestData($name, $password)
+            );
 
             if ($response->getStatusCode() !== 200) {
                 $apiErrorResponseData = ApiErrorResponseData::fromResponse($response);
