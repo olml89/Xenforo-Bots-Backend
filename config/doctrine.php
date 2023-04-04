@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-use olml89\XenforoBots\Domain\Bot\BotRepository;
-use olml89\XenforoBots\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
-use olml89\XenforoBots\Infrastructure\Doctrine\Migrations\Commands\ExecuteCommand;
-use olml89\XenforoBots\Infrastructure\Doctrine\Migrations\Commands\MigrateCommand;
-use olml89\XenforoBots\Infrastructure\Doctrine\Repositories\DoctrineBotRepository;
-use olml89\XenforoBots\Infrastructure\Doctrine\Types\AutoIdType;
-use olml89\XenforoBots\Infrastructure\Doctrine\Types\PasswordType;
+use olml89\XenforoBots\Bot\Domain\BotRepository;
+use olml89\XenforoBots\Bot\Infrastructure\Persistence\DoctrineBotRepository;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\ExecuteCommand;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\MigrateCommand;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\AutoIdType;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\PasswordType;
 
 return [
 
@@ -21,7 +21,7 @@ return [
     ],
 
     'mappings' => [
-        app_path('Infrastructure/Doctrine/Mappings'),
+        app_path('Bot/Infrastructure/Persistence'),
     ],
 
     'proxies' => [

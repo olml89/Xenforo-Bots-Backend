@@ -185,23 +185,25 @@ return [
         /*
          * Package Service Providers...
          */
+        \olml89\XenforoBots\Common\Infrastructure\Doctrine\DoctrineServiceProvider::class,
 
         /*
          * Default Application Service Providers...
          */
-        \olml89\XenforoBots\Infrastructure\Laravel\Providers\AppServiceProvider::class,
-        \olml89\XenforoBots\Infrastructure\Laravel\Providers\AuthServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\AppServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\AuthServiceProvider::class,
         // olml89\XenforoBots\Providers\BroadcastServiceProvider::class,
-        \olml89\XenforoBots\Infrastructure\Laravel\Providers\EventServiceProvider::class,
-        \olml89\XenforoBots\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\EventServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
 
         /*
         * Application Service Providers...
         */
-        \olml89\XenforoBots\Infrastructure\Xenforo\ApiConsumerServiceProvider::class,
-        \olml89\XenforoBots\Infrastructure\Hasher\HasherServiceProvider::class,
-        \olml89\XenforoBots\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
-        \olml89\XenforoBots\Infrastructure\Doctrine\DoctrineServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumerServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\Hasher\HasherServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
+        \olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider::class,
+
     ],
 
     /*
