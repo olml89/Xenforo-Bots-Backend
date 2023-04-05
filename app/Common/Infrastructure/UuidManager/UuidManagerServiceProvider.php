@@ -4,14 +4,14 @@ namespace olml89\XenforoBots\Common\Infrastructure\UuidManager;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager as UuidManagerContract;
+use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager;
 use Ramsey\Uuid\UuidFactory;
 
 final class UuidManagerServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app->singleton(UuidManagerContract::class, function(Application $app): RamseyUuidManager {
+        $this->app->singleton(UuidManager::class, function(Application $app): RamseyUuidManager {
             return new RamseyUuidManager($app->get(UuidFactory::class));
         });
     }
