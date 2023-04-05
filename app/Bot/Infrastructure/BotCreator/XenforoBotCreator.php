@@ -11,7 +11,6 @@ use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Password;
 use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
 use olml89\XenforoBots\Common\Infrastructure\UuidManager\RamseyUuidManager;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumer;
@@ -46,7 +45,7 @@ final class XenforoBotCreator implements BotCreator
             $createUserResponseData = CreateUserResponseData::fromResponse($response);
 
             return new Bot(
-                id: Uuid::random($this->uuidManager),
+                id: $this->uuidManager->random(),
                 userId: new AutoId($createUserResponseData->user_id),
                 name: new Username($name),
                 password: new Password($password, $this->hasher),

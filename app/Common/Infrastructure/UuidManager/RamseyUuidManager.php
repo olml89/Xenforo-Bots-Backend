@@ -2,6 +2,7 @@
 
 namespace olml89\XenforoBots\Common\Infrastructure\UuidManager;
 
+use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager as UuidManagerContract;
 use Ramsey\Uuid\UuidFactory;
 
@@ -11,9 +12,9 @@ final class RamseyUuidManager implements UuidManagerContract
         private readonly UuidFactory $uuidFactory,
     ) {}
 
-    public function random(): string
+    public function random(): Uuid
     {
-        return $this->uuidFactory->uuid4()->toString();
+        return new Uuid($this->uuidFactory->uuid4()->toString(), $this);
     }
 
     public function isValid(string $uuid): bool
