@@ -8,6 +8,7 @@ use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\Migrat
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\ResetCommand;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\AutoIdType;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\PasswordType;
+use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UrlType;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UsernameType;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UuidType;
 
@@ -25,6 +26,7 @@ return [
 
     'mappings' => [
         app_path('Bot/Infrastructure/Persistence'),
+        app_path('Subscription/Infrastructure/Persistence'),
     ],
 
     'proxies' => [
@@ -45,6 +47,7 @@ return [
         AutoIdType::class,
         UsernameType::class,
         PasswordType::class,
+        UrlType::class,
     ],
 
     'repositories' => [

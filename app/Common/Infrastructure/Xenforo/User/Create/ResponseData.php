@@ -5,7 +5,7 @@ namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiResponseData;
 use Psr\Http\Message\ResponseInterface;
 
-final class CreateUserResponseData extends ApiResponseData
+final class ResponseData extends ApiResponseData
 {
     private function __construct(
         public readonly int $user_id,

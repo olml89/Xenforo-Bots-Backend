@@ -5,7 +5,7 @@ namespace olml89\XenforoBots\Common\Infrastructure\Hasher;
 use Illuminate\Contracts\Hashing\Hasher as LaravelHasherContract;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher as HasherContract;
 
-final class Hasher implements HasherContract
+final class LaravelHasher implements HasherContract
 {
     public function __construct(
         private readonly LaravelHasherContract $laravelHasher,

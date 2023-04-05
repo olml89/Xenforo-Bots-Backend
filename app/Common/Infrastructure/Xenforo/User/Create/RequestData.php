@@ -4,7 +4,7 @@ namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create;
 
 use olml89\XenforoBots\Common\Domain\JsonSerializable;
 
-final class CreateUserRequestData extends JsonSerializable
+final class RequestData extends JsonSerializable
 {
     public readonly int $api_bypass_permissions;
 

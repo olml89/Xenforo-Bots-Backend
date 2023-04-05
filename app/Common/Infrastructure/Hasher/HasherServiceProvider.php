@@ -11,12 +11,12 @@ final class HasherServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app->singleton(HasherContract::class, function(Application $app): Hasher {
+        $this->app->singleton(HasherContract::class, function(Application $app): LaravelHasher {
 
             /** @var HashManager $hashManager */
             $hashManager = $app->get(HashManager::class);
 
-            return new Hasher($hashManager->driver());
+            return new LaravelHasher($hashManager->driver());
         });
     }
 }

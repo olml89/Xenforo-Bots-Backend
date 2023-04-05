@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 
 abstract class ApiResponseData
 {
-    abstract protected static function fromResponse(ResponseInterface $response): self;
+    abstract public static function fromResponse(ResponseInterface $response): self;
 
     protected static function jsonDecode(ResponseInterface $response): array
     {

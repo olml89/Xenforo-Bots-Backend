@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use olml89\XenforoBots\Bot\Domain\Bot;
 use olml89\XenforoBots\Bot\Domain\BotRepository;
 use olml89\XenforoBots\Bot\Domain\BotStorageException;
+use olml89\XenforoBots\Bot\Domain\Username;
 
 final class DoctrineBotRepository extends EntityRepository implements BotRepository
 {
@@ -18,6 +19,13 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
             $entityManager,
             new ClassMetadata(Bot::class),
         );
+    }
+
+    public function getByName(Username $name): ?Bot
+    {
+        return $this->getEntityManager()->getRepository(Bot::class)->findOneBy([
+            'name' => $name,
+        ]);
     }
 
     /**

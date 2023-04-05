@@ -13,18 +13,18 @@ use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Password;
 use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
-use olml89\XenforoBots\Common\Infrastructure\UuidManager\UuidManager;
+use olml89\XenforoBots\Common\Infrastructure\UuidManager\RamseyUuidManager;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumer;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiErrorResponseData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\CreateUserRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\CreateUserResponseData;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\RequestData as CreateUserRequestData;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\ResponseData as CreateUserResponseData;
 
 final class XenforoBotCreator implements BotCreator
 {
     public function __construct(
         private readonly ApiConsumer $apiConsumer,
         private readonly Hasher $hasher,
-        private readonly UuidManager $uuidManager,
+        private readonly RamseyUuidManager $uuidManager,
     ) {}
 
     /**
@@ -50,7 +50,7 @@ final class XenforoBotCreator implements BotCreator
                 userId: new AutoId($createUserResponseData->user_id),
                 name: new Username($name),
                 password: new Password($password, $this->hasher),
-                registeredAt: UnixTimestamp::fromUnixTimestamp($createUserResponseData->register_date),
+                registeredAt: UnixTimestamp::toDateTimeImmutable($createUserResponseData->register_date),
             );
         }
         catch (GuzzleException $e) {

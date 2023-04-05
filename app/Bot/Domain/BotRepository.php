@@ -4,6 +4,8 @@ namespace olml89\XenforoBots\Bot\Domain;
 
 interface BotRepository
 {
+    public function getByName(Username $name): ?Bot;
+
     /**
      * @throws BotStorageException
      */

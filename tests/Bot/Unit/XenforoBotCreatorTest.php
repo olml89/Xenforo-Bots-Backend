@@ -12,7 +12,7 @@ use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreator;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher;
 use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\CreateUserRequestData;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\RequestData;
 use Tests\Common\InteractsWithXenforoApi;
 use Tests\TestCase;
 
@@ -39,9 +39,9 @@ final class XenforoBotCreatorTest extends TestCase
         $this->botCreator = $this->app->get(XenforoBotCreator::class);
     }
 
-    private function createUserData(string $username = null, string $password = null): CreateUserRequestData
+    private function createUserData(string $username = null, string $password = null): RequestData
     {
-        return new CreateUserRequestData(
+        return new RequestData(
             username: $username ?? $this->faker->userName(),
             password: $password ?? $this->faker->password(),
         );
@@ -136,6 +136,9 @@ final class XenforoBotCreatorTest extends TestCase
         $this->assertEquals($user_id, $bot->userId()->toInt());
         $this->assertEquals($createUserData->username, (string)$bot->name());
         $this->assertTrue($bot->password()->check($createUserData->password, $this->hasher));
-        $this->assertEquals(UnixTimestamp::fromUnixTimestamp($register_date_timestamp), $bot->registeredAt());
+        $this->assertEquals(
+            UnixTimestamp::toDateTimeImmutable($register_date_timestamp),
+            $bot->registeredAt()
+        );
     }
 }

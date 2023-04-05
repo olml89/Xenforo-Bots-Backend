@@ -2,8 +2,12 @@
 
 namespace olml89\XenforoBots\Bot\Domain;
 
+use olml89\XenforoBots\Subscription\Domain\Subscription;
 
-final class BotSubscriber
+interface BotSubscriber
 {
-
+    /**
+     * @throws BotSubscriptionException
+     */
+    public function subscribe(Bot $bot, string $password): Subscription;
 }

@@ -11,8 +11,8 @@ final class UuidManagerServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app->singleton(UuidManagerContract::class, function(Application $app): UuidManager {
-            return new UuidManager($app->get(UuidFactory::class));
+        $this->app->singleton(UuidManagerContract::class, function(Application $app): RamseyUuidManager {
+            return new RamseyUuidManager($app->get(UuidFactory::class));
         });
     }
 }

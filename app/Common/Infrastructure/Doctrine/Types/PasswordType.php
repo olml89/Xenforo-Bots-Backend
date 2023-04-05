@@ -23,41 +23,38 @@ final class PasswordType extends Type
         return $platform->getStringTypeDeclarationSQL($column);
     }
 
+    /**
+     * @throws ConversionException
+     */
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
         if (!($value instanceof Password)) {
-            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), Password::class);
+            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['string']);
         }
 
-        try {
-            $reflectionClass = new ReflectionClass(Password::class);
-            $reflectionHashProperty = $reflectionClass->getProperty('hash');
-            $reflectionHashProperty->setAccessible(true);
+        $reflectionClass = new ReflectionClass(Password::class);
+        $reflectionHashProperty = $reflectionClass->getProperty('hash');
+        $reflectionHashProperty->setAccessible(true);
 
-            return $reflectionHashProperty->getValue($value);
-        }
-        catch (ReflectionException) {
-            throw ConversionException::conversionFailed($value, Password::class);
-        }
+        return $reflectionHashProperty->getValue($value);
     }
 
+    /**
+     * @throws ConversionException
+     * @throws ReflectionException
+     */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): Password
     {
         if (!is_string($value)) {
             throw ConversionException::conversionFailedFormat($value, Password::class, $this->getName());
         }
 
-        try {
-            $reflectionClass = new ReflectionClass(Password::class);
-            $password = $reflectionClass->newInstanceWithoutConstructor();
-            $reflectionHashProperty = $reflectionClass->getProperty('hash');
-            $reflectionHashProperty->setAccessible(true);
-            $reflectionHashProperty->setValue($password, $value);
+        $reflectionClass = new ReflectionClass(Password::class);
+        $password = $reflectionClass->newInstanceWithoutConstructor();
+        $reflectionHashProperty = $reflectionClass->getProperty('hash');
+        $reflectionHashProperty->setAccessible(true);
+        $reflectionHashProperty->setValue($password, $value);
 
-            return $password;
-        }
-        catch (ReflectionException) {
-            throw ConversionException::conversionFailedFormat($value, Password::class, $this->getName());
-        }
+        return $password;
     }
 }

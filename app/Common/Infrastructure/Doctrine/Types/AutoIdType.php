@@ -21,19 +21,25 @@ final class AutoIdType extends Type
         return $platform->getIntegerTypeDeclarationSQL($column);
     }
 
+    /**
+     * @throws ConversionException
+     */
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): int
     {
         if (!($value instanceof AutoId)) {
-            throw ConversionException::conversionFailed($value, AutoId::class);
+            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['int']);
         }
 
         return $value->toInt();
     }
 
+    /**
+     * @throws ConversionException
+     */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): AutoId
     {
         if (!is_int($value)) {
-            throw ConversionException::conversionFailed($value, $this->getName());
+            throw ConversionException::conversionFailedFormat($value, AutoId::class, $this->getName());
         }
 
         return new AutoId($value);

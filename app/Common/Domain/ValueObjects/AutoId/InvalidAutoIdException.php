@@ -10,7 +10,7 @@ final class InvalidAutoIdException extends ValueObjectException
     {
         parent::__construct(
             sprintf(
-                'AutoId must be bigger than 0, <$s> provided',
+                'AutoId must be bigger than 0, <%s> provided',
                 $user_id,
             )
         );

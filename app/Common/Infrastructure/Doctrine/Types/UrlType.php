@@ -5,13 +5,14 @@ namespace olml89\XenforoBots\Common\Infrastructure\Doctrine\Types;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBots\Bot\Domain\Username;
+use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
 use ReflectionClass;
 use ReflectionException;
 
-class UuidType extends Type
+final class UrlType extends Type
 {
-    private const NAME = 'uuid';
+    private const NAME = 'url';
 
     public function getName(): string
     {
@@ -20,7 +21,7 @@ class UuidType extends Type
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return $platform->getGuidTypeDeclarationSQL($column);
+        return $platform->getStringTypeDeclarationSQL($column);
     }
 
     /**
@@ -32,7 +33,7 @@ class UuidType extends Type
             return null;
         }
 
-        if (!($value instanceof Uuid)) {
+        if (!($value instanceof Url)) {
             throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['string']);
         }
 
@@ -43,21 +44,21 @@ class UuidType extends Type
      * @throws ConversionException
      * @throws ReflectionException
      */
-    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Uuid
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Url
     {
         if (is_null($value)) {
             return null;
         }
 
         if (!is_string($value)) {
-            throw ConversionException::conversionFailedFormat($value, Uuid::class, $this->getName());
+            throw ConversionException::conversionFailedFormat($value, Url::class, $this->getName());
         }
 
-        $reflectionClass = new ReflectionClass(Uuid::class);
-        $uuid = $reflectionClass->newInstanceWithoutConstructor();
-        $reflectionClass->getParentClass()->getProperty('value')->setAccessible(true);
-        $reflectionClass->getParentClass()->getProperty('value')->setValue($uuid, $value);
+        $url = (new ReflectionClass(Url::class))->newInstanceWithoutConstructor();
+        $property = (new ReflectionClass($url))->getParentClass()->getProperty('value');
+        $property->setAccessible(true);
+        $property->setValue($url, $value);
 
-        return $uuid;
+        return $url;
     }
 }

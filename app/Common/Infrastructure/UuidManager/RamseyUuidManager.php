@@ -5,7 +5,7 @@ namespace olml89\XenforoBots\Common\Infrastructure\UuidManager;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager as UuidManagerContract;
 use Ramsey\Uuid\UuidFactory;
 
-final class UuidManager implements UuidManagerContract
+final class RamseyUuidManager implements UuidManagerContract
 {
     public function __construct(
         private readonly UuidFactory $uuidFactory,

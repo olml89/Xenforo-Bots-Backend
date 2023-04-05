@@ -48,8 +48,23 @@
         <field
             name="registeredAt"
             column="registered_at"
-            type="datetime"
+            type="datetime_immutable"
         />
+
+        <one-to-one
+            field="subscription"
+            target-entity="olml89\XenforoBots\Subscription\Domain\Subscription"
+            fetch="EAGER"
+        >
+            <join-column
+                name="subscription_id"
+                referenced-column-name="id"
+            />
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-one>
 
     </entity>
 

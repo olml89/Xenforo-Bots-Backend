@@ -2,19 +2,22 @@
 
 namespace olml89\XenforoBots\Bot\Domain;
 
+use DateTimeImmutable;
 use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Password;
-use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBots\Subscription\Domain\Subscription;
 
 final class Bot
 {
+    private ?Subscription $subscription = null;
+
     public function __construct(
-        private readonly Uuid $id,
+        private Uuid $id,
         private readonly AutoId $userId,
         private readonly Username $name,
         private readonly Password $password,
-        private readonly UnixTimestamp $registeredAt,
+        private readonly DateTimeImmutable $registeredAt,
     ) {}
 
     public function id(): Uuid
@@ -37,8 +40,25 @@ final class Bot
         return $this->password;
     }
 
-    public function registeredAt(): UnixTimestamp
+    public function registeredAt(): DateTimeImmutable
     {
         return $this->registeredAt;
+    }
+
+    public function subscription(): ?Subscription
+    {
+        return $this->subscription;
+    }
+
+    public function subscribe(Subscription $subscription): self
+    {
+        $this->subscription = $subscription;
+
+        return $this;
+    }
+
+    public function isSubscribed(): bool
+    {
+        return !is_null($this->subscription);
     }
 }

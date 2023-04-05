@@ -90,7 +90,7 @@ final class CreateBotCommandTest extends TestCase
                     self::CREATED_USER_OUTPUT_FORMAT,
                     $user_id,
                     $name,
-                    UnixTimestamp::fromUnixTimestamp($register_date_timestamp)
+                    UnixTimestamp::toDateTimeImmutable($register_date_timestamp)
                         ->format(self::REGISTERED_AT_OUTPUT_FORMAT),
                 )
             );
@@ -100,7 +100,7 @@ final class CreateBotCommandTest extends TestCase
         $this->assertDatabaseHas('bots', [
             'user_id' => $user_id,
             'name' => $name,
-            'registered_at' => UnixTimestamp::fromUnixTimestamp($register_date_timestamp)
+            'registered_at' => UnixTimestamp::toDateTimeImmutable($register_date_timestamp)
                 ->format(self::REGISTERED_AT_DATABASE_FORMAT),
         ]);
 
