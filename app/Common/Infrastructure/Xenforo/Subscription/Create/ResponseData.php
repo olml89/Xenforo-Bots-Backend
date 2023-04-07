@@ -16,10 +16,11 @@ final class ResponseData extends ApiResponseData
     public static function fromResponse(ResponseInterface $response): self
     {
         $json = self::jsonDecode($response);
+        $subscription = $json['subscription'];
 
         return new self(
-            id: $json['id'],
-            subscribed_at: $json['subscribed_at'],
+            id: $subscription['subscription_id'],
+            subscribed_at: $subscription['subscribed_at'],
         );
     }
 }
