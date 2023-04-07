@@ -1,13 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\Create;
+namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription;
 
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiResponseData;
 use Psr\Http\Message\ResponseInterface;
 
 final class ResponseData extends ApiResponseData
 {
-    public int $a;
     private function __construct(
         public readonly string $id,
         public readonly int $subscribed_at,

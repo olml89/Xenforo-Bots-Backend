@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Application\Subscribe;
+namespace olml89\XenforoBots\Bot\Application;
 
 use olml89\XenforoBots\Common\Domain\JsonSerializable;
 use olml89\XenforoBots\Subscription\Domain\Subscription;
 
-final class SubscribeBotResult extends JsonSerializable
+final class SubscriptionResult extends JsonSerializable
 {
     public readonly string $id;
     public readonly string $xenforo_url;

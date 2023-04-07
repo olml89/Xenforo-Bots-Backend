@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use olml89\XenforoBots\Bot\Application\Subscribe\SubscribeBotUseCase;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBots\Bot\Domain\BotStorageException;
-use olml89\XenforoBots\Bot\Domain\BotSubscriptionException;
+use olml89\XenforoBots\Subscription\Domain\SubscriptionCreationException;
 
 final class SubscribeBotCommand extends Command
 {
@@ -27,7 +27,7 @@ final class SubscribeBotCommand extends Command
     /**
      * Execute the console command.
      *
-     * @throws BotNotFoundException | BotStorageException | BotSubscriptionException
+     * @throws BotNotFoundException | SubscriptionCreationException | BotStorageException
      */
     public function handle(SubscribeBotUseCase $subscribeBot): void
     {

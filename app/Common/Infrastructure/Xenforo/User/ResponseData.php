@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create;
+namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\User;
 
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiResponseData;
 use Psr\Http\Message\ResponseInterface;

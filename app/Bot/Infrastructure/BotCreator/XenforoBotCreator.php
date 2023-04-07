@@ -15,8 +15,9 @@ use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
 use olml89\XenforoBots\Common\Infrastructure\UuidManager\RamseyUuidManager;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumer;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiErrorResponseData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\RequestData as CreateUserRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\ResponseData as CreateUserResponseData;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\RequestData as UserRequestData;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\ResponseData as UserResponseData;
+use Symfony\Component\HttpFoundation\Response;
 
 final class XenforoBotCreator implements BotCreator
 {
@@ -34,15 +35,15 @@ final class XenforoBotCreator implements BotCreator
         try {
             $response = $this->apiConsumer->post(
                 endpoint: '/users',
-                data: new CreateUserRequestData($name, $password)
+                data: new UserRequestData($name, $password)
             );
 
-            if ($response->getStatusCode() !== 200) {
+            if ($response->getStatusCode() !== Response::HTTP_OK) {
                 $apiErrorResponseData = ApiErrorResponseData::fromResponse($response);
                 throw new BotCreationException($apiErrorResponseData->message);
             }
 
-            $createUserResponseData = CreateUserResponseData::fromResponse($response);
+            $createUserResponseData = UserResponseData::fromResponse($response);
 
             return new Bot(
                 id: $this->uuidManager->random(),

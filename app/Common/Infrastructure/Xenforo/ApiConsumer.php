@@ -14,11 +14,28 @@ final class ApiConsumer
         private readonly Url $apiUrl,
         private readonly string $apiKey,
         private readonly Client $httpClient,
-    ) { }
+        private readonly Url $appUrl,
+    ) {}
 
     public function apiUrl(): Url
     {
         return $this->apiUrl;
+    }
+
+    public function appUrl(): Url
+    {
+        return $this->appUrl;
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function get(string $endpoint, JsonSerializable $data = null): ResponseInterface
+    {
+        return $this->httpClient->get(
+            (string)$this->apiUrl->withPath($endpoint),
+            !is_null($data)? ['form_params' => $data] : [],
+        );
     }
 
     /**

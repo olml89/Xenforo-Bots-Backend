@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\Create;
+namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription;
 
 use olml89\XenforoBots\Common\Domain\JsonSerializable;
 

@@ -2,6 +2,7 @@
 
 namespace olml89\XenforoBots\Bot\Application\Create;
 
+use olml89\XenforoBots\Bot\Application\BotResult;
 use olml89\XenforoBots\Bot\Domain\BotCreationException;
 use olml89\XenforoBots\Bot\Domain\BotCreator;
 use olml89\XenforoBots\Bot\Domain\BotRepository;
@@ -17,11 +18,11 @@ final class CreateBotUseCase
     /**
      * @throws BotCreationException | BotStorageException
      */
-    public function create(string $name, string $password): CreateBotResult
+    public function create(string $name, string $password): BotResult
     {
         $bot = $this->botCreator->create($name, $password);
         $this->botRepository->save($bot);
 
-        return new CreateBotResult($bot);
+        return new BotResult($bot);
     }
 }

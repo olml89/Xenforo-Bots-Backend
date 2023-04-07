@@ -12,9 +12,9 @@ final class ApiConsumerServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $config = $this->app['config']->get('xenforo');
-        $api_url = $config['api_url'];
-        $api_key = $config['api_key'];
+        $api_url = $this->app['config']->get('xenforo')['api_url'];
+        $api_key = $this->app['config']->get('xenforo')['api_key'];
+        $app_url = $this->app['config']->get('app')['url'];
 
         $this->app->singleton(Client::class, function() use ($api_key): Client {
             return new Client([
@@ -26,15 +26,19 @@ final class ApiConsumerServiceProvider extends ServiceProvider
             ]);
         });
 
-        $this->app->singleton(ApiConsumer::class, function(Application $app) use ($api_url, $api_key): ApiConsumer {
-            return new ApiConsumer(
-                apiUrl: Url::create(
-                    $api_url,
-                    $app->get(UrlValidator::class),
-                ),
-                apiKey: $api_key,
-                httpClient: $app->get(Client::class),
-            );
-        });
+        $this->app->singleton(
+            ApiConsumer::class,
+            function(Application $app) use ($api_url, $api_key, $app_url): ApiConsumer {
+                /** @var UrlValidator $urlValidator */
+                $urlValidator = $app->get(UrlValidator::class);
+
+                return new ApiConsumer(
+                    apiUrl: Url::create($api_url, $urlValidator),
+                    apiKey: $api_key,
+                    httpClient: $app->get(Client::class),
+                    appUrl: Url::create($app_url, $urlValidator),
+                );
+            }
+        );
     }
 }

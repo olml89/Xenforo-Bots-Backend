@@ -13,7 +13,7 @@ final class Bot
     private ?Subscription $subscription = null;
 
     public function __construct(
-        private Uuid $id,
+        private readonly Uuid $id,
         private readonly AutoId $userId,
         private readonly Username $name,
         private readonly Password $password,
@@ -53,6 +53,13 @@ final class Bot
     public function subscribe(Subscription $subscription): self
     {
         $this->subscription = $subscription;
+
+        return $this;
+    }
+
+    public function cancelSubscription(): self
+    {
+        $this->subscription = null;
 
         return $this;
     }

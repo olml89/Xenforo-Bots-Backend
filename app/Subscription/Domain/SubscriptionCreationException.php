@@ -1,11 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Domain;
+namespace olml89\XenforoBots\Subscription\Domain;
 
 use Exception;
+use olml89\XenforoBots\Bot\Domain\Bot;
 use Throwable;
 
-final class BotSubscriptionException extends Exception
+final class SubscriptionCreationException extends Exception
 {
     public function __construct(string $message, ?Throwable $previous = null)
     {

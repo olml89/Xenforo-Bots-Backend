@@ -202,9 +202,10 @@ return [
         \olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumerServiceProvider::class,
         \olml89\XenforoBots\Common\Infrastructure\Hasher\HasherServiceProvider::class,
         \olml89\XenforoBots\Common\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
-        \olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider::class,
-        \olml89\XenforoBots\Bot\Infrastructure\BotSubscriber\XenforoBotSubscriberServiceProvider::class,
         \olml89\XenforoBots\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider::class,
+        \olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider::class,
+        \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionCreator\XenforoSubscriptionCreatorServiceProvider::class,
+        \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRetriever\XenforoSubscriptionRetrieverServiceProvider::class,
 
     ],
 

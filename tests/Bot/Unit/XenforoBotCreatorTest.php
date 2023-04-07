@@ -12,7 +12,7 @@ use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreator;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher;
 use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\Create\RequestData;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\RequestData;
 use Tests\Common\InteractsWithXenforoApi;
 use Tests\TestCase;
 
