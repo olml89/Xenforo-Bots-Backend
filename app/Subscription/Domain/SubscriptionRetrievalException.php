@@ -15,11 +15,4 @@ final class SubscriptionRetrievalException extends Exception
             previous: $previous,
         );
     }
-
-    public static function xenforoError(Url $xenforoUrl, int $httpStatusCode): self
-    {
-        return new self(
-            sprintf('Response with status %s returned from \'%s\'', $httpStatusCode, $xenforoUrl)
-        );
-    }
 }

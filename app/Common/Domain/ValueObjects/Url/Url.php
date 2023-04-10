@@ -18,9 +18,9 @@ final class Url extends StringValueObject
         return new self($url);
     }
 
-    public function withPath(string $path): self
+    public function urlencode(): string
     {
-        return new self($this->value.$path);
+        return urlencode((string)$this);
     }
 
     private static function ensureIsAValidUrl(string $url, UrlValidator $validator): void

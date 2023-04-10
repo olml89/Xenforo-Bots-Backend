@@ -2,25 +2,30 @@
 
 namespace olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRetriever;
 
-use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Foundation\Application;
 use olml89\XenforoBots\Bot\Domain\Bot;
 use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
+use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumer;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiErrorResponseData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\ResponseData as SubscriptionResponseData;
+use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiException;
 use olml89\XenforoBots\Subscription\Domain\Subscription;
 use olml89\XenforoBots\Subscription\Domain\SubscriptionRetrievalException;
 use olml89\XenforoBots\Subscription\Domain\SubscriptionRetriever;
-use Symfony\Component\HttpFoundation\Response;
 
 final class XenforoSubscriptionRetriever implements SubscriptionRetriever
 {
+    private readonly Url $appUrl;
+
     public function __construct(
-        private readonly ApiConsumer $apiConsumer,
+        private readonly XenforoApi $xenforoApi,
         private readonly UuidManager $uuidManager,
-    ) {}
+        Application $application
+    ) {
+        $this->appUrl = $application[Url::class];
+    }
 
     /**
      * @throws SubscriptionRetrievalException
@@ -28,39 +33,23 @@ final class XenforoSubscriptionRetriever implements SubscriptionRetriever
     public function get(Bot $bot): ?Subscription
     {
         try {
-            $response = $this->apiConsumer->get(
-                endpoint: sprintf(
-                    '/subscriptions/?user_id=%s&webhook=%s',
-                    $bot->userId()->toInt(),
-                    urlencode((string)$this->apiConsumer->appUrl()),
-                )
+            $subscriptionResponseData = $this->xenforoApi->getSubscription(
+                user_id: $bot->userId()->toInt(),
+                webhook: $this->appUrl->urlencode(),
             );
 
-            if ($response->getStatusCode() === Response::HTTP_NOT_FOUND) {
+            if (is_null($subscriptionResponseData)) {
                 return null;
             }
 
-            if ($response->getStatusCode() === Response::HTTP_OK) {
-                $subscriptionResponseData = SubscriptionResponseData::fromResponse($response);
-
-                return new Subscription(
-                    id: new Uuid($subscriptionResponseData->id, $this->uuidManager),
-                    bot: $bot,
-                    xenforoUrl: $this->apiConsumer->apiUrl(),
-                    subscribedAt: UnixTimestamp::toDateTimeImmutable($subscriptionResponseData->subscribed_at),
-                );
-            }
-
-            throw SubscriptionRetrievalException::xenforoError(
-                $this->apiConsumer->apiUrl(),
-                $response->getStatusCode(),
+            return new Subscription(
+                id: new Uuid($subscriptionResponseData->id, $this->uuidManager),
+                bot: $bot,
+                xenforoUrl: $this->xenforoApi->apiUrl(),
+                subscribedAt: UnixTimestamp::toDateTimeImmutable($subscriptionResponseData->subscribed_at),
             );
         }
-        catch (GuzzleException $e) {
-            $apiErrorResponseData = ApiErrorResponseData::fromGuzzleException($e);
-            throw new SubscriptionRetrievalException($apiErrorResponseData->message, $e);
-        }
-        catch (ValueObjectException $e) {
+        catch (XenforoApiException|ValueObjectException $e) {
             throw new SubscriptionRetrievalException($e->getMessage(), $e);
         }
     }

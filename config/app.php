@@ -199,7 +199,7 @@ return [
         /*
         * Application Service Providers...
         */
-        \olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumerServiceProvider::class,
+        \olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiServiceProvider::class,
         \olml89\XenforoBots\Common\Infrastructure\Hasher\HasherServiceProvider::class,
         \olml89\XenforoBots\Common\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
         \olml89\XenforoBots\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider::class,

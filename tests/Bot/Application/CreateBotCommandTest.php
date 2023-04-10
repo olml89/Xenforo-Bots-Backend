@@ -35,7 +35,7 @@ final class CreateBotCommandTest extends TestCase
         parent::setUp();
 
         $this->migrate();
-        $this->setUpGuzzleClient();
+        $this->setUpXenforoApi();
 
         $this->faker = $this->app->get(Faker::class);
         $this->hasher = $this->app->get(Hasher::class);

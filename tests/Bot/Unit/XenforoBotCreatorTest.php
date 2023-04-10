@@ -32,7 +32,7 @@ final class XenforoBotCreatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpGuzzleClient();
+        $this->setUpXenforoApi();
 
         $this->faker = $this->app->get(Faker::class);
         $this->hasher = $this->app->get(Hasher::class);

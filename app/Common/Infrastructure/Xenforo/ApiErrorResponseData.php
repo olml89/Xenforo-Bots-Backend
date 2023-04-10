@@ -2,7 +2,6 @@
 
 namespace olml89\XenforoBots\Common\Infrastructure\Xenforo;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 
 final class ApiErrorResponseData extends ApiResponseData
@@ -13,24 +12,28 @@ final class ApiErrorResponseData extends ApiResponseData
         public readonly string $message,
     ) {}
 
+    private static function unknownError(int $httpStatusCode): self
+    {
+        return new self(
+            httpCode: $httpStatusCode,
+            errorCode: 'unknown_error',
+            message: 'Unknown error',
+        );
+    }
+
     public static function fromResponse(ResponseInterface $response): self
     {
         $json = self::jsonDecode($response);
-        $error = $json['errors'][0];
+        $error = $json['errors'][0] ?? null;
+
+        if (is_null($error)) {
+            return self::unknownError($response->getStatusCode());
+        }
 
         return new self(
             httpCode: $response->getStatusCode(),
             errorCode: $error['code'],
             message: $error['message'],
-        );
-    }
-
-    public static function fromGuzzleException(GuzzleException $e): self
-    {
-        return new self(
-            httpCode: 500,
-            errorCode: 'guzzle_exception',
-            message: $e->getMessage(),
         );
     }
 }

@@ -10,31 +10,39 @@ use Psr\Http\Message\ResponseInterface;
 
 final class ApiConsumer
 {
-    public function __construct(
-        private readonly Url $apiUrl,
-        private readonly string $apiKey,
-        private readonly Client $httpClient,
-        private readonly Url $appUrl,
-    ) {}
+    private const API_PREFIX = '/api';
+
+    private readonly Url $apiUrl;
+    private readonly Client $httpClient;
+
+    public function __construct(string $apiKey, Url $apiUrl, array $config = [])
+    {
+        $this->apiUrl = $apiUrl;
+
+        $defaultConfig = [
+            'base_uri' => (string)$apiUrl,
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'XF-Api-Key' => $apiKey,
+            ],
+            'http_errors' => true,
+        ];
+
+        $this->httpClient = new Client($defaultConfig + $config);
+    }
 
     public function apiUrl(): Url
     {
         return $this->apiUrl;
     }
 
-    public function appUrl(): Url
-    {
-        return $this->appUrl;
-    }
-
     /**
      * @throws GuzzleException
      */
-    public function get(string $endpoint, JsonSerializable $data = null): ResponseInterface
+    public function get(string $endpoint, array $parameters = []): ResponseInterface
     {
         return $this->httpClient->get(
-            (string)$this->apiUrl->withPath($endpoint),
-            !is_null($data)? ['form_params' => $data] : [],
+            sprintf(self::API_PREFIX.$endpoint, ...$parameters)
         );
     }
 
@@ -44,7 +52,7 @@ final class ApiConsumer
     public function post(string $endpoint, JsonSerializable $data): ResponseInterface
     {
         return $this->httpClient->post(
-            (string)$this->apiUrl->withPath($endpoint),
+            self::API_PREFIX.$endpoint,
             ['form_params' => $data],
         );
     }

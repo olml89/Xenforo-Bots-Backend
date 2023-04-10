@@ -2,25 +2,27 @@
 
 namespace Tests\Common;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumer;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiFactory;
 use Psr\Http\Message\ResponseInterface;
 
 trait InteractsWithXenforoApi
 {
     private readonly MockHandler $requests;
 
-    private function setUpGuzzleClient(): void
+    private function setUpXenforoApi(): void
     {
         $this->requests = new MockHandler();
 
-        $this->app->singleton(Client::class, function(): Client {
-            return new Client([
-                'handler' => HandlerStack::create($this->requests),
-                'http_errors' => false,
-            ]);
+        $this->app->singleton(XenforoApi::class, function(): XenforoApi {
+            /** @var XenforoApiFactory $xenforoApiFactory */
+            $xenforoApiFactory = $this->app->get(XenforoApiFactory::class);
+
+            return $xenforoApiFactory->create(['handler' => HandlerStack::create($this->requests)]);
         });
     }
 
