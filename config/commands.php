@@ -2,6 +2,7 @@
 
 use olml89\XenforoBots\Bot\Infrastructure\Console\CancelBotSubscriptionCommand;
 use olml89\XenforoBots\Bot\Infrastructure\Console\CreateBotCommand;
+use olml89\XenforoBots\Bot\Infrastructure\Console\ShowBotSubscriptionCommand;
 use olml89\XenforoBots\Bot\Infrastructure\Console\SubscribeBotCommand;
 use olml89\XenforoBots\Bot\Infrastructure\Console\UpdateBotSubscriptionCommand;
 
@@ -10,5 +11,6 @@ return [
     SubscribeBotCommand::class,
     UpdateBotSubscriptionCommand::class,
     CancelBotSubscriptionCommand::class,
+    ShowBotSubscriptionCommand::class,
 ];
 

@@ -44,7 +44,7 @@ final class UpdateBotSubscriptionCommand extends Command
             : sprintf(
                 'Bot <%s> is currently subscribed in \'%s\'',
                 $name,
-                $updateBotSubscriptionResult->xenforo_url
+                $updateBotSubscriptionResult->xenforo_url,
             );
 
         is_null($updateBotSubscriptionResult)
