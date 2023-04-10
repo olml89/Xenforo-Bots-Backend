@@ -31,11 +31,13 @@ class CreateBotCommand extends Command
     public function handle(CreateBotUseCase $createBot): void
     {
         $createBotResult = $createBot->create(
-            $this->argument('name'),
+            $name = $this->argument('name'),
             $this->argument('password'),
         );
 
-        $this->output->success('Bot created successfully');
+        $this->output->success(
+            sprintf('Bot <%s> created successfully', $name)
+        );
         $this->output->write(json_encode($createBotResult, JSON_PRETTY_PRINT));
     }
 }

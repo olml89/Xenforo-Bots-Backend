@@ -7,6 +7,7 @@ use olml89\XenforoBots\Bot\Domain\BotFinder;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBots\Bot\Domain\BotRepository;
 use olml89\XenforoBots\Bot\Domain\BotStorageException;
+use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBots\Bot\Domain\Username;
 use olml89\XenforoBots\Subscription\Domain\SubscriptionRetrievalException;
 use olml89\XenforoBots\Subscription\Domain\SubscriptionRetriever;
@@ -20,6 +21,7 @@ final class UpdateBotSubscriptionUseCase
     ) {}
 
     /**
+     * @throws InvalidUsernameException
      * @throws BotNotFoundException | SubscriptionRetrievalException | BotStorageException
      */
     public function update(string $name, string $password): ?SubscriptionResult

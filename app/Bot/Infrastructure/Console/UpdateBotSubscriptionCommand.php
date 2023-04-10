@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use olml89\XenforoBots\Bot\Application\UpdateSubscription\UpdateBotSubscriptionUseCase;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBots\Bot\Domain\BotStorageException;
+use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBots\Subscription\Domain\SubscriptionRetrievalException;
 
 final class UpdateBotSubscriptionCommand extends Command
@@ -15,7 +16,7 @@ final class UpdateBotSubscriptionCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'bot:subscription:update {name} {password}';
+    protected $signature = 'bot:update-subscription {name} {password}';
 
     /**
      * The console command description.
@@ -28,6 +29,7 @@ final class UpdateBotSubscriptionCommand extends Command
     /**
      * Execute the console command.
      *
+     * @throws InvalidUsernameException
      * @throws BotNotFoundException | SubscriptionRetrievalException | BotStorageException
      */
     public function handle(UpdateBotSubscriptionUseCase $updateBotSubscription): void
