@@ -89,4 +89,23 @@ final class XenforoApi
             throw XenforoApiException::fromGuzzleException($e);
         }
     }
+
+    /**
+     * @throws XenforoApiException
+     */
+    public function deleteSubscription(int $user_id, string $webhook): void
+    {
+        try {
+            $this->apiConsumer->delete(
+                endpoint: '/subscriptions/?user_id=%s&webhook=%s',
+                parameters: [$user_id, $webhook],
+            );
+        }
+        catch (RequestException $e) {
+            throw XenforoApiException::fromResponse($e->getResponse());
+        }
+        catch (GuzzleException $e) {
+            throw XenforoApiException::fromGuzzleException($e);
+        }
+    }
 }

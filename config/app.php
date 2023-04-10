@@ -206,6 +206,7 @@ return [
         \olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider::class,
         \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionCreator\XenforoSubscriptionCreatorServiceProvider::class,
         \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRetriever\XenforoSubscriptionRetrieverServiceProvider::class,
+        \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRemover\XenforoSubscriptionRemoverServiceProvider::class,
 
     ],
 

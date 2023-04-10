@@ -56,4 +56,14 @@ final class ApiConsumer
             ['form_params' => $data],
         );
     }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function delete(string $endpoint, array $parameters = []): ResponseInterface
+    {
+        return $this->httpClient->delete(
+            sprintf(self::API_PREFIX.$endpoint, ...$parameters)
+        );
+    }
 }
