@@ -4,6 +4,11 @@ namespace olml89\XenforoBots\Bot\Domain;
 
 interface BotRepository
 {
+    /**
+     * @return Bot[]
+     */
+    public function allSubscribed(): array;
+
     public function getByName(Username $name): ?Bot;
 
     /**

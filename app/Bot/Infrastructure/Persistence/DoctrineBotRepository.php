@@ -2,6 +2,7 @@
 
 namespace olml89\XenforoBots\Bot\Infrastructure\Persistence;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -21,11 +22,28 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
         );
     }
 
+    /**
+     * @return Bot[]
+     */
+    public function allSubscribed(): array
+    {
+        return $this
+            ->getEntityManager()
+            ->getRepository(Bot::class)
+            ->matching(
+                new Criteria(Criteria::expr()->neq('subscription', null))
+            )
+            ->toArray();
+    }
+
     public function getByName(Username $name): ?Bot
     {
-        return $this->getEntityManager()->getRepository(Bot::class)->findOneBy([
-            'name' => $name,
-        ]);
+        return $this
+            ->getEntityManager()
+            ->getRepository(Bot::class)
+            ->findOneBy([
+                'name' => $name,
+            ]);
     }
 
     /**

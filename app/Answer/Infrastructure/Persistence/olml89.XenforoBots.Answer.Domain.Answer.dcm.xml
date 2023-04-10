@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="olml89\XenforoBots\Answer\Domain\Answer" table="answers">
+
+        <indexes>
+            <index
+                name="idx_id"
+                columns="id"
+            />
+        </indexes>
+
+        <unique-constraints>
+            <unique-constraint columns="parent_id,type" name="idx_parent_id_type" />
+        </unique-constraints>
+
+        <id
+            name="id"
+            column="id"
+            type="uuid"
+        />
+
+        <field
+            name="parentId"
+            column="parent_id"
+            type="auto_id"
+        >
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </field>
+
+        <field
+            name="type"
+            column="type"
+            enumType="olml89\XenforoBots\Answer\Domain\ContentType"
+        />
+
+        <field
+            name="content"
+            column="content"
+            type="text"
+        />
+
+        <field
+            name="answeredAt"
+            column="answered_at"
+            type="datetime_immutable"
+        />
+
+        <field
+            name="deliveredAt"
+            column="delivered_at"
+            type="datetime_immutable"
+            nullable="true"
+        />
+
+        <one-to-one
+            field="bot"
+            target-entity="olml89\XenforoBots\Bot\Domain\Bot"
+            fetch="EAGER"
+        >
+            <join-column
+                name="bot_id"
+                referenced-column-name="id"
+            />
+        </one-to-one>
+
+    </entity>
+
+</doctrine-mapping>

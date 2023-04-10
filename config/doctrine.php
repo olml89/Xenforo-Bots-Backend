@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+use olml89\XenforoBots\Answer\Domain\AnswerRepository;
+use olml89\XenforoBots\Answer\Infrastructure\Persistence\DoctrineAnswerRepository;
 use olml89\XenforoBots\Bot\Domain\BotRepository;
 use olml89\XenforoBots\Bot\Infrastructure\Persistence\DoctrineBotRepository;
 use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
@@ -25,6 +27,7 @@ return [
     ],
 
     'mappings' => [
+        app_path('Answer/Infrastructure/Persistence'),
         app_path('Bot/Infrastructure/Persistence'),
         app_path('Subscription/Infrastructure/Persistence'),
     ],
@@ -52,6 +55,7 @@ return [
 
     'repositories' => [
         BotRepository::class => DoctrineBotRepository::class,
+        AnswerRepository::class => DoctrineAnswerRepository::class,
     ],
 
     'migrations' => [
