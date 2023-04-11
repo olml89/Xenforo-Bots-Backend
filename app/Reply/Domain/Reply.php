@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Answer\Domain;
+namespace olml89\XenforoBots\Reply\Domain;
 
 use DateTimeImmutable;
 use olml89\XenforoBots\Bot\Domain\Bot;
 use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
 
-final class Answer
+final class Reply
 {
-    private readonly DateTimeImmutable $answeredAt;
-    private ?DateTimeImmutable $deliveredAt;
+    private readonly DateTimeImmutable $repliedAt;
+    private ?DateTimeImmutable $publishedAt;
 
     public function __construct(
         private readonly Uuid $id,
@@ -20,8 +20,8 @@ final class Answer
         private readonly string $response,
         private readonly Bot $bot,
     ) {
-        $this->answeredAt = new DateTimeImmutable();
-        $this->deliveredAt = null;
+        $this->repliedAt = new DateTimeImmutable();
+        $this->publishedAt = null;
     }
 
     public function id(): Uuid
@@ -54,24 +54,24 @@ final class Answer
         return $this->bot;
     }
 
-    public function answeredAt(): DateTimeImmutable
+    public function repliedAt(): DateTimeImmutable
     {
-        return $this->answeredAt;
+        return $this->repliedAt;
     }
 
-    public function isDelivered(): bool
+    public function isPublished(): bool
     {
-        return !is_null($this->deliveredAt);
+        return !is_null($this->publishedAt);
     }
 
-    public function deliveredAt(): ?DateTimeImmutable
+    public function publishedAt(): ?DateTimeImmutable
     {
-        return $this->deliveredAt;
+        return $this->publishedAt;
     }
 
-    public function deliver(DateTimeImmutable $deliveredAt): self
+    public function publish(DateTimeImmutable $publishedAt): self
     {
-        $this->deliveredAt = $deliveredAt;
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230411075647 extends AbstractMigration
+final class Version20230411093004 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,22 +20,22 @@ final class Version20230411075647 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE answers (id CHAR(36) NOT NULL, bot_id CHAR(36) DEFAULT NULL, type VARCHAR(255) NOT NULL, content_id INT UNSIGNED NOT NULL, container_id INT UNSIGNED NOT NULL, response LONGTEXT NOT NULL, answered_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', delivered_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_50D0C60692C1C487 (bot_id), INDEX idx_id (id), UNIQUE INDEX idx_content_id_type (content_id, type), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE bots (id CHAR(36) NOT NULL, subscription_id CHAR(36) DEFAULT NULL, user_id INT UNSIGNED NOT NULL, name VARCHAR(50) NOT NULL, password VARCHAR(72) NOT NULL, registered_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', UNIQUE INDEX UNIQ_71BFF0FDA76ED395 (user_id), UNIQUE INDEX UNIQ_71BFF0FD5E237E06 (name), UNIQUE INDEX UNIQ_71BFF0FD9A1887DC (subscription_id), INDEX idx_id (id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE replies (id CHAR(36) NOT NULL, bot_id CHAR(36) DEFAULT NULL, type VARCHAR(255) NOT NULL, content_id INT UNSIGNED NOT NULL, container_id INT UNSIGNED NOT NULL, response LONGTEXT NOT NULL, replied_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', published_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_A000672A92C1C487 (bot_id), INDEX idx_id (id), UNIQUE INDEX idx_content_id_type (content_id, type), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE subscriptions (id CHAR(36) NOT NULL, bot_id CHAR(36) DEFAULT NULL, xenforo_url VARCHAR(2048) NOT NULL, subscribed_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', UNIQUE INDEX UNIQ_4778A0192C1C487 (bot_id), INDEX idx_id (id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE answers ADD CONSTRAINT FK_50D0C60692C1C487 FOREIGN KEY (bot_id) REFERENCES bots (id)');
         $this->addSql('ALTER TABLE bots ADD CONSTRAINT FK_71BFF0FD9A1887DC FOREIGN KEY (subscription_id) REFERENCES subscriptions (id)');
+        $this->addSql('ALTER TABLE replies ADD CONSTRAINT FK_A000672A92C1C487 FOREIGN KEY (bot_id) REFERENCES bots (id)');
         $this->addSql('ALTER TABLE subscriptions ADD CONSTRAINT FK_4778A0192C1C487 FOREIGN KEY (bot_id) REFERENCES bots (id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE answers DROP FOREIGN KEY FK_50D0C60692C1C487');
         $this->addSql('ALTER TABLE bots DROP FOREIGN KEY FK_71BFF0FD9A1887DC');
+        $this->addSql('ALTER TABLE replies DROP FOREIGN KEY FK_A000672A92C1C487');
         $this->addSql('ALTER TABLE subscriptions DROP FOREIGN KEY FK_4778A0192C1C487');
-        $this->addSql('DROP TABLE answers');
         $this->addSql('DROP TABLE bots');
+        $this->addSql('DROP TABLE replies');
         $this->addSql('DROP TABLE subscriptions');
     }
 }

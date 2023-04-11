@@ -1,41 +1,37 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Answer\Infrastructure\Persistence;
+namespace olml89\XenforoBots\Reply\Infrastructure\Persistence;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Query\AST\Join;
-use Doctrine\ORM\Query\Expr\OrderBy;
-use olml89\XenforoBots\Answer\Domain\Answer;
-use olml89\XenforoBots\Answer\Domain\AnswerRepository;
-use olml89\XenforoBots\Answer\Domain\AnswerStorageException;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use Ramsey\Uuid\Codec\OrderedTimeCodec;
+use olml89\XenforoBots\Reply\Domain\Reply;
+use olml89\XenforoBots\Reply\Domain\ReplyRepository;
+use olml89\XenforoBots\Reply\Domain\ReplyStorageException;
 
-final class DoctrineAnswerRepository extends EntityRepository implements AnswerRepository
+final class DoctrineReplyRepository extends EntityRepository implements ReplyRepository
 {
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct(
             $entityManager,
-            new ClassMetadata(Answer::class),
+            new ClassMetadata(Reply::class),
         );
     }
 
-    public function getNextDeliverable(): ?Answer
+    public function getNextDeliverable(): ?Reply
     {
         /**
          * Reason to use DQL instead of findOneBy:
          * https://github.com/doctrine/orm/issues/9505
          *
-         * Answer -> Bot -> Subscription
+         * Reply -> Bot -> Subscription
          *
-         * If Bot is set as EAGER loading it doesn't try to update the uuid when getting $answer->bot(),
+         * If Bot is set as EAGER loading it doesn't try to update the uuid when getting $reply->bot(),
          * but because Subscription is on a 2nd grade of inheritance, even though is set as EAGER loading,
-         * it will always be a proxy if we do $answer->bot()->subscription() (but not if we get a Bot
+         * it will always be a proxy if we do $reply->bot()->subscription() (but not if we get a Bot
          * through BotRepository and do $bot->subscription()).
          *
          * So we have to mount the entities manually through DQL, joining the relationships is like eager-loading
@@ -43,7 +39,7 @@ final class DoctrineAnswerRepository extends EntityRepository implements AnswerR
          */
         $results = $this
             ->getEntityManager()
-            ->getRepository(Answer::class)
+            ->getRepository(Reply::class)
             ->createQueryBuilder('a')
             ->leftJoin('a.bot', 'b')
             ->leftJoin('b.subscription', 's')
@@ -52,9 +48,9 @@ final class DoctrineAnswerRepository extends EntityRepository implements AnswerR
                 $this
                     ->getEntityManager()
                     ->getExpressionBuilder()
-                    ->isNull('a.deliveredAt')
+                    ->isNull('a.publishedAt')
             )
-            ->orderBy('a.answeredAt', Criteria::ASC)
+            ->orderBy('a.repliedAt', Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -62,16 +58,16 @@ final class DoctrineAnswerRepository extends EntityRepository implements AnswerR
     }
 
     /**
-     * @throws AnswerStorageException
+     * @throws ReplyStorageException
      */
-    public function save(Answer $answer): void
+    public function save(Reply $reply): void
     {
         try {
-            $this->getEntityManager()->persist($answer);
+            $this->getEntityManager()->persist($reply);
             $this->getEntityManager()->flush();
         }
         catch (Exception $doctrineException) {
-            throw new AnswerStorageException($doctrineException->getMessage(), $doctrineException);
+            throw new ReplyStorageException($doctrineException->getMessage(), $doctrineException);
         }
     }
 }

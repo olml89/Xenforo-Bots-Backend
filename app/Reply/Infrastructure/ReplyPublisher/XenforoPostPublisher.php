@@ -1,44 +1,44 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Answer\Infrastructure\AnswerPublisher;
+namespace olml89\XenforoBots\Reply\Infrastructure\ReplyPublisher;
 
-use olml89\XenforoBots\Answer\Domain\Answer;
-use olml89\XenforoBots\Answer\Domain\AnswerPublicationException;
-use olml89\XenforoBots\Answer\Domain\AnswerPublisher;
+use olml89\XenforoBots\Reply\Domain\Reply;
+use olml89\XenforoBots\Reply\Domain\ReplyPublicationException;
+use olml89\XenforoBots\Reply\Domain\ReplyPublisher;
 use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiException;
 
-final class XenforoPostPublisher implements AnswerPublisher
+final class XenforoPostPublisher implements ReplyPublisher
 {
     public function __construct(
         private readonly XenforoApi $xenforoApi,
     ) {}
 
     /**
-     * @throws AnswerPublicationException
+     * @throws ReplyPublicationException
      */
-    public function publish(Answer $answer): void
+    public function publish(Reply $reply): void
     {
         try {
             $postRequestData = new PostRequestData(
-                thread_id: $answer->containerId()->toInt(),
-                message: $answer->getResponse(),
+                thread_id: $reply->containerId()->toInt(),
+                message: $reply->getResponse(),
             );
 
             $postResponseData = $this->xenforoApi->postPost(
-                user_id: $answer->bot()->userId()->toInt(),
+                user_id: $reply->bot()->userId()->toInt(),
                 postRequestData: $postRequestData,
             );
 
-            $answer->deliver(
+            $reply->publish(
                 UnixTimestamp::toDateTimeImmutable($postResponseData->post_date)
             );
         }
         catch (XenforoApiException|ValueObjectException $e) {
-            throw new AnswerPublicationException($e->getMessage(), $e);
+            throw new ReplyPublicationException($e->getMessage(), $e);
         }
     }
 }

@@ -69,7 +69,7 @@ final class Bot
         return !is_null($this->subscription);
     }
 
-    public function answer(string $text): string
+    public function reply(string $text): string
     {
         return $text;
     }

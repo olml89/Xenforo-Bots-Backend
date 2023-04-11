@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Answer\Infrastructure\Http\ProcessPost;
+namespace olml89\XenforoBots\Reply\Infrastructure\Http\ProcessPost;
 
 use Illuminate\Foundation\Http\FormRequest;
-use olml89\XenforoBots\Answer\Application\Create\Post\PostData;
+use olml89\XenforoBots\Reply\Application\Create\Post\PostData;
 
 final class ProcessPostRequest extends FormRequest
 {

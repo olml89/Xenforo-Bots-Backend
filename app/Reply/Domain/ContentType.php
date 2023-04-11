@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Answer\Domain;
+namespace olml89\XenforoBots\Reply\Domain;
 
 enum ContentType: string
 {

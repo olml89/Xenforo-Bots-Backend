@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use olml89\XenforoBots\Answer\Infrastructure\Http\ProcessPost\ProcessPostController;
+use olml89\XenforoBots\Reply\Infrastructure\Http\ProcessPost\ProcessPostController;
 
 /*
 |--------------------------------------------------------------------------
