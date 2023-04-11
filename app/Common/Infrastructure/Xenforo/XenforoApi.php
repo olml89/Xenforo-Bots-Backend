@@ -4,8 +4,9 @@ namespace olml89\XenforoBots\Common\Infrastructure\Xenforo;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use olml89\XenforoBots\Bot\Domain\Bot;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\Post\ResponseData as PostResponseData;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\ResponseData as SubscriptionResponseData;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\RequestData as UserRequestData;
@@ -100,6 +101,28 @@ final class XenforoApi
                 endpoint: '/subscriptions/?user_id=%s&webhook=%s',
                 parameters: [$user_id, $webhook],
             );
+        }
+        catch (RequestException $e) {
+            throw XenforoApiException::fromResponse($e->getResponse());
+        }
+        catch (GuzzleException $e) {
+            throw XenforoApiException::fromGuzzleException($e);
+        }
+    }
+
+    /**
+     * @throws XenforoApiException
+     */
+    public function postPost(int $user_id, PostRequestData $postRequestData): PostResponseData
+    {
+        try {
+            $response = $this->apiConsumer->post(
+                endpoint: '/posts',
+                data: $postRequestData,
+                headers: ['XF-Api-User' => $user_id],
+            );
+
+            return PostResponseData::fromResponse($response);
         }
         catch (RequestException $e) {
             throw XenforoApiException::fromResponse($e->getResponse());

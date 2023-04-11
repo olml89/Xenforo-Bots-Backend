@@ -14,18 +14,64 @@ final class Answer
 
     public function __construct(
         private readonly Uuid $id,
-        private readonly Bot $bot,
-        private readonly AutoId $parentId,
         private readonly ContentType $type,
-        private readonly string $content,
+        private readonly AutoId $contentId,
+        private readonly AutoId $containerId,
+        private readonly string $response,
+        private readonly Bot $bot,
     ) {
         $this->answeredAt = new DateTimeImmutable();
         $this->deliveredAt = null;
     }
 
-    public function deliver(): self
+    public function id(): Uuid
     {
-        $this->deliveredAt = new DateTimeImmutable();
+        return $this->id;
+    }
+
+    public function getType(): ContentType
+    {
+        return $this->type;
+    }
+
+    public function contentId(): AutoId
+    {
+        return $this->contentId;
+    }
+
+    public function containerId(): AutoId
+    {
+        return $this->containerId;
+    }
+
+    public function getResponse(): string
+    {
+        return $this->response;
+    }
+
+    public function bot(): Bot
+    {
+        return $this->bot;
+    }
+
+    public function answeredAt(): DateTimeImmutable
+    {
+        return $this->answeredAt;
+    }
+
+    public function isDelivered(): bool
+    {
+        return !is_null($this->deliveredAt);
+    }
+
+    public function deliveredAt(): ?DateTimeImmutable
+    {
+        return $this->deliveredAt;
+    }
+
+    public function deliver(DateTimeImmutable $deliveredAt): self
+    {
+        $this->deliveredAt = $deliveredAt;
 
         return $this;
     }

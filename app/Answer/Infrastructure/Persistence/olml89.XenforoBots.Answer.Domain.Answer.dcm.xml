@@ -14,7 +14,7 @@
         </indexes>
 
         <unique-constraints>
-            <unique-constraint columns="parent_id,type" name="idx_parent_id_type" />
+            <unique-constraint columns="content_id,type" name="idx_content_id_type" />
         </unique-constraints>
 
         <id
@@ -24,8 +24,14 @@
         />
 
         <field
-            name="parentId"
-            column="parent_id"
+            name="type"
+            column="type"
+            enumType="olml89\XenforoBots\Answer\Domain\ContentType"
+        />
+
+        <field
+            name="contentId"
+            column="content_id"
             type="auto_id"
         >
             <options>
@@ -34,14 +40,18 @@
         </field>
 
         <field
-            name="type"
-            column="type"
-            enumType="olml89\XenforoBots\Answer\Domain\ContentType"
-        />
+            name="containerId"
+            column="container_id"
+            type="auto_id"
+        >
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </field>
 
         <field
-            name="content"
-            column="content"
+            name="response"
+            column="response"
             type="text"
         />
 
@@ -58,16 +68,17 @@
             nullable="true"
         />
 
-        <one-to-one
+        <many-to-one
             field="bot"
             target-entity="olml89\XenforoBots\Bot\Domain\Bot"
             fetch="EAGER"
+            orphan-removal="true"
         >
             <join-column
                 name="bot_id"
                 referenced-column-name="id"
             />
-        </one-to-one>
+        </many-to-one>
 
     </entity>
 

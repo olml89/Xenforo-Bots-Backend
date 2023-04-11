@@ -39,31 +39,40 @@ final class ApiConsumer
     /**
      * @throws GuzzleException
      */
-    public function get(string $endpoint, array $parameters = []): ResponseInterface
+    public function get(string $endpoint, array $parameters = [], array $headers = []): ResponseInterface
     {
         return $this->httpClient->get(
-            sprintf(self::API_PREFIX.$endpoint, ...$parameters)
+            sprintf(self::API_PREFIX.$endpoint, ...$parameters),
+            [
+                'headers' => $headers,
+            ]
         );
     }
 
     /**
      * @throws GuzzleException
      */
-    public function post(string $endpoint, JsonSerializable $data): ResponseInterface
+    public function post(string $endpoint, JsonSerializable $data, array $headers = []): ResponseInterface
     {
         return $this->httpClient->post(
             self::API_PREFIX.$endpoint,
-            ['form_params' => $data],
+            [
+                'headers' => $headers,
+                'form_params' => $data,
+            ]
         );
     }
 
     /**
      * @throws GuzzleException
      */
-    public function delete(string $endpoint, array $parameters = []): ResponseInterface
+    public function delete(string $endpoint, array $parameters = [], array $headers = []): ResponseInterface
     {
         return $this->httpClient->delete(
-            sprintf(self::API_PREFIX.$endpoint, ...$parameters)
+            sprintf(self::API_PREFIX.$endpoint, ...$parameters),
+            [
+                'headers' => $headers,
+            ]
         );
     }
 }

@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use olml89\XenforoBots\Answer\Infrastructure\Console\SendAnswerCommand;
 use olml89\XenforoBots\Bot\Infrastructure\Console\CancelBotSubscriptionCommand;
 use olml89\XenforoBots\Bot\Infrastructure\Console\CreateBotCommand;
 use olml89\XenforoBots\Bot\Infrastructure\Console\ShowBotSubscriptionCommand;
@@ -12,5 +13,6 @@ return [
     UpdateBotSubscriptionCommand::class,
     CancelBotSubscriptionCommand::class,
     ShowBotSubscriptionCommand::class,
+    SendAnswerCommand::class,
 ];
 
