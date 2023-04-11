@@ -2,6 +2,7 @@
 
 namespace olml89\XenforoBots\Bot\Application\UpdateSubscription;
 
+use olml89\XenforoBots\Bot\Application\BotResult;
 use olml89\XenforoBots\Bot\Application\SubscriptionResult;
 use olml89\XenforoBots\Bot\Domain\BotFinder;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
@@ -24,7 +25,7 @@ final class UpdateBotSubscriptionUseCase
      * @throws InvalidUsernameException
      * @throws BotNotFoundException | SubscriptionRetrievalException | BotStorageException
      */
-    public function update(string $name, string $password): ?SubscriptionResult
+    public function update(string $name, string $password): ?BotResult
     {
         $bot = $this->botFinder->find(new Username($name), $password);
         $updatedSubscription = $this->botSubscriptionRetriever->get($bot);
@@ -38,6 +39,6 @@ final class UpdateBotSubscriptionUseCase
         $bot->subscribe($updatedSubscription);
         $this->botRepository->save($bot);
 
-        return new SubscriptionResult($updatedSubscription);
+        return new BotResult($bot);
     }
 }

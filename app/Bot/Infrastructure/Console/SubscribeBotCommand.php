@@ -34,11 +34,13 @@ final class SubscribeBotCommand extends Command
     public function handle(SubscribeBotUseCase $subscribeBot): void
     {
         $subscribeBotResult = $subscribeBot->subscribe(
-            $this->argument('name'),
+            $name = $this->argument('name'),
             $this->argument('password'),
         );
 
-        $this->output->success('Bot subscribed successfully');
+        $this->output->success(
+            sprintf('Bot <%s> subscribed successfully', $name)
+        );
         $this->output->write(json_encode($subscribeBotResult, JSON_PRETTY_PRINT));
     }
 }

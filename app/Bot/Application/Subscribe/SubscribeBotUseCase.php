@@ -2,6 +2,7 @@
 
 namespace olml89\XenforoBots\Bot\Application\Subscribe;
 
+use olml89\XenforoBots\Bot\Application\BotResult;
 use olml89\XenforoBots\Bot\Application\SubscriptionResult;
 use olml89\XenforoBots\Bot\Domain\BotFinder;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
@@ -24,12 +25,12 @@ final class SubscribeBotUseCase
      * @throws InvalidUsernameException
      * @throws BotNotFoundException | SubscriptionCreationException | BotStorageException
      */
-    public function subscribe(string $name, string $password): SubscriptionResult
+    public function subscribe(string $name, string $password): BotResult
     {
         $bot = $this->botFinder->find(new Username($name), $password);
-        $subscription = $this->botSubscriber->subscribe($bot, $password);
+        $this->botSubscriber->subscribe($bot, $password);
         $this->botRepository->save($bot);
 
-        return new SubscriptionResult($subscription);
+        return new BotResult($bot);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace olml89\XenforoBots\Bot\Application\ShowSubscription;
 
+use olml89\XenforoBots\Bot\Application\BotResult;
 use olml89\XenforoBots\Bot\Application\SubscriptionResult;
 use olml89\XenforoBots\Bot\Domain\BotFinder;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
@@ -18,7 +19,7 @@ final class ShowBotSubscriptionUseCase
      * @throws InvalidUsernameException
      * @throws BotNotFoundException
      */
-    public function retrieve(string $name, string $password): ?SubscriptionResult
+    public function retrieve(string $name, string $password): ?BotResult
     {
         $bot = $this->botFinder->find(new Username($name), $password);
 
@@ -26,7 +27,7 @@ final class ShowBotSubscriptionUseCase
             return null;
         }
 
-        return new SubscriptionResult($bot->subscription());
+        return new BotResult($bot);
     }
 
 }
