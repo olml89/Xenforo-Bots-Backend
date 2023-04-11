@@ -204,6 +204,7 @@ return [
         \olml89\XenforoBots\Common\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
         \olml89\XenforoBots\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider::class,
         \olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider::class,
+        \olml89\XenforoBots\Bot\Infrastructure\BotAuthenticator\XenforoBotAuthenticatorServiceProvider::class,
         \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionCreator\XenforoSubscriptionCreatorServiceProvider::class,
         \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRetriever\XenforoSubscriptionRetrieverServiceProvider::class,
         \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRemover\XenforoSubscriptionRemoverServiceProvider::class,

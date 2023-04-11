@@ -14,4 +14,11 @@ final class BotCreationException extends Exception
             previous: $previous,
         );
     }
+
+    public static function alreadyExists(Username $username): self
+    {
+        return new self(
+            sprintf('Bot <%s> already exists', $username)
+        );
+    }
 }

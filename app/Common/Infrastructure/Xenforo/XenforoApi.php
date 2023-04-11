@@ -5,6 +5,7 @@ namespace olml89\XenforoBots\Common\Infrastructure\Xenforo;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBots\Common\Infrastructure\Xenforo\Auth\RequestData as AuthRequestData;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\Post\ResponseData as PostResponseData;
 use olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
@@ -22,6 +23,27 @@ final class XenforoApi
     public function apiUrl(): Url
     {
         return $this->apiConsumer->apiUrl();
+    }
+
+    /**
+     * @throws XenforoApiException
+     */
+    public function postAuth(AuthRequestData $authRequestData): UserResponseData
+    {
+        try {
+            $response = $this->apiConsumer->post(
+                endpoint: '/auth',
+                data: $authRequestData,
+            );
+
+            return UserResponseData::fromResponse($response);
+        }
+        catch (RequestException $e) {
+            throw XenforoApiException::fromResponse($e->getResponse());
+        }
+        catch (GuzzleException $e) {
+            throw XenforoApiException::fromGuzzleException($e);
+        }
     }
 
     /**

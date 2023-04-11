@@ -11,6 +11,11 @@ final class BotFinder
         private readonly Hasher $hasher,
     ) {}
 
+    public function exists(Username $name): bool
+    {
+        return !is_null($this->botRepository->getByName($name));
+    }
+
     /**
      * @throws BotNotFoundException
      */
