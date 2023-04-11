@@ -31,12 +31,8 @@ final class XenforoSubscriptionCreator implements SubscriptionCreator
     /**
      * @throws SubscriptionCreationException
      */
-    public function subscribe(Bot $bot, string $password): Subscription
+    public function create(Bot $bot, string $password): Subscription
     {
-        if ($bot->isSubscribed()) {
-            throw SubscriptionCreationException::alreadySubscribed($bot);
-        }
-
         try {
             $subscriptionRequestData = new SubscriptionRequestData(
                 user_id: $bot->userId()->toInt(),
@@ -45,15 +41,12 @@ final class XenforoSubscriptionCreator implements SubscriptionCreator
             );
             $createSubscriptionResponseData = $this->xenforoApi->postSubscription($subscriptionRequestData);
 
-            $subscription = new Subscription(
+            return new Subscription(
                 id: new Uuid($createSubscriptionResponseData->id, $this->uuidManager),
                 bot: $bot,
                 xenforoUrl: $this->xenforoApi->apiUrl(),
                 subscribedAt: UnixTimestamp::toDateTimeImmutable($createSubscriptionResponseData->subscribed_at),
             );
-            $bot->subscribe($subscription);
-
-            return $subscription;
         }
         catch (XenforoApiException|ValueObjectException $e) {
             throw new SubscriptionCreationException($e->getMessage(), $e);

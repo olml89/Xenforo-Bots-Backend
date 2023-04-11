@@ -3,7 +3,6 @@
 namespace olml89\XenforoBots\Bot\Application\UpdateSubscription;
 
 use olml89\XenforoBots\Bot\Application\BotResult;
-use olml89\XenforoBots\Bot\Application\SubscriptionResult;
 use olml89\XenforoBots\Bot\Domain\BotFinder;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBots\Bot\Domain\BotRepository;

@@ -3,7 +3,6 @@
 namespace olml89\XenforoBots\Bot\Application\Subscribe;
 
 use olml89\XenforoBots\Bot\Application\BotResult;
-use olml89\XenforoBots\Bot\Application\SubscriptionResult;
 use olml89\XenforoBots\Bot\Domain\BotFinder;
 use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBots\Bot\Domain\BotRepository;
@@ -17,7 +16,7 @@ final class SubscribeBotUseCase
 {
     public function __construct(
         private readonly BotFinder $botFinder,
-        private readonly SubscriptionCreator $botSubscriber,
+        private readonly SubscriptionCreator $botSubscriptionCreator,
         private readonly BotRepository $botRepository,
     ) {}
 
@@ -28,7 +27,13 @@ final class SubscribeBotUseCase
     public function subscribe(string $name, string $password): BotResult
     {
         $bot = $this->botFinder->find(new Username($name), $password);
-        $this->botSubscriber->subscribe($bot, $password);
+
+        if ($bot->isSubscribed()) {
+            throw SubscriptionCreationException::alreadySubscribed($bot);
+        }
+
+        $subscription = $this->botSubscriptionCreator->create($bot, $password);
+        $bot->subscribe($subscription);
         $this->botRepository->save($bot);
 
         return new BotResult($bot);

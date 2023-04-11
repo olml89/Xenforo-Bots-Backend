@@ -9,5 +9,5 @@ interface SubscriptionCreator
     /**
      * @throws SubscriptionCreationException
      */
-    public function subscribe(Bot $bot, string $password): Subscription;
+    public function create(Bot $bot, string $password): Subscription;
 }

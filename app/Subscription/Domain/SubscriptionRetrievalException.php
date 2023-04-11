@@ -3,7 +3,6 @@
 namespace olml89\XenforoBots\Subscription\Domain;
 
 use Exception;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
 use Throwable;
 
 final class SubscriptionRetrievalException extends Exception

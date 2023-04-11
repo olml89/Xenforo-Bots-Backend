@@ -26,10 +26,6 @@ final class XenforoSubscriptionRemover implements SubscriptionRemover
      */
     public function remove(Bot $bot): void
     {
-        if (!$bot->isSubscribed()) {
-            throw SubscriptionRemovalException::notSubscribed($bot);
-        }
-
         try {
             $this->xenforoApi->deleteSubscription(
                 user_id: $bot->userId()->toInt(),

@@ -26,6 +26,11 @@ final class CancelBotSubscriptionUseCase
     public function cancel(string $name, string $password): void
     {
         $bot = $this->botFinder->find(new Username($name), $password);
+
+        if (!$bot->isSubscribed()) {
+            throw SubscriptionRemovalException::notSubscribed($bot);
+        }
+        
         $this->subscriptionRemover->remove($bot);
         $bot->cancelSubscription();
         $this->botRepository->save($bot);
