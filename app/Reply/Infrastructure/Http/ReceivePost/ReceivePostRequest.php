@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Infrastructure\Http\ProcessPost;
+namespace olml89\XenforoBots\Reply\Infrastructure\Http\ReceivePost;
 
 use Illuminate\Foundation\Http\FormRequest;
 use olml89\XenforoBots\Reply\Application\Create\Post\PostData;
 
-final class ProcessPostRequest extends FormRequest
+final class ReceivePostRequest extends FormRequest
 {
     public function authorize(): bool
     {

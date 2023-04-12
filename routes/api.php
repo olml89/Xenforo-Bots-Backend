@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use olml89\XenforoBots\Reply\Infrastructure\Http\ProcessPost\ProcessPostController;
+use olml89\XenforoBots\Reply\Infrastructure\Http\ReceivePost\ReceivePostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,4 +14,4 @@ use olml89\XenforoBots\Reply\Infrastructure\Http\ProcessPost\ProcessPostControll
 |
 */
 
-Route::post('/posts', ProcessPostController::class);
+Route::post('/posts', ReceivePostController::class);
