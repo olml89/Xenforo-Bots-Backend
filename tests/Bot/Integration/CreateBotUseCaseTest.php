@@ -72,9 +72,10 @@ final class CreateBotUseCaseTest extends TestCase
         $createBotResult = $createBotUseCase->create((string)$bot->name(), $password);
 
         $this->assertEquals((string)$bot->id(), $createBotResult->id);
-        $this->assertEquals($bot->userId()->toInt(), $createBotResult->userId);
+        $this->assertEquals($bot->userId()->toInt(), $createBotResult->user_id);
         $this->assertEquals((string)$bot->name(), $createBotResult->name);
-        $this->assertEquals($bot->registeredAt()->format('c'), $createBotResult->registeredAt);
+        $this->assertEquals($bot->registeredAt()->format('c'), $createBotResult->registered_at);
+        $this->assertEquals(null, $createBotResult->subscription);
         $this->assertDatabaseCount('bots', 1);
         $this->assertDatabaseHas('bots', ['id' => (string)$bot->id()]);
     }

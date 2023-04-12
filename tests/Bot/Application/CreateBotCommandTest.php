@@ -17,7 +17,11 @@ final class CreateBotCommandTest extends TestCase
     use PreparesDatabase;
     use InteractsWithXenforoApi;
 
-    private const CREATED_USER_OUTPUT_FORMAT = '"userId": %s,'."\n".'    "name": "%s",'."\n".'    "registeredAt": "%s"';
+    private const CREATED_USER_OUTPUT_FORMAT =
+        '"user_id": %s,'
+        ."\n".'    "name": "%s",'
+        ."\n".'    "registered_at": "%s",'
+        ."\n".'    "subscription": null';
     private const REGISTERED_AT_OUTPUT_FORMAT = 'c';
     private const REGISTERED_AT_DATABASE_FORMAT = 'Y-m-d H:i:s';
 
@@ -84,7 +88,9 @@ final class CreateBotCommandTest extends TestCase
         $this
             ->artisan(sprintf('bot:create %s %s', $name, $password))
             ->assertSuccessful()
-            ->expectsOutputToContain('Bot created successfully')
+            ->expectsOutputToContain(
+                sprintf('Bot <%s> created successfully', $name)
+            )
             ->expectsOutputToContain(
                 sprintf(
                     self::CREATED_USER_OUTPUT_FORMAT,
@@ -102,6 +108,7 @@ final class CreateBotCommandTest extends TestCase
             'name' => $name,
             'registered_at' => UnixTimestamp::toDateTimeImmutable($register_date_timestamp)
                 ->format(self::REGISTERED_AT_DATABASE_FORMAT),
+            'subscription_id' => null,
         ]);
 
         $this->assertTrue(
