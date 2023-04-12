@@ -18,7 +18,7 @@ final class PublishReplyUseCase
     /**
      * @throws ReplyPublicationException | ReplyStorageException
      */
-    public function send(): ?ReplyResult
+    public function publish(): ?ReplyResult
     {
         $reply = $this->replyRepository->getNextDeliverable();
 

@@ -9,7 +9,9 @@ use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
 
 final class Reply
 {
-    private readonly DateTimeImmutable $repliedAt;
+    private ?string $response;
+    private readonly DateTimeImmutable $createdAt;
+    private ?DateTimeImmutable $processedAt;
     private ?DateTimeImmutable $publishedAt;
 
     public function __construct(
@@ -17,10 +19,11 @@ final class Reply
         private readonly ContentType $type,
         private readonly AutoId $contentId,
         private readonly AutoId $containerId,
-        private readonly string $response,
+        private readonly string $content,
         private readonly Bot $bot,
     ) {
-        $this->repliedAt = new DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
+        $this->processedAt = null;
         $this->publishedAt = null;
     }
 
@@ -44,9 +47,22 @@ final class Reply
         return $this->containerId;
     }
 
-    public function getResponse(): string
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function getResponse(): ?string
     {
         return $this->response;
+    }
+
+    public function process(string $response): self
+    {
+        $this->response = $response;
+        $this->processedAt = new DateTimeImmutable();
+
+        return $this;
     }
 
     public function bot(): Bot
@@ -54,9 +70,19 @@ final class Reply
         return $this->bot;
     }
 
-    public function repliedAt(): DateTimeImmutable
+    public function createdAt(): DateTimeImmutable
     {
-        return $this->repliedAt;
+        return $this->createdAt;
+    }
+
+    public function isProcessed(): bool
+    {
+        return !is_null($this->processedAt);
+    }
+
+    public function processedAt(): ?DateTimeImmutable
+    {
+        return $this->processedAt;
     }
 
     public function isPublished(): bool

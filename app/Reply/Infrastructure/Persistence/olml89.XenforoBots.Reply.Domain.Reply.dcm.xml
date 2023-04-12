@@ -50,15 +50,29 @@
         </field>
 
         <field
-            name="response"
-            column="response"
+            name="content"
+            column="content"
             type="text"
         />
 
         <field
-            name="repliedAt"
-            column="replied_at"
+            name="response"
+            column="response"
+            type="text"
+            nullable="true"
+        />
+
+        <field
+            name="createdAt"
+            column="created_at"
             type="datetime_immutable"
+        />
+
+        <field
+            name="processedAt"
+            column="processed_at"
+            type="datetime_immutable"
+            nullable="true"
         />
 
         <field

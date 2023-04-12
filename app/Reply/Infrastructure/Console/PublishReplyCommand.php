@@ -22,13 +22,13 @@ final class PublishReplyCommand extends Command
      * @var string
      */
     protected $description = 'Publishes the next publishable Reply';
-    
+
     /**
      * @throws ReplyPublicationException | ReplyStorageException
      */
     public function handle(PublishReplyUseCase $publishReply): void
     {
-        $publishReplyResult = $publishReply->send();
+        $publishReplyResult = $publishReply->publish();
 
         $outputMessage = is_null($publishReplyResult)
             ? 'No replies to publish'

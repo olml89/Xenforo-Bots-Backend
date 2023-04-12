@@ -26,14 +26,12 @@ final class CreateRepliesFromPostUseCase
         $subscribedBots = $this->botRepository->allSubscribed();
 
         foreach($subscribedBots as $bot) {
-            $response = $bot->reply($postData->message);
-
             $reply = new Reply(
                 id: $this->uuidManager->random(),
                 type: ContentType::POST,
                 contentId: new AutoId($postData->post_id),
                 containerId: new AutoId($postData->thread_id),
-                response: $response,
+                content: $postData->message,
                 bot: $bot,
             );
 

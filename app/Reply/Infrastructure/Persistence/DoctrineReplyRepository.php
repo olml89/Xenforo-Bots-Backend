@@ -48,9 +48,15 @@ final class DoctrineReplyRepository extends EntityRepository implements ReplyRep
                 $this
                     ->getEntityManager()
                     ->getExpressionBuilder()
+                    ->isNotNull('a.processedAt')
+            )
+            ->andWhere(
+                $this
+                    ->getEntityManager()
+                    ->getExpressionBuilder()
                     ->isNull('a.publishedAt')
             )
-            ->orderBy('a.repliedAt', Criteria::ASC)
+            ->orderBy('a.processedAt', Criteria::ASC)
             ->getQuery()
             ->getResult();
 
