@@ -6,7 +6,7 @@ trait PreparesDatabase
 {
     public function migrate(): void
     {
-        $this->artisan('doctrine:migrations:migrate');
+        $this->artisan('doctrine:migrations:migrate', ['--no-interaction' => true]);
     }
 
     public function resetMigrations(): void
