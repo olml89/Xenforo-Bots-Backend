@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Application;
+namespace olml89\XenforoBotsBackend\Reply\Application;
 
-use olml89\XenforoBots\Reply\Domain\Reply;
-use olml89\XenforoBots\Bot\Application\BotResult;
+use olml89\XenforoBotsBackend\Reply\Domain\Reply;
+use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 
 final class ReplyResult
 {

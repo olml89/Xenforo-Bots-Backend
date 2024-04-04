@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonSerializable;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use Psr\Http\Message\ResponseInterface;
 
 final class ApiConsumer

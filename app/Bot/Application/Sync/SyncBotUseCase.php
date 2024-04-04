@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Application\Sync;
+namespace olml89\XenforoBotsBackend\Bot\Application\Sync;
 
-use olml89\XenforoBots\Bot\Application\BotResult;
-use olml89\XenforoBots\Bot\Domain\BotAuthenticator;
-use olml89\XenforoBots\Bot\Domain\BotCreationException;
-use olml89\XenforoBots\Bot\Domain\BotFinder;
-use olml89\XenforoBots\Bot\Domain\BotRepository;
-use olml89\XenforoBots\Bot\Domain\BotStorageException;
-use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBots\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Bot\Application\BotResult;
+use olml89\XenforoBotsBackend\Bot\Domain\BotAuthenticator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
 
 final class SyncBotUseCase
 {

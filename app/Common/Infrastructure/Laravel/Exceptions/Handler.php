@@ -1,6 +1,6 @@
 <?php
 
-namespace olml89\XenforoBots\Common\Infrastructure\Laravel\Exceptions;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace olml89\XenforoBots\Common\Infrastructure\Laravel\Providers;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers;
 
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\ServiceProvider;

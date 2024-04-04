@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Domain;
+namespace olml89\XenforoBotsBackend\Subscription\Domain;
 
 use Exception;
 use Throwable;

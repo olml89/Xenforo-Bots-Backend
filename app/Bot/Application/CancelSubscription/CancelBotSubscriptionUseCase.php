@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Application\CancelSubscription;
+namespace olml89\XenforoBotsBackend\Bot\Application\CancelSubscription;
 
-use olml89\XenforoBots\Bot\Domain\BotFinder;
-use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
-use olml89\XenforoBots\Bot\Domain\BotRepository;
-use olml89\XenforoBots\Bot\Domain\BotStorageException;
-use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBots\Bot\Domain\Username;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRemovalException;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRemover;
+use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
+use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRemovalException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRemover;
 
 final class CancelBotSubscriptionUseCase
 {
@@ -30,7 +30,7 @@ final class CancelBotSubscriptionUseCase
         if (!$bot->isSubscribed()) {
             throw SubscriptionRemovalException::notSubscribed($bot);
         }
-        
+
         $this->subscriptionRemover->remove($bot);
         $bot->cancelSubscription();
         $this->botRepository->save($bot);

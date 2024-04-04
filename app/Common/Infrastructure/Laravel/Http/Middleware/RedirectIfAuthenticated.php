@@ -1,11 +1,11 @@
 <?php
 
-namespace olml89\XenforoBots\Common\Infrastructure\Laravel\Http\Middleware;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\RouteServiceProvider;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\RouteServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated

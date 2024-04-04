@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo;
 
 use Illuminate\Config\Repository as Config;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\UrlValidator;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\UrlValidator;
 
 final class XenforoApiFactory
 {

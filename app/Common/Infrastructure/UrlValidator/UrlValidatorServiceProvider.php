@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\UrlValidator;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\UrlValidator;
 
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\UrlValidator;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\UrlValidator;
 
 final class UrlValidatorServiceProvider extends ServiceProvider
 {

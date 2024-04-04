@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Domain\ValueObjects\Uuid;
+namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid;
 
-use olml89\XenforoBots\Common\Domain\ValueObjects\StringValueObject;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\StringValueObject;
 
 final class Uuid extends StringValueObject
 {

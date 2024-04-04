@@ -3,7 +3,7 @@
 namespace Database\Factories\ValueObjects;
 
 use Faker\Generator as Faker;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use ReflectionClass;
 use ReflectionException;
 

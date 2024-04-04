@@ -185,30 +185,30 @@ return [
         /*
          * Package Service Providers...
          */
-        \olml89\XenforoBots\Common\Infrastructure\Doctrine\DoctrineServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DoctrineServiceProvider::class,
 
         /*
          * Default Application Service Providers...
          */
-        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\AppServiceProvider::class,
-        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\AuthServiceProvider::class,
-        // olml89\XenforoBots\Providers\BroadcastServiceProvider::class,
-        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\EventServiceProvider::class,
-        \olml89\XenforoBots\Common\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\AppServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\AuthServiceProvider::class,
+        // olml89\XenforoBotsBackend\Providers\BroadcastServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\EventServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
 
         /*
         * Application Service Providers...
         */
-        \olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiServiceProvider::class,
-        \olml89\XenforoBots\Common\Infrastructure\Hasher\HasherServiceProvider::class,
-        \olml89\XenforoBots\Common\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
-        \olml89\XenforoBots\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider::class,
-        \olml89\XenforoBots\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider::class,
-        \olml89\XenforoBots\Bot\Infrastructure\BotAuthenticator\XenforoBotAuthenticatorServiceProvider::class,
-        \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionCreator\XenforoSubscriptionCreatorServiceProvider::class,
-        \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRetriever\XenforoSubscriptionRetrieverServiceProvider::class,
-        \olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRemover\XenforoSubscriptionRemoverServiceProvider::class,
-        \olml89\XenforoBots\Reply\Infrastructure\ReplyPublisher\ReplyPublisherServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\Hasher\HasherServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\UuidManager\UuidManagerServiceProvider::class,
+        \olml89\XenforoBotsBackend\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider::class,
+        \olml89\XenforoBotsBackend\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider::class,
+        \olml89\XenforoBotsBackend\Bot\Infrastructure\BotAuthenticator\XenforoBotAuthenticatorServiceProvider::class,
+        \olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionCreator\XenforoSubscriptionCreatorServiceProvider::class,
+        \olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRetriever\XenforoSubscriptionRetrieverServiceProvider::class,
+        \olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRemover\XenforoSubscriptionRemoverServiceProvider::class,
+        \olml89\XenforoBotsBackend\Reply\Infrastructure\ReplyPublisher\ReplyPublisherServiceProvider::class,
 
     ],
 
@@ -224,7 +224,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => olml89\XenforoBots\Example\ExampleClass::class,
+        // 'ExampleClass' => olml89\XenforoBotsBackend\Example\ExampleClass::class,
     ])->toArray(),
 
 ];

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\Auth;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Auth;
 
-use olml89\XenforoBots\Common\Domain\JsonSerializable;
+use olml89\XenforoBotsBackend\Common\Domain\JsonSerializable;
 
 final class RequestData extends JsonSerializable
 {

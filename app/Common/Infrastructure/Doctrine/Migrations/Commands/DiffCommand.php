@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands;
 
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Generator\Exception\NoChangesDetected;

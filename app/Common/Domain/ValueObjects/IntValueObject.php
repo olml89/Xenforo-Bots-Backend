@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Domain\ValueObjects;
+namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects;
 
 abstract class IntValueObject
 {

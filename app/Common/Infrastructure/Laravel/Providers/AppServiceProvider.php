@@ -1,12 +1,12 @@
 <?php
 
-namespace olml89\XenforoBots\Common\Infrastructure\Laravel\Providers;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers;
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\UrlValidator;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\UrlValidator;
 
 class AppServiceProvider extends ServiceProvider
 {

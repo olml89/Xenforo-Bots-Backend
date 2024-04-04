@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Application;
+namespace olml89\XenforoBotsBackend\Bot\Application;
 
-use olml89\XenforoBots\Common\Domain\JsonSerializable;
-use olml89\XenforoBots\Subscription\Domain\Subscription;
+use olml89\XenforoBotsBackend\Common\Domain\JsonSerializable;
+use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
 final class SubscriptionResult extends JsonSerializable
 {

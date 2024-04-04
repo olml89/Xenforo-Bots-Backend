@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Hasher;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Hasher;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Hashing\HashManager;
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher as HasherContract;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher as HasherContract;
 
 final class HasherServiceProvider extends ServiceProvider
 {

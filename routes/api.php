@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use olml89\XenforoBots\Reply\Infrastructure\Http\ReceivePost\ReceivePostController;
+use olml89\XenforoBotsBackend\Reply\Infrastructure\Http\ReceivePost\ReceivePostController;
 
 /*
 |--------------------------------------------------------------------------

@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Auth\RequestData as AuthRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Post\ResponseData as PostResponseData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\ResponseData as SubscriptionResponseData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\RequestData as UserRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\ResponseData as UserResponseData;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Auth\RequestData as AuthRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Post\ResponseData as PostResponseData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Subscription\ResponseData as SubscriptionResponseData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\User\RequestData as UserRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\User\ResponseData as UserResponseData;
 use Symfony\Component\HttpFoundation\Response;
 
 final class XenforoApi

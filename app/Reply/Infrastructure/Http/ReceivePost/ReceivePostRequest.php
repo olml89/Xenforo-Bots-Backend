@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Infrastructure\Http\ReceivePost;
+namespace olml89\XenforoBotsBackend\Reply\Infrastructure\Http\ReceivePost;
 
 use Illuminate\Foundation\Http\FormRequest;
-use olml89\XenforoBots\Reply\Application\Create\Post\PostData;
+use olml89\XenforoBotsBackend\Reply\Application\Create\Post\PostData;
 
 final class ReceivePostRequest extends FormRequest
 {

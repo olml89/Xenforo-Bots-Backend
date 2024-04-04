@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\UuidManager;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\UuidManager;
 
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager as UuidManagerContract;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager as UuidManagerContract;
 use Ramsey\Uuid\UuidFactory;
 
 final class RamseyUuidManager implements UuidManagerContract

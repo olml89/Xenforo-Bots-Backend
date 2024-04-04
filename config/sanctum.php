@@ -60,8 +60,8 @@ return [
     */
 
     'middleware' => [
-        'verify_csrf_token' => \olml89\XenforoBots\Common\Infrastructure\Laravel\Http\Middleware\VerifyCsrfToken::class,
-        'encrypt_cookies' => \olml89\XenforoBots\Common\Infrastructure\Laravel\Http\Middleware\EncryptCookies::class,
+        'verify_csrf_token' => \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Http\Middleware\VerifyCsrfToken::class,
+        'encrypt_cookies' => \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Http\Middleware\EncryptCookies::class,
     ],
 
 ];

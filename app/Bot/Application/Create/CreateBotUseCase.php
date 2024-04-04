@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Application\Create;
+namespace olml89\XenforoBotsBackend\Bot\Application\Create;
 
-use olml89\XenforoBots\Bot\Application\BotResult;
-use olml89\XenforoBots\Bot\Domain\BotCreationException;
-use olml89\XenforoBots\Bot\Domain\BotCreator;
-use olml89\XenforoBots\Bot\Domain\BotRepository;
-use olml89\XenforoBots\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Application\BotResult;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 
 final class CreateBotUseCase
 {

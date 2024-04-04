@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Infrastructure\Persistence;
+namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Persistence;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Bot\Domain\BotRepository;
-use olml89\XenforoBots\Bot\Domain\BotStorageException;
-use olml89\XenforoBots\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
 
 final class DoctrineBotRepository extends EntityRepository implements BotRepository
 {

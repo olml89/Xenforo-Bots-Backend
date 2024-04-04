@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRetriever;
+namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRetriever;
 
 use Illuminate\Foundation\Application;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager;
-use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiException;
-use olml89\XenforoBots\Subscription\Domain\Subscription;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRetrievalException;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRetriever;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
+use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetrievalException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetriever;
 
 final class XenforoSubscriptionRetriever implements SubscriptionRetriever
 {

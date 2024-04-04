@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Infrastructure\Console;
+namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 
 use Illuminate\Console\Command;
-use olml89\XenforoBots\Bot\Application\Subscribe\SubscribeBotUseCase;
-use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
-use olml89\XenforoBots\Bot\Domain\BotStorageException;
-use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionCreationException;
+use olml89\XenforoBotsBackend\Bot\Application\Subscribe\SubscribeBotUseCase;
+use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreationException;
 
 final class SubscribeBotCommand extends Command
 {

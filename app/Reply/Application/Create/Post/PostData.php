@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Application\Create\Post;
+namespace olml89\XenforoBotsBackend\Reply\Application\Create\Post;
 
 final class PostData
 {

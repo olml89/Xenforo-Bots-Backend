@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Doctrine\Types;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
-use olml89\XenforoBots\Bot\Domain\Username;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use ReflectionClass;
 use ReflectionException;
 

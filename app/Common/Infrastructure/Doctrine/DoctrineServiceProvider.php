@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Doctrine;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;

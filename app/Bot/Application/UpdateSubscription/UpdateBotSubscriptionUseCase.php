@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Application\UpdateSubscription;
+namespace olml89\XenforoBotsBackend\Bot\Application\UpdateSubscription;
 
-use olml89\XenforoBots\Bot\Application\BotResult;
-use olml89\XenforoBots\Bot\Domain\BotFinder;
-use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
-use olml89\XenforoBots\Bot\Domain\BotRepository;
-use olml89\XenforoBots\Bot\Domain\BotStorageException;
-use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBots\Bot\Domain\Username;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRetrievalException;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRetriever;
+use olml89\XenforoBotsBackend\Bot\Application\BotResult;
+use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
+use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetrievalException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetriever;
 
 final class UpdateBotSubscriptionUseCase
 {

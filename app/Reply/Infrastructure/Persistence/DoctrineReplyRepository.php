@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Infrastructure\Persistence;
+namespace olml89\XenforoBotsBackend\Reply\Infrastructure\Persistence;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use olml89\XenforoBots\Reply\Domain\Reply;
-use olml89\XenforoBots\Reply\Domain\ReplyRepository;
-use olml89\XenforoBots\Reply\Domain\ReplyStorageException;
+use olml89\XenforoBotsBackend\Reply\Domain\Reply;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyRepository;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyStorageException;
 
 final class DoctrineReplyRepository extends EntityRepository implements ReplyRepository
 {

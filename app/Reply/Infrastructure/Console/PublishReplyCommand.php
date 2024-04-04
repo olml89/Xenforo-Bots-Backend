@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Infrastructure\Console;
+namespace olml89\XenforoBotsBackend\Reply\Infrastructure\Console;
 
 use Illuminate\Console\Command;
-use olml89\XenforoBots\Reply\Application\Publish\PublishReplyUseCase;
-use olml89\XenforoBots\Reply\Domain\ReplyPublicationException;
-use olml89\XenforoBots\Reply\Domain\ReplyStorageException;
+use olml89\XenforoBotsBackend\Reply\Application\Publish\PublishReplyUseCase;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyPublicationException;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyStorageException;
 
 final class PublishReplyCommand extends Command
 {

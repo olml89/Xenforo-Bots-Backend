@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRemover;
+namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRemover;
 
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRemover;
-use olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRemover\XenforoSubscriptionRemover;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRemover;
+use olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRemover\XenforoSubscriptionRemover;
 
 final class XenforoSubscriptionRemoverServiceProvider extends ServiceProvider
 {

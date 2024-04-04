@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Doctrine\Types;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use ReflectionClass;
 use ReflectionException;
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Domain\ValueObjects\Uuid;
+namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid;
 
 interface UuidManager
 {

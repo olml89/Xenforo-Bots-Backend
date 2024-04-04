@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Domain\ValueObjects\AutoId;
+namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId;
 
-use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 
 final class InvalidAutoIdException extends ValueObjectException
 {

@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-use olml89\XenforoBots\Reply\Domain\ReplyRepository;
-use olml89\XenforoBots\Reply\Infrastructure\Persistence\DoctrineReplyRepository;
-use olml89\XenforoBots\Bot\Domain\BotRepository;
-use olml89\XenforoBots\Bot\Infrastructure\Persistence\DoctrineBotRepository;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\ExecuteCommand;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\MigrateCommand;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Migrations\Commands\ResetCommand;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\AutoIdType;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\PasswordType;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UrlType;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UsernameType;
-use olml89\XenforoBots\Common\Infrastructure\Doctrine\Types\UuidType;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyRepository;
+use olml89\XenforoBotsBackend\Reply\Infrastructure\Persistence\DoctrineReplyRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Persistence\DoctrineBotRepository;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\ExecuteCommand;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\MigrateCommand;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\ResetCommand;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\AutoIdType;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\PasswordType;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\UrlType;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\UsernameType;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\UuidType;
 
 return [
 

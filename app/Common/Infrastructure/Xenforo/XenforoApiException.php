@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;

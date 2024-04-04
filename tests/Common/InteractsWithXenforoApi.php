@@ -5,9 +5,9 @@ namespace Tests\Common;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiConsumer;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiFactory;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\ApiConsumer;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiFactory;
 use Psr\Http\Message\ResponseInterface;
 
 trait InteractsWithXenforoApi

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Domain\ValueObjects\Url;
+namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url;
 
-use olml89\XenforoBots\Common\Domain\ValueObjects\StringValueObject;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\StringValueObject;
 
 final class Url extends StringValueObject
 {

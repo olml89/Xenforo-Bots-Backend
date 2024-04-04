@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Domain;
+namespace olml89\XenforoBotsBackend\Subscription\Domain;
 
 use DateTimeImmutable;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
 final class Subscription
 {

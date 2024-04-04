@@ -4,7 +4,7 @@
                   xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="olml89\XenforoBots\Bot\Domain\Bot" table="bots">
+    <entity name="olml89\XenforoBotsBackend\Bot\Domain\Bot" table="bots">
 
         <indexes>
             <index
@@ -53,7 +53,7 @@
 
         <one-to-one
             field="subscription"
-            target-entity="olml89\XenforoBots\Subscription\Domain\Subscription"
+            target-entity="olml89\XenforoBotsBackend\Subscription\Domain\Subscription"
             fetch="EAGER"
             orphan-removal="true"
         >

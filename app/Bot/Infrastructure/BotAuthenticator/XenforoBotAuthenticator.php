@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Infrastructure\BotAuthenticator;
+namespace olml89\XenforoBotsBackend\Bot\Infrastructure\BotAuthenticator;
 
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Bot\Domain\BotAuthenticator;
-use olml89\XenforoBots\Bot\Domain\BotCreationException;
-use olml89\XenforoBots\Bot\Domain\Username;
-use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Password;
-use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager;
-use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Auth\RequestData as AuthRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiException;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\BotAuthenticator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId\AutoId;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Password;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Auth\RequestData as AuthRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
 
 final class XenforoBotAuthenticator implements BotAuthenticator
 {

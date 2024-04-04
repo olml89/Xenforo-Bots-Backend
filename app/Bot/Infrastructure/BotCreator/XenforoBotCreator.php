@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Infrastructure\BotCreator;
+namespace olml89\XenforoBotsBackend\Bot\Infrastructure\BotCreator;
 
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Bot\Domain\BotCreationException;
-use olml89\XenforoBots\Bot\Domain\BotCreator;
-use olml89\XenforoBots\Bot\Domain\Username;
-use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Password;
-use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
-use olml89\XenforoBots\Common\Infrastructure\UuidManager\RamseyUuidManager;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\User\RequestData as UserRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiException;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId\AutoId;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Password;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\UuidManager\RamseyUuidManager;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\User\RequestData as UserRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
 
 final class XenforoBotCreator implements BotCreator
 {

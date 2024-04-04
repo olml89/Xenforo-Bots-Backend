@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Domain;
+namespace olml89\XenforoBotsBackend\Bot\Domain;
 
 use DateTimeImmutable;
-use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Password;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
-use olml89\XenforoBots\Subscription\Domain\Subscription;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId\AutoId;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Password;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
 final class Bot
 {

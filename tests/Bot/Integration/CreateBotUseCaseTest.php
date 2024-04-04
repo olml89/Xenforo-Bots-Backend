@@ -5,10 +5,10 @@ namespace Tests\Bot\Integration;
 use Database\Factories\BotFactory;
 use Faker\Generator as Faker;
 use Mockery\MockInterface;
-use olml89\XenforoBots\Bot\Application\Create\CreateBotUseCase;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Bot\Domain\BotCreator;
-use olml89\XenforoBots\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Application\Create\CreateBotUseCase;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use Tests\PreparesDatabase;
 use Tests\TestCase;
 
@@ -59,8 +59,8 @@ final class CreateBotUseCaseTest extends TestCase
     /**
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \olml89\XenforoBots\Bot\Domain\BotCreationException
-     * @throws \olml89\XenforoBots\Bot\Domain\BotStorageException
+     * @throws \olml89\XenforoBotsBackend\Bot\Domain\BotCreationException
+     * @throws \olml89\XenforoBotsBackend\Bot\Domain\BotStorageException
      * @throws \ReflectionException
      */
     public function test_that_user_created_in_xenforo_is_stored_as_bot(): void

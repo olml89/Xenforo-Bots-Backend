@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Domain;
+namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
 
 final class BotFinder
 {

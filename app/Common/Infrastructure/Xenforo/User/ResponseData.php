@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Xenforo\User;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\User;
 
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\ApiResponseData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\ApiResponseData;
 use Psr\Http\Message\ResponseInterface;
 
 final class ResponseData extends ApiResponseData

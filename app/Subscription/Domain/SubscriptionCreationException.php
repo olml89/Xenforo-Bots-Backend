@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Domain;
+namespace olml89\XenforoBotsBackend\Subscription\Domain;
 
 use Exception;
-use olml89\XenforoBots\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use Throwable;
 
 final class SubscriptionCreationException extends Exception

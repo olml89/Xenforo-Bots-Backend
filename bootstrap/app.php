@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    \olml89\XenforoBots\Common\Infrastructure\Laravel\Http\Kernel::class
+    \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    \olml89\XenforoBots\Common\Infrastructure\Laravel\Console\Kernel::class
+    \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    \olml89\XenforoBots\Common\Infrastructure\Laravel\Exceptions\Handler::class
+    \olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Exceptions\Handler::class
 );
 
 /*

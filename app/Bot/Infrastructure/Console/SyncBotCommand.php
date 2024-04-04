@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Infrastructure\Console;
+namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 
 use Illuminate\Console\Command;
-use olml89\XenforoBots\Bot\Application\Sync\SyncBotUseCase;
-use olml89\XenforoBots\Bot\Domain\BotCreationException;
-use olml89\XenforoBots\Bot\Domain\BotStorageException;
-use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Application\Sync\SyncBotUseCase;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 
 class SyncBotCommand extends Command
 {

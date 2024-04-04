@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Application\Publish;
+namespace olml89\XenforoBotsBackend\Reply\Application\Publish;
 
-use olml89\XenforoBots\Reply\Application\ReplyResult;
-use olml89\XenforoBots\Reply\Domain\ReplyPublicationException;
-use olml89\XenforoBots\Reply\Domain\ReplyPublisherManager;
-use olml89\XenforoBots\Reply\Domain\ReplyRepository;
-use olml89\XenforoBots\Reply\Domain\ReplyStorageException;
+use olml89\XenforoBotsBackend\Reply\Application\ReplyResult;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyPublicationException;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyPublisherManager;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyRepository;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyStorageException;
 
 final class PublishReplyUseCase
 {

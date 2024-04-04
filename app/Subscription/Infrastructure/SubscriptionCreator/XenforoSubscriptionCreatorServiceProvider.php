@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Infrastructure\SubscriptionCreator;
+namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionCreator;
 
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionCreator;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
 
 final class XenforoSubscriptionCreatorServiceProvider extends ServiceProvider
 {

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Bot\Application\ShowSubscription;
+namespace olml89\XenforoBotsBackend\Bot\Application\ShowSubscription;
 
-use olml89\XenforoBots\Bot\Application\BotResult;
-use olml89\XenforoBots\Bot\Domain\BotFinder;
-use olml89\XenforoBots\Bot\Domain\BotNotFoundException;
-use olml89\XenforoBots\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBots\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Bot\Application\BotResult;
+use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
+use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
+use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
 
 final class ShowBotSubscriptionUseCase
 {

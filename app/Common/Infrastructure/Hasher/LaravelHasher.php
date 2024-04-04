@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\Hasher;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Hasher;
 
 use Illuminate\Contracts\Hashing\Hasher as LaravelHasherContract;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher as HasherContract;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher as HasherContract;
 
 final class LaravelHasher implements HasherContract
 {

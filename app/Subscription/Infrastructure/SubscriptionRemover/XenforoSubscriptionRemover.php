@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Infrastructure\SubscriptionRemover;
+namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRemover;
 
 use Illuminate\Foundation\Application;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiException;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRemovalException;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionRemover;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRemovalException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRemover;
 
 final class XenforoSubscriptionRemover implements SubscriptionRemover
 {

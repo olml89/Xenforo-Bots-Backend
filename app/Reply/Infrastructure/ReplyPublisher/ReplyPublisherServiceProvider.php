@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Reply\Infrastructure\ReplyPublisher;
+namespace olml89\XenforoBotsBackend\Reply\Infrastructure\ReplyPublisher;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Reply\Domain\ReplyPublisherManager;
-use olml89\XenforoBots\Reply\Domain\ContentType;
+use olml89\XenforoBotsBackend\Reply\Domain\ReplyPublisherManager;
+use olml89\XenforoBotsBackend\Reply\Domain\ContentType;
 
 final class ReplyPublisherServiceProvider extends ServiceProvider
 {

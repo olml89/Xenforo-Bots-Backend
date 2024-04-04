@@ -4,12 +4,12 @@ namespace Database\Factories;
 
 use Database\Factories\ValueObjects\UuidFactory;
 use Faker\Generator as Faker;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Bot\Domain\Username;
-use olml89\XenforoBots\Common\Domain\ValueObjects\AutoId\AutoId;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Hasher;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Password\Password;
-use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId\AutoId;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Password;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use ReflectionException;
 
 final class BotFactory

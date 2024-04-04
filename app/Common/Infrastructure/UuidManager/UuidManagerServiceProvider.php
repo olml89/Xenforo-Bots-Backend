@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Common\Infrastructure\UuidManager;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\UuidManager;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
 use Ramsey\Uuid\UuidFactory;
 
 final class UuidManagerServiceProvider extends ServiceProvider

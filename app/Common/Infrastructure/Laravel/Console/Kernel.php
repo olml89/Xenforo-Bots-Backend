@@ -1,6 +1,6 @@
 <?php
 
-namespace olml89\XenforoBots\Common\Infrastructure\Laravel\Console;
+namespace olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Console;
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Application as Artisan;

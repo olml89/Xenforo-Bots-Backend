@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBots\Subscription\Infrastructure\SubscriptionCreator;
+namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionCreator;
 
 use Illuminate\Foundation\Application;
-use olml89\XenforoBots\Bot\Domain\Bot;
-use olml89\XenforoBots\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Url\Url;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\Uuid;
-use olml89\XenforoBots\Common\Domain\ValueObjects\Uuid\UuidManager;
-use olml89\XenforoBots\Common\Domain\ValueObjects\ValueObjectException;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBots\Common\Infrastructure\Xenforo\XenforoApiException;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionCreator;
-use olml89\XenforoBots\Subscription\Domain\Subscription;
-use olml89\XenforoBots\Subscription\Domain\SubscriptionCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
+use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreationException;
 
 final class XenforoSubscriptionCreator implements SubscriptionCreator
 {
