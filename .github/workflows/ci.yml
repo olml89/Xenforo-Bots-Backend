@@ -23,6 +23,11 @@ jobs:
           mysql user: ${{ env.DB_USERNAME }}
           mysql password: ${{ env.DB_PASSWORD }}
 
+      - name: Set up PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
       - name: Install composer and dependencies
         uses: php-actions/composer@v6
 
