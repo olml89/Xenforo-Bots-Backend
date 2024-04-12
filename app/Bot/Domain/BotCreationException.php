@@ -7,18 +7,11 @@ use Throwable;
 
 final class BotCreationException extends Exception
 {
-    public function __construct(string $message, ?Throwable $previous = null)
+    public function __construct(Throwable $exception)
     {
         parent::__construct(
-            message: $message,
-            previous: $previous,
-        );
-    }
-
-    public static function alreadyExists(Username $username): self
-    {
-        return new self(
-            sprintf('Bot <%s> already exists', $username)
+            message: $exception->getMessage(),
+            previous: $exception,
         );
     }
 }

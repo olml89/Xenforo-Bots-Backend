@@ -6,11 +6,21 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 
 final class InvalidUsernameException extends ValueObjectException
 {
-    public function __construct(string $username)
+    private function __construct(string $message)
     {
-        parent::__construct(
+        parent::__construct($message);
+    }
+
+    public static function empty(): self
+    {
+        return new self('Username cannot be empty');
+    }
+
+    public static function tooLong(string $username): self
+    {
+        return new self(
             sprintf(
-                'Username has to be 50 characters length or fewer, \'%s\' provided with <%s> characters',
+                'Username cannot exceed 50 characters length,  \'%s\' provided with %s characters',
                 $username,
                 strlen($username),
             )

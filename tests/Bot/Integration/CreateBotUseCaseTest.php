@@ -59,7 +59,7 @@ final class CreateBotUseCaseTest extends TestCase
     /**
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \olml89\XenforoBotsBackend\Bot\Domain\BotCreationException
+     * @throws \olml89\XenforoBotsBackend\Bot\Domain\BotValidationException
      * @throws \olml89\XenforoBotsBackend\Bot\Domain\BotStorageException
      * @throws \ReflectionException
      */
@@ -71,9 +71,9 @@ final class CreateBotUseCaseTest extends TestCase
 
         $createBotResult = $createBotUseCase->create((string)$bot->name(), $password);
 
-        $this->assertEquals((string)$bot->id(), $createBotResult->id);
-        $this->assertEquals($bot->userId()->toInt(), $createBotResult->user_id);
-        $this->assertEquals((string)$bot->name(), $createBotResult->name);
+        $this->assertEquals((string)$bot->id(), $createBotResult->bot_id);
+        $this->assertEquals($bot->userId()->toInt(), $createBotResult->api_key);
+        $this->assertEquals((string)$bot->name(), $createBotResult->username);
         $this->assertEquals($bot->registeredAt()->format('c'), $createBotResult->registered_at);
         $this->assertEquals(null, $createBotResult->subscription);
         $this->assertDatabaseCount('bots', 1);

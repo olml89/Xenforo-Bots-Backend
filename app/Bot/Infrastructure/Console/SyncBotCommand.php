@@ -4,7 +4,7 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 
 use Illuminate\Console\Command;
 use olml89\XenforoBotsBackend\Bot\Application\Sync\SyncBotUseCase;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 
@@ -28,7 +28,7 @@ class SyncBotCommand extends Command
      * Execute the console command.
      *
      * @throws InvalidUsernameException
-     * @throws BotCreationException | BotStorageException
+     * @throws BotValidationException | BotStorageException
      */
     public function handle(SyncBotUseCase $syncBot): void
     {

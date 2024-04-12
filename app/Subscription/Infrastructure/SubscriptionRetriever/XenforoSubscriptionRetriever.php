@@ -9,8 +9,8 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
 use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetrievalException;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetriever;
@@ -46,7 +46,7 @@ final class XenforoSubscriptionRetriever implements SubscriptionRetriever
                 id: new Uuid($subscriptionResponseData->id, $this->uuidManager),
                 bot: $bot,
                 xenforoUrl: $this->xenforoApi->apiUrl(),
-                subscribedAt: UnixTimestamp::toDateTimeImmutable($subscriptionResponseData->subscribed_at),
+                subscribedAt: UnixTimestamp::fromTimestamp($subscriptionResponseData->subscribed_at),
             );
         }
         catch (XenforoApiException|ValueObjectException $e) {

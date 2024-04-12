@@ -3,6 +3,7 @@
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
 use Exception;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
 final class BotNotFoundException extends Exception
 {
@@ -11,15 +12,17 @@ final class BotNotFoundException extends Exception
         parent::__construct($message);
     }
 
-    public static function invalidName(Username $name): self
+    public static function botId(Uuid $botId): self
     {
         return new self(
-            sprintf('Bot not found with name \'%s\'', $name)
+            sprintf('Bot with botId \'%s\' not found', $botId)
         );
     }
 
-    public static function invalidPassword(): self
+    public static function username(Username $username): self
     {
-        return new self('Invalid password');
+        return new self(
+            sprintf('Bot with username \'%s\' not found', $username)
+        );
     }
 }

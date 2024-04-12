@@ -4,14 +4,7 @@ namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects;
 
 use Stringable;
 
-class StringValueObject implements Stringable
+interface StringValueObject extends Stringable
 {
-    public function __construct(
-        protected readonly string $value,
-    ) {}
-
-    public function __toString(): string
-    {
-        return $this->value;
-    }
+    public function value(): string;
 }

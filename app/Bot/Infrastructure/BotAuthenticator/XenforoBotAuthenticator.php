@@ -4,7 +4,7 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\BotAuthenticator;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAuthenticator;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId\AutoId;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
@@ -13,8 +13,8 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimes
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Auth\RequestData as AuthRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
 
 final class XenforoBotAuthenticator implements BotAuthenticator
 {
@@ -25,7 +25,7 @@ final class XenforoBotAuthenticator implements BotAuthenticator
     ) {}
 
     /**
-     * @throws BotCreationException
+     * @throws BotValidationException
      */
     public function authenticate(Username $username, string $password): Bot
     {
@@ -41,11 +41,11 @@ final class XenforoBotAuthenticator implements BotAuthenticator
                 userId: new AutoId($userResponseData->user_id),
                 name: $username,
                 password: new Password($password, $this->hasher),
-                registeredAt: UnixTimestamp::toDateTimeImmutable($userResponseData->register_date),
+                registeredAt: UnixTimestamp::fromTimestamp($userResponseData->register_date),
             );
         }
         catch (XenforoApiException|ValueObjectException $e) {
-            throw new BotCreationException($e->getMessage(), $e);
+            throw new BotValidationException($e->getMessage(), $e);
         }
     }
 }

@@ -9,12 +9,12 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
 use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreationException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
 
 final class XenforoSubscriptionCreator implements SubscriptionCreator
 {

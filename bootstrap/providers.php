@@ -3,11 +3,9 @@
 use olml89\XenforoBotsBackend\Bot\Infrastructure\BotAuthenticator\XenforoBotAuthenticatorServiceProvider;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\BotCreator\XenforoBotCreatorServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DoctrineServiceProvider;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Hasher\HasherServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\AppServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider;
-use olml89\XenforoBotsBackend\Common\Infrastructure\UuidManager\UuidManagerServiceProvider;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiServiceProvider;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiConsumerServiceProvider;
 use olml89\XenforoBotsBackend\Reply\Infrastructure\ReplyPublisher\ReplyPublisherServiceProvider;
 use olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionCreator\XenforoSubscriptionCreatorServiceProvider;
 use olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRemover\XenforoSubscriptionRemoverServiceProvider;
@@ -17,6 +15,7 @@ return [
     /*
      * Laravel Framework Service Providers...
      */
+    /*
     Illuminate\Auth\AuthServiceProvider::class,
     Illuminate\Broadcasting\BroadcastServiceProvider::class,
     Illuminate\Bus\BusServiceProvider::class,
@@ -39,11 +38,7 @@ return [
     Illuminate\Translation\TranslationServiceProvider::class,
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
-
-    /*
-     * Package Service Providers...
-     */
-    DoctrineServiceProvider::class,
+    */
 
     /*
      * Default Application Service Providers...
@@ -53,14 +48,20 @@ return [
     /*
     * Application Service Providers...
     */
-    XenforoApiServiceProvider::class,
-    HasherServiceProvider::class,
-    UuidManagerServiceProvider::class,
     UrlValidatorServiceProvider::class,
+    XenforoApiConsumerServiceProvider::class,
     XenforoBotCreatorServiceProvider::class,
+    /*
     XenforoBotAuthenticatorServiceProvider::class,
     XenforoSubscriptionCreatorServiceProvider::class,
     XenforoSubscriptionRetrieverServiceProvider::class,
     XenforoSubscriptionRemoverServiceProvider::class,
     ReplyPublisherServiceProvider::class,
+    */
+
+    /*
+     * Package Service Providers...
+     */
+    DoctrineServiceProvider::class,
+
 ];

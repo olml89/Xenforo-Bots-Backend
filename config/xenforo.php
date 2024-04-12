@@ -2,6 +2,6 @@
 
 return [
     'api_url' => env('XF_API_URL'),
-    'api_key' => env('XF_API_KEY'),
+    'super_user_api_key' => env('XF_API_KEY'),
 ];
 

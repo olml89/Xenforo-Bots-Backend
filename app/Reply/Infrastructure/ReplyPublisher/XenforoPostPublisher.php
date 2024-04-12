@@ -2,14 +2,14 @@
 
 namespace olml89\XenforoBotsBackend\Reply\Infrastructure\ReplyPublisher;
 
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
 use olml89\XenforoBotsBackend\Reply\Domain\Reply;
 use olml89\XenforoBotsBackend\Reply\Domain\ReplyPublicationException;
 use olml89\XenforoBotsBackend\Reply\Domain\ReplyPublisher;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
 
 final class XenforoPostPublisher implements ReplyPublisher
 {
@@ -34,7 +34,7 @@ final class XenforoPostPublisher implements ReplyPublisher
             );
 
             $reply->publish(
-                UnixTimestamp::toDateTimeImmutable($postResponseData->post_date)
+                UnixTimestamp::fromTimestamp($postResponseData->post_date)
             );
         }
         catch (XenforoApiException|ValueObjectException $e) {

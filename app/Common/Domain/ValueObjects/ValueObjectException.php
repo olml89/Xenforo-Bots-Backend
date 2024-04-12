@@ -2,6 +2,6 @@
 
 namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects;
 
-use DomainException;
+use Exception;
 
-abstract class ValueObjectException extends DomainException {}
+abstract class ValueObjectException extends Exception {}

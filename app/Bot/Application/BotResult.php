@@ -7,19 +7,21 @@ use olml89\XenforoBotsBackend\Common\Domain\JsonSerializable;
 
 final class BotResult extends JsonSerializable
 {
-    public readonly string $id;
-    public readonly int $user_id;
-    public readonly string $name;
+    public readonly string $bot_id;
+    public readonly string $api_key;
+    public readonly string $username;
     public readonly string $registered_at;
-    public readonly ?SubscriptionResult $subscription;
+    //public readonly ?SubscriptionResult $subscription;
 
     public function __construct(Bot $bot) {
-        $this->id = (string)$bot->id();
-        $this->user_id = $bot->userId()->toInt();
-        $this->name = (string)$bot->name();
+        $this->bot_id = (string)$bot->botId();
+        $this->api_key = (string)$bot->apiKey();
+        $this->username = (string)$bot->username();
         $this->registered_at = $bot->registeredAt()->format('c');
+        /*
         $this->subscription = $bot->isSubscribed()
             ? new SubscriptionResult($bot->subscription())
             : null;
+        */
     }
 }

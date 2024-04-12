@@ -10,7 +10,7 @@ final class InvalidUrlException extends ValueObjectException
     {
         parent::__construct(
             sprintf(
-                'Must represent a valid url, <%s> provided',
+                'Must represent a valid url, \'%s\' provided',
                 $url,
             )
         );

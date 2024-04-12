@@ -4,13 +4,15 @@ namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url;
 
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\StringValueObject;
 
-final class Url extends StringValueObject
+final readonly class Url implements StringValueObject
 {
-    private function __construct(string $url)
-    {
-        parent::__construct($url);
-    }
+    private function __construct(
+        private string $url,
+    ) {}
 
+    /**
+     * @throws InvalidUrlException
+     */
     public static function create(string $url, UrlValidator $validator): self
     {
         self::ensureIsAValidUrl($url, $validator);
@@ -18,15 +20,28 @@ final class Url extends StringValueObject
         return new self($url);
     }
 
-    public function urlencode(): string
-    {
-        return urlencode((string)$this);
-    }
-
+    /**
+     * @throws InvalidUrlException
+     */
     private static function ensureIsAValidUrl(string $url, UrlValidator $validator): void
     {
         if (!$validator->isValid($url)) {
             throw new InvalidUrlException($url);
         }
+    }
+
+    public function urlencode(): string
+    {
+        return urlencode((string)$this);
+    }
+
+    public function value(): string
+    {
+        return $this->url;
+    }
+
+    public function __toString(): string
+    {
+        return $this->value();
     }
 }

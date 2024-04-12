@@ -3,7 +3,6 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine;
 
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
 use Doctrine\Migrations\Configuration\Migration\ConfigurationArray;
@@ -14,7 +13,9 @@ use Doctrine\ORM\ORMSetup;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\InjectableType;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Throwable;
 
 final class DoctrineServiceProvider extends ServiceProvider
 {
@@ -27,13 +28,9 @@ final class DoctrineServiceProvider extends ServiceProvider
         parent::__construct($app);
     }
 
-    /**
-     * @throws Exception
-     */
     public function register(): void
     {
         $this->registerEntityManager();
-        $this->registerCustomTypes();
         $this->registerRepositories();
 
         if ($this->app->runningInConsole()) {
@@ -47,25 +44,6 @@ final class DoctrineServiceProvider extends ServiceProvider
             EntityManagerInterface::class,
             EntityManager::class,
         );
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function registerCustomTypes(): void
-    {
-        $customTypes = $this->config->get('doctrine.custom_types');
-
-        /** @var class-string<Type> $typeClass */
-        foreach ($customTypes as $typeClass) {
-            $type = new $typeClass();
-
-            if (Type::hasType($type->getName())) {
-                continue;
-            }
-
-            Type::getTypeRegistry()->register($type->getName(), $type);
-        }
     }
 
     private function registerRepositories(): void
@@ -84,9 +62,13 @@ final class DoctrineServiceProvider extends ServiceProvider
         $this->commands($migrationCommands);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function boot(): void
     {
         $this->bootEntityManager();
+        $this->bootCustomTypes();
 
         if ($this->app->runningInConsole()) {
             $this->bootMigrations();
@@ -112,8 +94,40 @@ final class DoctrineServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * This is booted instead of registered, since our defined CustomTypes can contain dependencies that have to be
+     * previously instantiated by the application
+     *
+     * @throws Throwable
+     */
+    private function bootCustomTypes(): void
+    {
+        $customTypes = $this->config->get('doctrine.custom_types');
+
+        /** @var class-string<Type> $typeClass */
+        foreach ($customTypes as $typeName => $typeClass) {
+            if (Type::hasType($typeName)) {
+                continue;
+            }
+
+            $type = new $typeClass;
+
+            if ($type instanceof InjectableType) {
+                $type->inject($this->app);
+            }
+
+            Type::getTypeRegistry()->register($typeName, $type);
+        }
+    }
+
     private function bootMigrations(): void
     {
+        foreach ($this->config->get('doctrine.migrations.default.migrations_paths') as $migrationsDirectory) {
+            if (!is_dir($migrationsDirectory)) {
+                mkdir($migrationsDirectory);
+            }
+        }
+
         $this->app->singleton(DependencyFactory::class, function(Application $app): DependencyFactory {
             return DependencyFactory::fromEntityManager(
                 configurationLoader: new ConfigurationArray(

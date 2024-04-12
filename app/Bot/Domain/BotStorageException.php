@@ -7,11 +7,11 @@ use Throwable;
 
 final class BotStorageException extends Exception
 {
-    public function __construct(string $message, ?Throwable $previous = null)
+    public function __construct(Throwable $exception)
     {
         parent::__construct(
-            message: $message,
-            previous: $previous,
+            message: $exception->getMessage(),
+            previous: $exception,
         );
     }
 }

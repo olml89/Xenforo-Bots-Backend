@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\ApiKeyType;
 use olml89\XenforoBotsBackend\Reply\Domain\ReplyRepository;
 use olml89\XenforoBotsBackend\Reply\Infrastructure\Persistence\DoctrineReplyRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
@@ -7,9 +8,6 @@ use olml89\XenforoBotsBackend\Bot\Infrastructure\Persistence\DoctrineBotReposito
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\ExecuteCommand;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\MigrateCommand;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\ResetCommand;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\AutoIdType;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\PasswordType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\UrlType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\UsernameType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types\UuidType;
@@ -19,8 +17,9 @@ return [
     'connection' => [
         'driver' => env('DOCTRINE_DRIVER', 'pdo_mysql'),
         'host' => env('DB_HOST', '127.0.0.1'),
+        'port' => env('DB_PORT', 3306),
         'dbname' => env('DB_DATABASE', 'laravel'),
-        'user' => env('DB_USERNAME', 'root'),
+        'user' => env('DB_USER', 'root'),
         'password' => env('DB_PASSWORD', ''),
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -28,8 +27,8 @@ return [
 
     'mappings' => [
         app_path('Bot/Infrastructure/Persistence'),
-        app_path('Reply/Infrastructure/Persistence'),
-        app_path('Subscription/Infrastructure/Persistence'),
+        //app_path('Reply/Infrastructure/Persistence'),
+        //app_path('Subscription/Infrastructure/Persistence'),
     ],
 
     'proxies' => [
@@ -46,11 +45,10 @@ return [
     'filters' => [],
 
     'custom_types' => [
-        UuidType::class,
-        AutoIdType::class,
-        UsernameType::class,
-        PasswordType::class,
-        UrlType::class,
+        UuidType::NAME => UuidType::class,
+        ApiKeyType::NAME => ApiKeyType::class,
+        UsernameType::NAME => UsernameType::class,
+        UrlType::NAME => UrlType::class,
     ],
 
     'repositories' => [
@@ -89,7 +87,6 @@ return [
             DiffCommand::class,
             ExecuteCommand::class,
             MigrateCommand::class,
-            ResetCommand::class,
         ],
 
     ],

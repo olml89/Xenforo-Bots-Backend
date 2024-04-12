@@ -2,9 +2,7 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use DateTimeImmutable;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId\AutoId;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Password;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
@@ -13,34 +11,28 @@ final class Bot
     private ?Subscription $subscription = null;
 
     public function __construct(
-        private readonly Uuid $id,
-        private readonly AutoId $userId,
-        private readonly Username $name,
-        private readonly Password $password,
-        private readonly DateTimeImmutable $registeredAt,
+        private readonly Uuid $botId,
+        private readonly ApiKey $apiKey,
+        private readonly Username $username,
+        private readonly \DateTimeImmutable $registeredAt,
     ) {}
 
-    public function id(): Uuid
+    public function botId(): Uuid
     {
-        return $this->id;
+        return $this->botId;
     }
 
-    public function userId(): AutoId
+    public function apiKey(): ApiKey
     {
-        return $this->userId;
+        return $this->apiKey;
     }
 
-    public function name(): Username
+    public function username(): Username
     {
-        return $this->name;
+        return $this->username;
     }
 
-    public function password(): Password
-    {
-        return $this->password;
-    }
-
-    public function registeredAt(): DateTimeImmutable
+    public function registeredAt(): \DateTimeImmutable
     {
         return $this->registeredAt;
     }

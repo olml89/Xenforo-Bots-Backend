@@ -10,7 +10,7 @@ final class InvalidUnixTimestampException extends ValueObjectException
     {
         parent::__construct(
             sprintf(
-                'Must represent a valid Unix timestamp, <%s> provided',
+                'Must represent a valid Unix timestamp, \'%s\' provided',
                 $timestamp,
             )
         );

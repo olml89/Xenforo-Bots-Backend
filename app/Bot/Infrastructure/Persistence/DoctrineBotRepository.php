@@ -3,7 +3,6 @@
 namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Persistence;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -11,6 +10,8 @@ use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use Throwable;
 
 final class DoctrineBotRepository extends EntityRepository implements BotRepository
 {
@@ -28,22 +29,22 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
     public function allSubscribed(): array
     {
         return $this
-            ->getEntityManager()
-            ->getRepository(Bot::class)
             ->matching(
                 new Criteria(Criteria::expr()->neq('subscription', null))
             )
             ->toArray();
     }
 
-    public function getByName(Username $name): ?Bot
+    public function get(Uuid $botId): ?Bot
     {
-        return $this
-            ->getEntityManager()
-            ->getRepository(Bot::class)
-            ->findOneBy([
-                'name' => $name,
-            ]);
+        return $this->find($botId);
+    }
+
+    public function getByUsername(Username $username): ?Bot
+    {
+        return $this->findOneBy([
+            'username' => $username,
+        ]);
     }
 
     /**
@@ -55,8 +56,8 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
             $this->getEntityManager()->persist($bot);
             $this->getEntityManager()->flush();
         }
-        catch (Exception $doctrineException) {
-            throw new BotStorageException($doctrineException->getMessage(), $doctrineException);
+        catch (Throwable $doctrineException) {
+            throw new BotStorageException($doctrineException);
         }
     }
 }

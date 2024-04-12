@@ -10,7 +10,7 @@ final class InvalidUuidException extends ValueObjectException
     {
         parent::__construct(
             sprintf(
-                'Must represent a valid UUID, <%s> provided',
+                'Must represent a valid Uuid, \'%s\' provided',
                 $uuid,
             )
         );

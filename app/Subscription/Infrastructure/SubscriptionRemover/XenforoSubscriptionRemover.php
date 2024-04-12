@@ -5,8 +5,8 @@ namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRemo
 use Illuminate\Foundation\Application;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiException;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRemovalException;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRemover;
 

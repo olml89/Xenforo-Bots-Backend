@@ -3,20 +3,15 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Type;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\InvalidUuidException;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
-use ReflectionClass;
-use ReflectionException;
 
 class UuidType extends Type
 {
-    private const NAME = 'uuid';
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
+    public const string NAME = 'uuid';
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
@@ -24,40 +19,35 @@ class UuidType extends Type
     }
 
     /**
-     * @throws ConversionException
+     * @throws InvalidType
      */
-    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
-        if (is_null($value)) {
-            return null;
-        }
-
         if (!($value instanceof Uuid)) {
-            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['string']);
+            throw InvalidType::new(
+                value: $value,
+                toType: self::NAME,
+                possibleTypes: [Uuid::class],
+            );
         }
 
         return (string)$value;
     }
 
     /**
-     * @throws ConversionException
-     * @throws ReflectionException
+     * @throws InvalidFormat
+     * @throws InvalidUuidException
      */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Uuid
     {
-        if (is_null($value)) {
-            return null;
-        }
-
         if (!is_string($value)) {
-            throw ConversionException::conversionFailedFormat($value, Uuid::class, $this->getName());
+            throw InvalidFormat::new(
+                value: $value,
+                toType: Uuid::class,
+                expectedFormat: 'string',
+            );
         }
 
-        $reflectionClass = new ReflectionClass(Uuid::class);
-        $uuid = $reflectionClass->newInstanceWithoutConstructor();
-        $reflectionClass->getParentClass()->getProperty('value')->setAccessible(true);
-        $reflectionClass->getParentClass()->getProperty('value')->setValue($uuid, $value);
-
-        return $uuid;
+        return Uuid::create($value);
     }
 }

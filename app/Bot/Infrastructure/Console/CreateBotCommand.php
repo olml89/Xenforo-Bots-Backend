@@ -2,10 +2,10 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 
-use Illuminate\Console\Command;
 use olml89\XenforoBotsBackend\Bot\Application\Create\CreateBotUseCase as CreateBotUseCase;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Console\Command;
 
 class CreateBotCommand extends Command
 {
@@ -14,30 +14,32 @@ class CreateBotCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'bot:create {name} {password}';
+    protected $signature = 'bot:create {username} {password}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Creates a bot as a user on the remote Xenforo platform';
+    protected $description = 'Creates a bot on the remote Xenforo platform';
 
     /**
      * Execute the console command.
      *
-     * @throws BotCreationException | BotStorageException
+     * @throws BotValidationException
+     * @throws BotStorageException
      */
     public function handle(CreateBotUseCase $createBot): void
     {
         $createBotResult = $createBot->create(
-            $name = $this->argument('name'),
+            $this->argument('username'),
             $this->argument('password'),
         );
 
         $this->output->success(
-            sprintf('Bot <%s> created successfully', $name)
+            sprintf('Bot \'%s\' created successfully', $createBotResult->username)
         );
-        $this->output->write(json_encode($createBotResult, JSON_PRETTY_PRINT));
+
+        $this->outputObject($createBotResult);
     }
 }

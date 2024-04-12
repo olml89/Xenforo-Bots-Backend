@@ -4,20 +4,43 @@ namespace olml89\XenforoBotsBackend\Bot\Domain;
 
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\StringValueObject;
 
-final class Username extends StringValueObject
+final readonly class Username implements StringValueObject
 {
-    public function __construct(string $username)
-    {
-        $this->ensureItHas50CharactersOrLess($username);
+    private function __construct(
+        private string $username,
+    ) {}
 
-        parent::__construct($username);
+    /**
+     * @throws InvalidUsernameException
+     */
+    public static function create(string $username): self
+    {
+        self::ensureItHasBetween1And50Characters($username);
+
+        return new self($username);
     }
 
-    private function ensureItHas50CharactersOrLess(string $username): void
+    /**
+     * @throws InvalidUsernameException
+     */
+    private static function ensureItHasBetween1And50Characters(string $username): void
     {
+        if (strlen($username) === 0) {
+            throw InvalidUsernameException::empty();
+        }
+
         if (strlen($username) > 50) {
-            throw new InvalidUsernameException($username);
+            throw InvalidUsernameException::tooLong($username);
         }
     }
 
+    public function value(): string
+    {
+        return $this->username;
+    }
+
+    public function __toString(): string
+    {
+        return $this->value();
+    }
 }

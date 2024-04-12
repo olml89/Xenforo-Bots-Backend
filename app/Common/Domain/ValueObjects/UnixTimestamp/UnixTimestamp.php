@@ -4,9 +4,16 @@ namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp;
 
 use DateTimeImmutable;
 
-final class UnixTimestamp
+final readonly class UnixTimestamp
 {
-    public static function toDateTimeImmutable(int $timestamp): DateTimeImmutable
+    private function __construct(
+        private DateTimeImmutable $dateTime,
+    ) {}
+
+    /**
+     * @throws InvalidUnixTimestampException
+     */
+    public static function create(int $timestamp): self
     {
         $dateTime = DateTimeImmutable::createFromFormat('U', (string)$timestamp);
 
@@ -14,6 +21,11 @@ final class UnixTimestamp
             throw new InvalidUnixTimestampException($timestamp);
         }
 
-        return $dateTime;
+        return new self($dateTime);
+    }
+
+    public function value(): DateTimeImmutable
+    {
+        return $this->dateTime;
     }
 }

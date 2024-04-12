@@ -2,31 +2,32 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
 final class BotFinder
 {
     public function __construct(
         private readonly BotRepository $botRepository,
-        private readonly Hasher $hasher,
     ) {}
 
-    public function exists(Username $name): bool
+    /**
+     * @throws BotNotFoundException
+     */
+    public function find(Uuid $botId): Bot
     {
-        return !is_null($this->botRepository->getByName($name));
+        return $this->botRepository->get($botId) ?? throw BotNotFoundException::botId($botId);
     }
 
     /**
      * @throws BotNotFoundException
      */
-    public function find(Username $name, string $password): Bot
+    public function findByUsername(Username $username): Bot
     {
-        $bot = $this->botRepository->getByName($name) ?? throw BotNotFoundException::invalidName($name);
+        return $this->botRepository->getByUsername($username) ?? throw BotNotFoundException::username($username);
+    }
 
-        if (!$bot->password()->check($password, $this->hasher)) {
-            throw BotNotFoundException::invalidPassword();
-        }
-
-        return $bot;
+    public function exists(Username $name): bool
+    {
+        return !is_null($this->botRepository->getByUsername($name));
     }
 }

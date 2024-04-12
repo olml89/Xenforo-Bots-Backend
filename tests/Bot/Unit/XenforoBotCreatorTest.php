@@ -7,12 +7,12 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Str;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\BotCreator\XenforoBotCreator;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotCreationData;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\User\RequestData;
 use Tests\Common\InteractsWithXenforoApi;
 use Tests\TestCase;
 
@@ -39,9 +39,9 @@ final class XenforoBotCreatorTest extends TestCase
         $this->botCreator = $this->app->get(XenforoBotCreator::class);
     }
 
-    private function createUserData(string $username = null, string $password = null): RequestData
+    private function createUserData(string $username = null, string $password = null): XenforoBotCreationData
     {
-        return new RequestData(
+        return new XenforoBotCreationData(
             username: $username ?? $this->faker->userName(),
             password: $password ?? $this->faker->password(),
         );
@@ -58,7 +58,7 @@ final class XenforoBotCreatorTest extends TestCase
             )
         );
 
-        $this->expectException(BotCreationException::class);
+        $this->expectException(BotValidationException::class);
         $this->expectExceptionMessage('Error communicating with Server');
 
         $this->botCreator->create($createUserData->username, $createUserData->password);
@@ -75,7 +75,7 @@ final class XenforoBotCreatorTest extends TestCase
             )
         );
 
-        $this->expectException(BotCreationException::class);
+        $this->expectException(BotValidationException::class);
         $this->expectExceptionMessage('Please enter a valid name.');
 
         $this->botCreator->create($createUserData->username, $createUserData->password);
@@ -94,7 +94,7 @@ final class XenforoBotCreatorTest extends TestCase
             )
         );
 
-        $this->expectException(BotCreationException::class);
+        $this->expectException(BotValidationException::class);
         $this->expectExceptionMessage($invalidUsernameException->getMessage());
 
         $this->botCreator->create($createUserData->username, $createUserData->password);
@@ -111,7 +111,7 @@ final class XenforoBotCreatorTest extends TestCase
             )
         );
 
-        $this->expectException(BotCreationException::class);
+        $this->expectException(BotValidationException::class);
         $this->expectExceptionMessage('Please enter a valid password.');
 
         $this->botCreator->create($createUserData->username, $createUserData->password);
@@ -137,7 +137,7 @@ final class XenforoBotCreatorTest extends TestCase
         $this->assertEquals($createUserData->username, (string)$bot->name());
         $this->assertTrue($bot->password()->check($createUserData->password, $this->hasher));
         $this->assertEquals(
-            UnixTimestamp::toDateTimeImmutable($register_date_timestamp),
+            UnixTimestamp::fromTimestamp($register_date_timestamp),
             $bot->registeredAt()
         );
     }

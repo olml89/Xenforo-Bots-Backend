@@ -36,7 +36,7 @@ final class BotFactory
             userId: new AutoId($user_id ?? $this->faker->numberBetween(1)),
             name: new Username($name ?? $this->faker->userName()),
             password: new Password($password ?? $this->faker->password(), $this->hasher),
-            registeredAt: UnixTimestamp::toDateTimeImmutable($registered_at ?? time()),
+            registeredAt: UnixTimestamp::fromTimestamp($registered_at ?? time()),
         );
     }
 }

@@ -4,7 +4,7 @@ namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo;
 
 use Psr\Http\Message\ResponseInterface;
 
-abstract class ApiResponseData
+abstract readonly class ApiResponseData
 {
     abstract public static function fromResponse(ResponseInterface $response): self;
 

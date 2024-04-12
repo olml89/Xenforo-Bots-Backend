@@ -3,18 +3,15 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Type;
+use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 
 final class UsernameType extends Type
 {
-    private const NAME = 'username';
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
+    public const string NAME = 'username';
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
@@ -22,26 +19,35 @@ final class UsernameType extends Type
     }
 
     /**
-     * @throws ConversionException
+     * @throws InvalidType
      */
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
         if (!($value instanceof Username)) {
-            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['string']);
+            throw InvalidType::new(
+                value: $value,
+                toType: self::NAME,
+                possibleTypes: [Username::class],
+            );
         }
 
         return (string)$value;
     }
 
     /**
-     * @throws ConversionException
+     * @throws InvalidFormat
+     * @throws InvalidUsernameException
      */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): Username
     {
         if (!is_string($value)) {
-            throw ConversionException::conversionFailedFormat($value, Username::class, $this->getName());
+            throw InvalidFormat::new(
+                value: $value,
+                toType: Username::class,
+                expectedFormat: 'string',
+            );
         }
 
-        return new Username($value);
+        return Username::create($value);
     }
 }

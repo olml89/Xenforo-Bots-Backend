@@ -5,7 +5,7 @@ namespace olml89\XenforoBotsBackend\Bot\Domain;
 interface BotCreator
 {
     /**
-     * @throws BotCreationException
+     * @throws BotValidationException
      */
-    public function create(string $name, string $password): Bot;
+    public function create(Username $username, Password $password): Bot;
 }

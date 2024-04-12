@@ -4,20 +4,21 @@ namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotCreationData as UserRequestData;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotData as UserResponseData;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Auth\RequestData as AuthRequestData;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Post\RequestData as PostRequestData;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Post\ResponseData as PostResponseData;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Subscription\RequestData as SubscriptionRequestData;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Subscription\ResponseData as SubscriptionResponseData;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\User\RequestData as UserRequestData;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\User\ResponseData as UserResponseData;
 use Symfony\Component\HttpFoundation\Response;
 
 final class XenforoApi
 {
     public function __construct(
-        private readonly ApiConsumer $apiConsumer,
+        private readonly XenforoApiConsumer $apiConsumer,
     ) {}
 
     public function apiUrl(): Url
@@ -53,7 +54,7 @@ final class XenforoApi
     {
         try {
             $response = $this->apiConsumer->post(
-                endpoint: '/users',
+                endpoint: 'bots',
                 data: $userRequestData,
             );
 
@@ -74,8 +75,8 @@ final class XenforoApi
     {
         try {
             $response = $this->apiConsumer->get(
-                endpoint: '/subscriptions/?user_id=%s&webhook=%s',
-                parameters: [$user_id, $webhook],
+                endpoint: '/subscriptions',
+                query: [$user_id, $webhook],
             );
 
             return SubscriptionResponseData::fromResponse($response);
@@ -120,8 +121,8 @@ final class XenforoApi
     {
         try {
             $this->apiConsumer->delete(
-                endpoint: '/subscriptions/?user_id=%s&webhook=%s',
-                parameters: [$user_id, $webhook],
+                endpoint: '/subscriptions',
+                query: [$user_id, $webhook],
             );
         }
         catch (RequestException $e) {

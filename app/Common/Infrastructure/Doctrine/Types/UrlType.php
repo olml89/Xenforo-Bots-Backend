@@ -3,20 +3,28 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
-use Doctrine\DBAL\Types\Type;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
+use Illuminate\Foundation\Application;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\InvalidUrlException;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
-use ReflectionClass;
-use ReflectionException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\UrlValidator;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
-final class UrlType extends Type
+final class UrlType extends InjectableType
 {
-    private const NAME = 'url';
+    public const string NAME = 'url';
 
-    public function getName(): string
+    private readonly UrlValidator $urlValidator;
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function inject(Application $app): void
     {
-        return self::NAME;
+        $this->urlValidator = $app->get(UrlValidator::class);
     }
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
@@ -25,40 +33,35 @@ final class UrlType extends Type
     }
 
     /**
-     * @throws ConversionException
+     * @throws InvalidType
      */
-    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
-        if (is_null($value)) {
-            return null;
-        }
-
         if (!($value instanceof Url)) {
-            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['string']);
+            throw InvalidType::new(
+                value: $value,
+                toType: self::NAME,
+                possibleTypes: [Url::class],
+            );
         }
 
         return (string)$value;
     }
 
     /**
-     * @throws ConversionException
-     * @throws ReflectionException
+     * @throws InvalidFormat
+     * @throws InvalidUrlException
      */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Url
     {
-        if (is_null($value)) {
-            return null;
-        }
-
         if (!is_string($value)) {
-            throw ConversionException::conversionFailedFormat($value, Url::class, $this->getName());
+            throw InvalidFormat::new(
+                value: $value,
+                toType: Url::class,
+                expectedFormat: 'string',
+            );
         }
 
-        $url = (new ReflectionClass(Url::class))->newInstanceWithoutConstructor();
-        $property = (new ReflectionClass($url))->getParentClass()->getProperty('value');
-        $property->setAccessible(true);
-        $property->setValue($url, $value);
-
-        return $url;
+        return Url::create($value, $this->urlValidator);
     }
 }
