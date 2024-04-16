@@ -9,11 +9,13 @@ use JsonSerializable;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiExceptionMapper;
 use Psr\Http\Message\ResponseInterface;
 
 final readonly class XenforoApiConsumer
 {
     private Client $httpClient;
+    private XenforoApiExceptionMapper $xenforoApiExceptionMapper;
 
     public function __construct(Url $apiUrl, ApiKey $superUserApiKey, ?HandlerStack $handlerStack = null)
     {
@@ -28,6 +30,8 @@ final readonly class XenforoApiConsumer
             'http_errors' => true,
             'handler' => $handlerStack,
         ]);
+
+        $this->xenforoApiExceptionMapper = new XenforoApiExceptionMapper();
     }
 
     /**
@@ -45,7 +49,7 @@ final readonly class XenforoApiConsumer
             );
         }
         catch (GuzzleException $e) {
-            throw new XenforoApiException($e);
+            throw $this->xenforoApiExceptionMapper->map($e);
         }
     }
 
@@ -64,7 +68,7 @@ final readonly class XenforoApiConsumer
             );
         }
         catch (GuzzleException $e) {
-            throw new XenforoApiException($e);
+            throw $this->xenforoApiExceptionMapper->map($e);
         }
     }
 
@@ -83,7 +87,7 @@ final readonly class XenforoApiConsumer
             );
         }
         catch (GuzzleException $e) {
-            throw new XenforoApiException($e);
+            throw $this->xenforoApiExceptionMapper->map($e);
         }
     }
 }

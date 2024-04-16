@@ -39,7 +39,7 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'mysql' => [
+        'mysql' => $mysql = [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -58,6 +58,15 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+
+        'root' => array_merge(
+            $mysql,
+            [
+                'database' => null,
+                'username' => 'root',
+                'password' => env('DB_ROOT_PASSWORD', ''),
+            ],
+        ),
 
         'mariadb' => [
             'driver' => 'mariadb',

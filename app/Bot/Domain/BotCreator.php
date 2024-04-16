@@ -6,6 +6,7 @@ interface BotCreator
 {
     /**
      * @throws BotValidationException
+     * @throws BotCreationException
      */
     public function create(Username $username, Password $password): Bot;
 }

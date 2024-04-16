@@ -10,6 +10,11 @@ abstract readonly class ApiResponseData
 
     protected static function jsonDecode(ResponseInterface $response): array
     {
-        return json_decode($response->getBody()->getContents(), true);
+        /**
+         * Preventing to having to seek the stream response in order to use it more than once (f. ex. when testing)
+         *
+         * https://github.com/guzzle/psr7/issues/38
+         */
+        return json_decode((string)$response->getBody(), true);
     }
 }

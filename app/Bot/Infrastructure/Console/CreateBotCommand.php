@@ -2,12 +2,14 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 
+use Illuminate\Console\Command;
 use olml89\XenforoBotsBackend\Bot\Application\Create\CreateBotUseCase as CreateBotUseCase;
+use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Console\Command;
 
-class CreateBotCommand extends Command
+final class CreateBotCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -27,6 +29,8 @@ class CreateBotCommand extends Command
      * Execute the console command.
      *
      * @throws BotValidationException
+     * @throws BotAlreadyExistsException
+     * @throws BotCreationException
      * @throws BotStorageException
      */
     public function handle(CreateBotUseCase $createBot): void
@@ -40,6 +44,6 @@ class CreateBotCommand extends Command
             sprintf('Bot \'%s\' created successfully', $createBotResult->username)
         );
 
-        $this->outputObject($createBotResult);
+        $this->output->write((string)$createBotResult);
     }
 }

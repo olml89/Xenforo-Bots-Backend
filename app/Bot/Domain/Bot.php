@@ -3,6 +3,7 @@
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
@@ -14,7 +15,7 @@ final class Bot
         private readonly Uuid $botId,
         private readonly ApiKey $apiKey,
         private readonly Username $username,
-        private readonly \DateTimeImmutable $registeredAt,
+        private readonly UnixTimestamp $registeredAt,
     ) {}
 
     public function botId(): Uuid
@@ -32,7 +33,7 @@ final class Bot
         return $this->username;
     }
 
-    public function registeredAt(): \DateTimeImmutable
+    public function registeredAt(): UnixTimestamp
     {
         return $this->registeredAt;
     }

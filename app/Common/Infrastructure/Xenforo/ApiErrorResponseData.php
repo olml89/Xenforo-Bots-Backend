@@ -3,7 +3,6 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo;
 
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ApiErrorResponseData extends ApiResponseData
 {
@@ -13,7 +12,7 @@ final readonly class ApiErrorResponseData extends ApiResponseData
         public string $message,
     ) {}
 
-    public static function genericError(int $httpStatusCode = Response::HTTP_INTERNAL_SERVER_ERROR): self
+    private static function unknownError(int $httpStatusCode): self
     {
         return new self(
             httpCode: $httpStatusCode,
@@ -28,7 +27,7 @@ final readonly class ApiErrorResponseData extends ApiResponseData
         $error = $json['errors'][0] ?? null;
 
         if (is_null($error)) {
-            return self::genericError($response->getStatusCode());
+            return self::unknownError($response->getStatusCode());
         }
 
         return new self(

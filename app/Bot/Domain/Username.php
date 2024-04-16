@@ -34,6 +34,11 @@ final readonly class Username implements StringValueObject
         }
     }
 
+    public function equals(Username $username): bool
+    {
+        return $this->value() === $username->value();
+    }
+
     public function value(): string
     {
         return $this->username;

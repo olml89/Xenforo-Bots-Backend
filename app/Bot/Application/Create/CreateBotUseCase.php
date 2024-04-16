@@ -4,6 +4,7 @@ namespace olml89\XenforoBotsBackend\Bot\Application\Create;
 
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
@@ -20,8 +21,9 @@ final readonly class CreateBotUseCase
     ) {}
 
     /**
-     * @throws BotAlreadyExistsException
      * @throws BotValidationException
+     * @throws BotAlreadyExistsException
+     * @throws BotCreationException
      * @throws BotStorageException
      */
     public function create(string $username, string $password): BotResult
@@ -35,7 +37,11 @@ final readonly class CreateBotUseCase
             }
 
             $bot = $this->botCreator->create($username, $password);
+            $bot2 = $this->botCreator->create(Username::create(\Illuminate\Support\Str::random()), $password);
+            $bot3 = $this->botCreator->create(Username::create(\Illuminate\Support\Str::random()), $password);
             $this->botRepository->save($bot);
+            $this->botRepository->save($bot2);
+            $this->botRepository->save($bot3);
 
             return new BotResult($bot);
         }

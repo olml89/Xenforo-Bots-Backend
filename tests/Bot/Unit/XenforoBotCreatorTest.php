@@ -2,143 +2,237 @@
 
 namespace Tests\Bot\Unit;
 
-use Faker\Generator as Faker;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Str;
-use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBotsBackend\Bot\Infrastructure\BotCreator\XenforoBotCreator;
-use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotCreationData;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
-use Tests\Common\InteractsWithXenforoApi;
+use olml89\XenforoBotsBackend\Bot\Domain\Password;
+use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotCreator;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\InvalidApiKeyException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\InvalidUnixTimestampException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\InvalidUuidException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiConnectionException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiInternalServerErrorException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiUnprocessableEntityException;
+use Tests\Helpers\XenforoApi\Endpoints\Bots\Requests\Create\XenforoBotCreationDataCreator;
+use Tests\Helpers\XenforoApi\Endpoints\Bots\Requests\XenforoBotDataCreator;
+use Tests\Helpers\XenforoApi\InteractsWithXenforoApi;
+use Tests\Helpers\XenforoApi\XenforoApi;
 use Tests\TestCase;
 
-final class XenforoBotCreatorTest extends TestCase
+final class XenforoBotCreatorTest extends TestCase implements InteractsWithXenforoApi
 {
-    use InteractsWithXenforoApi;
+    use XenforoApi;
 
-    private readonly XenforoBotCreator $botCreator;
-    private readonly Faker $faker;
-    private readonly Hasher $hasher;
+    private XenforoBotCreationDataCreator $xenforoBotCreationDataCreator;
+    private XenforoBotDataCreator $xenforoBotDataCreator;
+    private XenforoBotCreator $xenforoBotCreator;
 
-    /**
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setUpXenforoApi();
-
-        $this->faker = $this->app->get(Faker::class);
-        $this->hasher = $this->app->get(Hasher::class);
-        $this->botCreator = $this->app->get(XenforoBotCreator::class);
+        $this->xenforoBotCreationDataCreator = $this->resolve(XenforoBotCreationDataCreator::class);
+        $this->xenforoBotDataCreator = $this->resolve(XenforoBotDataCreator::class);
+        $this->xenforoBotCreator = $this->resolve(XenforoBotCreator::class);
     }
 
-    private function createUserData(string $username = null, string $password = null): XenforoBotCreationData
+    public function testItThrowsBotCreationExceptionIfXenforoApiIsUnreachable(): void
     {
-        return new XenforoBotCreationData(
-            username: $username ?? $this->faker->userName(),
-            password: $password ?? $this->faker->password(),
-        );
+        $xenforoBotCreationData = $this->xenforoBotCreationDataCreator->create();
+
+        $connectException = $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create($xenforoBotCreationData)
+            ->connectException('Error communicating with Server');
+
+        $xenforoApiException = XenforoApiConnectionException::create($connectException);
+
+        try {
+            $this->xenforoBotCreator->create(
+                Username::create($xenforoBotCreationData->username),
+                Password::create($xenforoBotCreationData->password)
+            );
+        }
+        catch (BotCreationException $e) {
+            $this->assertEquals($xenforoApiException, $e->getPrevious());
+        }
     }
 
-    public function test_that_unreachable_xenforo_api_throws_bot_creation_exception(): void
+    public function testItThrowsBotValidationExceptionIfXenforoApiReturnsValidationError(): void
     {
-        $createUserData = $this->createUserData();
+        $xenforoBotCreationData = $this->xenforoBotCreationDataCreator->create();
 
-        $this->requests->append(
-            new ConnectException(
-                message: 'Error communicating with Server',
-                request: new Request(method: 'POST', uri: '/api/users', body: json_encode($createUserData)),
-            )
-        );
+        $unprocessableEntityException = $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create($xenforoBotCreationData)
+            ->unprocessableEntityException(
+                errorCode: Str::random(),
+                errorMessage: Str::random(),
+            );
 
-        $this->expectException(BotValidationException::class);
-        $this->expectExceptionMessage('Error communicating with Server');
+        $xenforoApiException = XenforoApiUnprocessableEntityException::create($unprocessableEntityException);
 
-        $this->botCreator->create($createUserData->username, $createUserData->password);
+        try {
+            $this->xenforoBotCreator->create(
+                Username::create($xenforoBotCreationData->username),
+                Password::create($xenforoBotCreationData->password)
+            );
+        }
+        catch (BotValidationException $e) {
+            $this->assertEquals($xenforoApiException, $e->getPrevious());
+        }
     }
 
-    public function test_that_void_username_throws_bot_creation_exception(): void
+    public function testItThrowsBotCreationExceptionIfXenforoApiReturnsInternalServerError(): void
     {
-        $createUserData = $this->createUserData(username: '');
+        $xenforoBotCreationData = $this->xenforoBotCreationDataCreator->create();
 
-        $this->requests->append(
-            $this->createBadRequestResponse(
-                code: 'please_enter_valid_name',
-                message: 'Please enter a valid name.',
-            )
-        );
+        $internalServerErrorException = $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create($xenforoBotCreationData)
+            ->internalServerErrorException(
+                errorCode: Str::random(),
+                errorMessage: Str::random()
+            );
 
-        $this->expectException(BotValidationException::class);
-        $this->expectExceptionMessage('Please enter a valid name.');
+        $xenforoApiException = XenforoApiInternalServerErrorException::create($internalServerErrorException);
 
-        $this->botCreator->create($createUserData->username, $createUserData->password);
+        try {
+            $this->xenforoBotCreator->create(
+                Username::create($xenforoBotCreationData->username),
+                Password::create($xenforoBotCreationData->password)
+            );
+        }
+        catch (BotCreationException $e) {
+            $this->assertEquals($xenforoApiException, $e->getPrevious());
+        }
     }
 
-    public function test_that_too_long_username_throws_bot_creation_exception(): void
+    public function testItThrowsBotValidationExceptionIfAnInvalidBotIdIsReturnedByTheXenforoApi(): void
     {
-        $tooLongUsername = Str::random(51);
-        $invalidUsernameException = new InvalidUsernameException($tooLongUsername);
-        $createUserData = $this->createUserData(username: $tooLongUsername);
+        $xenforoBotCreationData = $this->xenforoBotCreationDataCreator->create();
 
-        $this->requests->append(
-            $this->createUserCreatedResponse(
-                user_id: $this->faker->numberBetween(1),
-                register_date_timestamp: time(),
-            )
-        );
+        $xenforoBotData = $this
+            ->xenforoBotDataCreator
+            ->botId(Str::random())
+            ->create();
 
-        $this->expectException(BotValidationException::class);
-        $this->expectExceptionMessage($invalidUsernameException->getMessage());
+        $valueObjectException = new InvalidUuidException($xenforoBotData->bot_id);
 
-        $this->botCreator->create($createUserData->username, $createUserData->password);
+        $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create()
+            ->ok($xenforoBotData);
+
+        try {
+            $this->xenforoBotCreator->create(
+                Username::create($xenforoBotCreationData->username),
+                Password::create($xenforoBotCreationData->password)
+            );
+        }
+        catch (BotValidationException $e) {
+            $this->assertEquals($valueObjectException, $e->getPrevious());
+        }
     }
 
-    public function test_that_void_password_throws_bot_creation_exception(): void
+    public function testItThrowsBotValidationExceptionIfAnInvalidApiKeyIsReturnedByTheXenforoApi(): void
     {
-        $createUserData = $this->createUserData(password: '');
+        $xenforoBotCreationData = $this->xenforoBotCreationDataCreator->create();
 
-        $this->requests->append(
-            $this->createBadRequestResponse(
-                code: 'please_enter_valid_password',
-                message: 'Please enter a valid password.',
-            )
-        );
+        $xenforoBotData = $this
+            ->xenforoBotDataCreator
+            ->apiKey(Str::random())
+            ->create();
 
-        $this->expectException(BotValidationException::class);
-        $this->expectExceptionMessage('Please enter a valid password.');
+        $valueObjectException = new InvalidApiKeyException($xenforoBotData->api_key);
 
-        $this->botCreator->create($createUserData->username, $createUserData->password);
+        $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create($xenforoBotCreationData)
+            ->ok($xenforoBotData);
+
+        $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create()
+            ->ok($xenforoBotData);
+
+        try {
+            $this->xenforoBotCreator->create(
+                Username::create($xenforoBotCreationData->username),
+                Password::create($xenforoBotCreationData->password)
+            );
+        }
+        catch (BotValidationException $e) {
+            $this->assertEquals($valueObjectException, $e->getPrevious());
+        }
     }
 
-    public function test_that_valid_username_and_password_create_a_new_xenforo_user(): void
+    public function testItThrowsBotValidationExceptionIfAnInvalidUnixTimestampIsReturnedByTheXenforoApi(): void
     {
-        $createUserData = $this->createUserData();
-        $user_id = $this->faker->numberBetween(1);
-        $register_date_timestamp = time();
+        $xenforoBotCreationData = $this->xenforoBotCreationDataCreator->create();
 
-        $this->requests->append(
-            $this->createUserCreatedResponse(
-                user_id: $user_id,
-                register_date_timestamp: $register_date_timestamp,
-            )
+        $xenforoBotData = $this
+            ->xenforoBotDataCreator
+            ->createdAt(-10000000000000)
+            ->create();
+
+        $valueObjectException = new InvalidUnixTimestampException($xenforoBotData->created_at);
+
+        $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create()
+            ->ok($xenforoBotData);
+
+        try {
+            $this->xenforoBotCreator->create(
+                Username::create($xenforoBotCreationData->username),
+                Password::create($xenforoBotCreationData->password)
+            );
+        }
+        catch (BotValidationException $e) {
+            $this->assertEquals($valueObjectException, $e->getPrevious());
+        }
+    }
+
+    public function testItCreatesANewXenforoBotAndReturnsABotResult(): void
+    {
+        $xenforoBotCreationData = $this->xenforoBotCreationDataCreator->create();
+        $xenforoBotData = $this->xenforoBotDataCreator->create();
+
+        $this
+            ->xenforoApiResponseSimulator
+            ->bots()
+            ->create()
+            ->ok($xenforoBotData);
+
+        $bot = $this->xenforoBotCreator->create(
+            Username::create($xenforoBotCreationData->username),
+            Password::create($xenforoBotCreationData->password)
         );
 
-        $bot = $this->botCreator->create($createUserData->username, $createUserData->password);
-
-        $this->assertInstanceOf(Bot::class, $bot);
-        $this->assertEquals($user_id, $bot->userId()->toInt());
-        $this->assertEquals($createUserData->username, (string)$bot->name());
-        $this->assertTrue($bot->password()->check($createUserData->password, $this->hasher));
         $this->assertEquals(
-            UnixTimestamp::fromTimestamp($register_date_timestamp),
-            $bot->registeredAt()
+            $xenforoBotData->bot_id,
+            (string)$bot->botId()
+        );
+        $this->assertEquals(
+            $xenforoBotData->api_key,
+            (string)$bot->apiKey()
+        );
+        $this->assertEquals(
+            $xenforoBotCreationData->username,
+            (string)$bot->username()
+        );
+        $this->assertEquals(
+            $xenforoBotData->created_at,
+            $bot->registeredAt()->timestamp()
         );
     }
 }

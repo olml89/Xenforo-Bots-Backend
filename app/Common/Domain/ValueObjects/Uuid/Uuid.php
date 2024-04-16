@@ -37,6 +37,11 @@ final readonly class Uuid implements StringValueObject
         return new self(UuidFactory::uuid4());
     }
 
+    public function equals(Uuid $uuid): bool
+    {
+        return $this->value() === $uuid->value();
+    }
+
     public function value(): string
     {
         return (string)$this->uuid;
