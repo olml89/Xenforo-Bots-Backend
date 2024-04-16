@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMSetup;
 use Illuminate\Config\Repository as Config;
-use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Connection;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Driver\PersistentMySQLDriver;
@@ -22,12 +22,10 @@ use Throwable;
 final class DoctrineServiceProvider extends ServiceProvider
 {
     private readonly Config $config;
-    private readonly DatabaseManager $laravelDatabaseManager;
 
     public function __construct(Application $app)
     {
         $this->config = $app[Config::class];
-        $this->laravelDatabaseManager = $app[DatabaseManager::class];
 
         parent::__construct($app);
     }
@@ -94,11 +92,15 @@ final class DoctrineServiceProvider extends ServiceProvider
              *
              * You can inject an existing PDO connection into Doctrine, but not like explained here.
              * You have to implement a Driver that uses the already existing connection.
+             *
+             * @var Connection $laravelConnection
              */
+            $laravelConnection = $app[Connection::class];
+
             $connection = DriverManager::getConnection(
                 params: [
                     'driverClass' => PersistentMySQLDriver::class,
-                    'pdo' => $this->laravelDatabaseManager->getPdo(),
+                    'pdo' => $laravelConnection->getPdo(),
                 ],
                 config: $config,
             );

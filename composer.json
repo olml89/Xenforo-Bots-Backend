@@ -4,6 +4,7 @@
     "description": "This is a backend platform to interact with the Xenforo Bots add-on and implement bot users that can interact in a human-like way with the rest of the users.",
     "keywords": ["xenforo", "bots", "backend"],
     "license": "MIT",
+    "version": "1.0.0",
     "require": {
         "php": "^8.3",
         "ext-pdo": "*",
