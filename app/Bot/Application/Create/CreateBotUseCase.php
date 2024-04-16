@@ -37,11 +37,7 @@ final readonly class CreateBotUseCase
             }
 
             $bot = $this->botCreator->create($username, $password);
-            $bot2 = $this->botCreator->create(Username::create(\Illuminate\Support\Str::random()), $password);
-            $bot3 = $this->botCreator->create(Username::create(\Illuminate\Support\Str::random()), $password);
             $this->botRepository->save($bot);
-            $this->botRepository->save($bot2);
-            $this->botRepository->save($bot3);
 
             return new BotResult($bot);
         }

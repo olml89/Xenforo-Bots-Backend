@@ -46,6 +46,9 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
+        "create-database": [
+            "@php artisan app:create-database --migrate"
+        ],
         "create-testing-database": [
             "@php artisan app:create-database --migrate --env=testing"
         ]

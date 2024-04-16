@@ -7,6 +7,8 @@
     <testsuites>
         <testsuite name="Bot">
             <directory suffix="Test.php">./tests/Bot</directory>
+        </testsuite>
+        <testsuite name="Common">
             <directory suffix="Test.php">./tests/Common</directory>
         </testsuite>
     </testsuites>

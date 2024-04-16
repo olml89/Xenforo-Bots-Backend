@@ -3,6 +3,7 @@
 namespace Tests\Bot\Integration;
 
 use Database\Factories\BotFactory;
+use Illuminate\Support\Facades\Artisan;
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Tests\Helpers\DoctrineTransactions;
@@ -37,7 +38,9 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "username, password").');
 
-        $this->artisan('bot:create');
+        $this
+            ->artisan('bot:create')
+            ->assertFailed();
     }
 
     public function testItThrowsRuntimeExceptionIfPasswordIsEmpty(): void
@@ -45,7 +48,11 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "password").');
 
-        $this->artisan(sprintf('bot:create %s', fake()->userName()));
+        $this
+            ->artisan('bot:create', [
+                'username' => fake()->userName(),
+            ])
+            ->assertFailed();
     }
 
     public function testItCreatesNewXenforoBotAndPrintsABotResult(): void
@@ -60,22 +67,6 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
             ->create()
             ->ok();
 
-        $bot2 = $this->botFactory->create();
-
-        $this
-            ->xenforoApiResponseSimulator
-            ->bots($bot2)
-            ->create()
-            ->ok();
-
-        $bot3 = $this->botFactory->create();
-
-        $this
-            ->xenforoApiResponseSimulator
-            ->bots($bot3)
-            ->create()
-            ->ok();
-
         $this
             ->artisan('bot:create', [
                 'username' => (string)$bot->username(),
@@ -83,15 +74,12 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
             ])
             ->assertSuccessful()
             ->expectsOutputToContain(
-                sprintf('Bot \'%s\' created successfully', $bot->username())
-            )
-            ->expectsOutputToContain(
                 (string)$expectedBotResult
             );
 
         $this->assertDatabaseCount(
             'bots',
-            3
+            1
         );
         $this->assertDatabaseHas(
             'bots',

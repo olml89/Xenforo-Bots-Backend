@@ -3,7 +3,7 @@
 namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 
 use Illuminate\Console\Command;
-use olml89\XenforoBotsBackend\Bot\Application\Create\CreateBotUseCase as CreateBotUseCase;
+use olml89\XenforoBotsBackend\Bot\Application\Create\CreateBotUseCase;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
