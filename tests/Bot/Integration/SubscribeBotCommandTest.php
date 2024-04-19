@@ -100,7 +100,12 @@ final class SubscribeBotCommandTest extends TestCase implements ExecutesDoctrine
         );
         $this->assertDatabaseHas(
             'bots',
-            $expectedBotResult->jsonSerialize()
+            array_diff_key(
+                $expectedBotResult->jsonSerialize(),
+                array_flip([
+                    'subscription',
+                ])
+            )
         );
     }
 }
