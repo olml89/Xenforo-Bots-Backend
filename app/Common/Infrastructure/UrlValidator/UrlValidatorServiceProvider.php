@@ -11,7 +11,7 @@ final class UrlValidatorServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             UrlValidator::class,
-            LaravelUrlValidator::class,
+            LaravelUrlValidator::class
         );
     }
 }

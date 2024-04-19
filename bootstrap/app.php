@@ -9,6 +9,7 @@ use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\ShowBotSubscriptionComm
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\SyncBotCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\UpdateBotSubscriptionCommand;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Console\CreateDatabaseCommand;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Console\GenerateApiKeyCommand;
 use olml89\XenforoBotsBackend\Reply\Infrastructure\Console\PublishReplyCommand;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
     )
     ->withCommands([
+        GenerateApiKeyCommand::class,
         CreateDatabaseCommand::class,
         SubscribeBotCommand::class,
         SyncBotCommand::class,

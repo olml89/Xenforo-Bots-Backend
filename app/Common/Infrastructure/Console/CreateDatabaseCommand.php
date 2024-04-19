@@ -12,7 +12,7 @@ final class CreateDatabaseCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-database {--migrate}';
+    protected $signature = 'app:database:create {--migrate}';
 
     /**
      * The console command description.
