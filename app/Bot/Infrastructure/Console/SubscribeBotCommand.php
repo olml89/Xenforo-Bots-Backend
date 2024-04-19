@@ -4,10 +4,12 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 
 use Illuminate\Console\Command;
 use olml89\XenforoBotsBackend\Bot\Application\Subscribe\SubscribeBotUseCase;
-use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreationException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionValidationException;
 
 final class SubscribeBotCommand extends Command
 {
@@ -16,31 +18,36 @@ final class SubscribeBotCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'bot:subscribe {name} {password}';
+    protected $signature = 'bot:subscribe {username} {password}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Subscribes an already existing user on the remote Xenforo platform as a bot';
+    protected $description = 'Creates a Bot on the remote Xenforo platform with a BotSubscription pointing to this platform.';
 
     /**
      * Execute the console command.
      *
-     * @throws InvalidUsernameException
-     * @throws BotNotFoundException | SubscriptionCreationException | BotStorageException
+     * @throws BotValidationException
+     * @throws BotAlreadyExistsException
+     * @throws BotCreationException
+     * @throws SubscriptionValidationException
+     * @throws SubscriptionCreationException
+     * @throws BotStorageException
      */
     public function handle(SubscribeBotUseCase $subscribeBot): void
     {
         $subscribeBotResult = $subscribeBot->subscribe(
-            $name = $this->argument('name'),
+            $this->argument('username'),
             $this->argument('password'),
         );
 
         $this->output->success(
-            sprintf('Bot <%s> subscribed successfully', $name)
+            sprintf('Bot \'%s\' subscribed successfully', $subscribeBotResult->username)
         );
-        $this->output->write(json_encode($subscribeBotResult, JSON_PRETTY_PRINT));
+
+        $this->output->write((string)$subscribeBotResult);
     }
 }

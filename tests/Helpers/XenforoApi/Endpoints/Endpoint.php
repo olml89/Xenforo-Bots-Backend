@@ -15,13 +15,19 @@ abstract readonly class Endpoint
     protected MockHandler $responses;
     protected GuzzleRequest $request;
 
-    public function __construct(MockHandler $responses, string $method, string $uri, ?JsonSerializable $requestData = null)
-    {
+    public function __construct(
+        MockHandler $responses,
+        string $method,
+        string $uri,
+        ?JsonSerializable $requestData = null,
+        array $headers = [],
+    ) {
         $this->responses = $responses;
 
         $this->request = new GuzzleRequest(
             method: $method,
             uri: $uri,
+            headers: $headers,
             body: is_null($requestData) ? null : (string)$requestData,
         );
     }

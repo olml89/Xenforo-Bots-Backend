@@ -8,18 +8,15 @@
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
-
     <entity
         name="olml89\XenforoBotsBackend\Bot\Domain\Bot"
         table="bots"
     >
-
         <id
             name="botId"
             column="bot_id"
             type="uuid"
         />
-
         <field
             name="apiKey"
             column="api_key"
@@ -27,7 +24,6 @@
             length="32"
             unique="true"
         />
-
         <field
             name="username"
             column="username"
@@ -35,13 +31,18 @@
             length="50"
             unique="true"
         />
-
-        <field
-            name="registeredAt"
-            column="registered_at"
-            type="datetime_immutable"
-        />
-
+        <one-to-one
+            field="subscription"
+            target-entity="olml89\XenforoBotsBackend\Subscription\Domain\Subscription"
+            fetch="EAGER"
+        >
+            <join-column
+                name="subscription_id"
+                referenced-column-name="subscription_id"
+            />
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-one>
     </entity>
-
 </doctrine-mapping>

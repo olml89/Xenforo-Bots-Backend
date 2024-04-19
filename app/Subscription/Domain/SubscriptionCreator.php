@@ -7,7 +7,8 @@ use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 interface SubscriptionCreator
 {
     /**
+     * @throws SubscriptionValidationException
      * @throws SubscriptionCreationException
      */
-    public function create(Bot $bot, string $password): Subscription;
+    public function create(Bot $bot): Subscription;
 }

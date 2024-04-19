@@ -16,14 +16,14 @@ final readonly class XenforoApiConsumerFactory
     private ApiKey $superUserApiKey;
 
     /**
-     * @throws InvalidApiKeyException
      * @throws InvalidUrlException
+     * @throws InvalidApiKeyException
      */
     public function __construct(Config $config, UrlValidator $urlValidator)
     {
         $this->apiUrl = Url::create(
             $config->get('xenforo.api_url'),
-            $urlValidator,
+            $urlValidator
         );
 
         $this->superUserApiKey = ApiKey::create($config->get('xenforo.super_user_api_key'));

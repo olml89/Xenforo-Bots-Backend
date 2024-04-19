@@ -101,6 +101,8 @@ final class DoctrineServiceProvider extends ServiceProvider
                 params: [
                     'driverClass' => PersistentMySQLDriver::class,
                     'pdo' => $laravelConnection->getPdo(),
+                    'charset' => $laravelConnection->getConfig('charset'),
+                    'collation' => $laravelConnection->getConfig('collation'),
                 ],
                 config: $config,
             );

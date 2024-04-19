@@ -7,14 +7,16 @@ use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
 final class SubscriptionResult extends JsonSerializable
 {
-    public readonly string $id;
-    public readonly string $xenforo_url;
+    public readonly string $subscription_id;
     public readonly string $subscribed_at;
+    public readonly bool $is_active;
+    public readonly string $activation_changed_at;
 
     public function __construct(Subscription $subscription)
     {
-        $this->id = (string)$subscription->id();
-        $this->xenforo_url = (string)$subscription->xenforoUrl();
-        $this->subscribed_at = $subscription->subscribedAt()->format('c');
+        $this->subscription_id = (string)$subscription->subscriptionId();
+        $this->subscribed_at = $subscription->subscribedAt()->toOutput();
+        $this->is_active = $subscription->isActive();
+        $this->activation_changed_at = $subscription->activationChangedAt()->toOutput();
     }
 }

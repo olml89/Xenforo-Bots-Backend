@@ -3,39 +3,60 @@
 namespace olml89\XenforoBotsBackend\Bot\Application\Subscribe;
 
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
-use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
-use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Domain\Password;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreationException;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
+use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionValidationException;
 
-final class SubscribeBotUseCase
+final readonly class SubscribeBotUseCase
 {
     public function __construct(
-        private readonly BotFinder $botFinder,
-        private readonly SubscriptionCreator $botSubscriptionCreator,
-        private readonly BotRepository $botRepository,
+        private BotRepository $botRepository,
+        private BotCreator $botCreator,
+        private SubscriptionCreator $subscriptionCreator,
     ) {}
 
     /**
-     * @throws InvalidUsernameException
-     * @throws BotNotFoundException | SubscriptionCreationException | BotStorageException
+     * @throws BotValidationException
+     * @throws BotAlreadyExistsException
+     * @throws BotCreationException
+     * @throws SubscriptionValidationException
+     * @throws SubscriptionCreationException
+     * @throws BotStorageException
      */
-    public function subscribe(string $name, string $password): BotResult
+    public function subscribe(string $username, string $password): BotResult
     {
-        $bot = $this->botFinder->find(new Username($name), $password);
+        try {
+            $username = Username::create($username);
+            $password = Password::create($password);
 
-        if ($bot->isSubscribed()) {
-            throw SubscriptionCreationException::alreadySubscribed($bot);
+            if (!is_null($this->botRepository->getByUsername($username))) {
+                throw BotAlreadyExistsException::username($username);
+            }
+
+            $bot = $this
+                ->botCreator
+                ->create($username, $password);
+
+            $subscription = $this
+                ->subscriptionCreator
+                ->create($bot);
+
+            $bot->subscribe($subscription);
+            $this->botRepository->save($bot);
+
+            return new BotResult($bot);
         }
-
-        $subscription = $this->botSubscriptionCreator->create($bot, $password);
-        $bot->subscribe($subscription);
-        $this->botRepository->save($bot);
-
-        return new BotResult($bot);
+        catch (ValueObjectException $e) {
+            throw new BotValidationException($e);
+        }
     }
 }

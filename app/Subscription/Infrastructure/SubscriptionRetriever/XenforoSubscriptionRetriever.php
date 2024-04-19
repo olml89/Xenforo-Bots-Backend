@@ -46,7 +46,7 @@ final class XenforoSubscriptionRetriever implements SubscriptionRetriever
                 id: new Uuid($subscriptionResponseData->id, $this->uuidManager),
                 bot: $bot,
                 xenforoUrl: $this->xenforoApi->apiUrl(),
-                subscribedAt: UnixTimestamp::fromTimestamp($subscriptionResponseData->subscribed_at),
+                activationChangedAt: UnixTimestamp::fromTimestamp($subscriptionResponseData->subscribed_at),
             );
         }
         catch (XenforoApiException|ValueObjectException $e) {

@@ -2,37 +2,57 @@
 
 namespace olml89\XenforoBotsBackend\Subscription\Domain;
 
-use DateTimeImmutable;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
 final class Subscription
 {
-    public function __construct(
-        private readonly Uuid $id,
-        private readonly Bot $bot,
-        private readonly Url $xenforoUrl,
-        private readonly DateTimeImmutable $subscribedAt,
-    ) {}
+    private bool $isActive = false;
+    private UnixTimestamp $activationChangedAt;
 
-    public function id(): Uuid
+    public function __construct(
+        private readonly Uuid $subscriptionId,
+        private readonly UnixTimestamp $subscribedAt,
+        private readonly Bot $bot,
+    ) {
+        $this->activationChangedAt = clone $this->subscribedAt;
+    }
+
+    public function subscriptionId(): Uuid
     {
-        return $this->id;
+        return $this->subscriptionId;
+    }
+
+    public function subscribedAt(): UnixTimestamp
+    {
+        return $this->subscribedAt;
+    }
+
+    public function activate(): void
+    {
+        $this->isActive = true;
+        $this->activationChangedAt = new UnixTimestamp();
+    }
+
+    public function deactivate(): void
+    {
+        $this->isActive = false;
+        $this->activationChangedAt = new UnixTimestamp();
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function activationChangedAt(): UnixTimestamp
+    {
+        return $this->activationChangedAt;
     }
 
     public function bot(): Bot
     {
         return $this->bot;
-    }
-
-    public function xenforoUrl(): Url
-    {
-        return $this->xenforoUrl;
-    }
-
-    public function subscribedAt(): DateTimeImmutable
-    {
-        return $this->subscribedAt;
     }
 }

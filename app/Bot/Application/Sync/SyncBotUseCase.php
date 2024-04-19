@@ -4,7 +4,7 @@ namespace olml89\XenforoBotsBackend\Bot\Application\Sync;
 
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAuthenticator;
-use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\SubscriptionValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
@@ -22,14 +22,14 @@ final class SyncBotUseCase
 
     /**
      * @throws InvalidUsernameException
-     * @throws BotValidationException | BotStorageException
+     * @throws SubscriptionValidationException | BotStorageException
      */
     public function sync(string $name, string $password): BotResult
     {
         $username = new Username($name);
 
         if ($this->botFinder->exists($username)) {
-            throw BotValidationException::alreadyExists($username);
+            throw SubscriptionValidationException::alreadyExists($username);
         }
 
         $bot = $this->botAuthenticator->authenticate($username, $password);

@@ -30,6 +30,11 @@ final readonly class Password implements StringValueObject
         }
     }
 
+    public function equals(Password $password): bool
+    {
+        return $this->value() === $password->value();
+    }
+
     public function value(): string
     {
         return $this->password;

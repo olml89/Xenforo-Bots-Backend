@@ -4,7 +4,7 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\BotAuthenticator;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAuthenticator;
-use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\SubscriptionValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\AutoId\AutoId;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Password\Hasher;
@@ -25,7 +25,7 @@ final class XenforoBotAuthenticator implements BotAuthenticator
     ) {}
 
     /**
-     * @throws BotValidationException
+     * @throws SubscriptionValidationException
      */
     public function authenticate(Username $username, string $password): Bot
     {
@@ -45,7 +45,7 @@ final class XenforoBotAuthenticator implements BotAuthenticator
             );
         }
         catch (XenforoApiException|ValueObjectException $e) {
-            throw new BotValidationException($e->getMessage(), $e);
+            throw new SubscriptionValidationException($e->getMessage(), $e);
         }
     }
 }

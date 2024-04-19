@@ -13,4 +13,11 @@ final class XenforoApiConsumerServiceProvider extends ServiceProvider
             concrete: fn (): XenforoApiConsumer => $xenforoApiConsumerFactory->create()
         );
     }
+
+    public function provides(): array
+    {
+        return [
+            XenforoApiConsumer::class,
+        ];
+    }
 }

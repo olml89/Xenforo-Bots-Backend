@@ -4,9 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\CancelBotSubscriptionCommand;
-use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\CreateBotCommand;
-use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\ShowBotSubscriptionCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\SubscribeBotCommand;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\ShowBotSubscriptionCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\SyncBotCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\UpdateBotSubscriptionCommand;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Console\CreateDatabaseCommand;
@@ -18,9 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withCommands([
         CreateDatabaseCommand::class,
-        CreateBotCommand::class,
-        SyncBotCommand::class,
         SubscribeBotCommand::class,
+        SyncBotCommand::class,
         UpdateBotSubscriptionCommand::class,
         CancelBotSubscriptionCommand::class,
         ShowBotSubscriptionCommand::class,

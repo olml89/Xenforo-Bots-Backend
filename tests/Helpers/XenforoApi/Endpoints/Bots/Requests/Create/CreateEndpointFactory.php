@@ -16,8 +16,8 @@ final readonly class CreateEndpointFactory
 
     public function create(MockHandler $responses, Bot $bot, ?XenforoBotCreationData $requestData): CreateEndpoint
     {
-        $responseData = $this->xenforoBotDataCreator->bot($bot)->create();
         $requestData ??= $this->xenforoBotCreationDataCreator->bot($bot)->create();
+        $responseData = $this->xenforoBotDataCreator->bot($bot)->create();
 
         return new CreateEndpoint(
             responseData: $responseData,

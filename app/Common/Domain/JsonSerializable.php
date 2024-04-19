@@ -14,6 +14,10 @@ abstract class JsonSerializable implements JsonSerializableContract, Stringable
 
     public function __toString(): string
     {
-        return json_encode($this);
+        return sprintf(
+            '%s%s',
+            json_encode($this, JSON_PRETTY_PRINT),
+            PHP_EOL,
+        );
     }
 }

@@ -40,4 +40,18 @@ final class UuidTest extends TestCase
 
         Uuid::random();
     }
+
+    public function testItChecksEquality(): void
+    {
+        $uuid = Uuid::random();
+        $equalUuid = clone $uuid;
+        $differentUuid = Uuid::random();
+
+        $this->assertTrue(
+            $uuid->equals($equalUuid)
+        );
+        $this->assertFalse(
+            $uuid->equals($differentUuid)
+        );
+    }
 }

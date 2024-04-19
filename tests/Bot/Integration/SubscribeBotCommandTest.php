@@ -3,7 +3,8 @@
 namespace Tests\Bot\Integration;
 
 use Database\Factories\BotFactory;
-use Illuminate\Support\Facades\Artisan;
+use Database\Factories\SubscriptionFactory;
+use Database\Factories\ValueObjects\PasswordFactory;
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Tests\Helpers\DoctrineTransactions;
@@ -12,25 +13,22 @@ use Tests\Helpers\XenforoApi\InteractsWithXenforoApi;
 use Tests\Helpers\XenforoApi\XenforoApi;
 use Tests\TestCase;
 
-final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTransactions, InteractsWithXenforoApi
+final class SubscribeBotCommandTest extends TestCase implements ExecutesDoctrineTransactions, InteractsWithXenforoApi
 {
     use DoctrineTransactions;
     use XenforoApi;
 
     private readonly BotFactory $botFactory;
-
-    private const string CREATED_USER_OUTPUT_FORMAT =
-        '"bot_id": "%s",'
-        ."\n".'    "api_key": "%s",'
-        ."\n".'    "username": "%s",'
-        ."\n".'    "registered_at": "%s",'
-        ."\n".'    "subscription": null';
+    private readonly SubscriptionFactory $subscriptionFactory;
+    private readonly PasswordFactory $passwordFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->botFactory = $this->resolve(BotFactory::class);
+        $this->subscriptionFactory = $this->resolve(SubscriptionFactory::class);
+        $this->passwordFactory = $this->resolve(PasswordFactory::class);
     }
 
     public function testItThrowsRuntimeExceptionIfUsernameAndPasswordAreEmpty(): void
@@ -39,7 +37,7 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
         $this->expectExceptionMessage('Not enough arguments (missing: "username, password").');
 
         $this
-            ->artisan('bot:create')
+            ->artisan('bot:subscribe')
             ->assertFailed();
     }
 
@@ -49,7 +47,7 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
         $this->expectExceptionMessage('Not enough arguments (missing: "password").');
 
         $this
-            ->artisan('bot:create', [
+            ->artisan('bot:subscribe', [
                 'username' => fake()->userName(),
             ])
             ->assertFailed();
@@ -57,9 +55,22 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
 
     public function testItCreatesNewXenforoBotAndPrintsABotResult(): void
     {
-        $bot = $this->botFactory->create();
-        $password = fake()->password();
-        $expectedBotResult = new BotResult($bot);
+        $bot = $this
+            ->botFactory
+            ->create();
+
+        $subscription = $this
+            ->subscriptionFactory
+            ->bot($bot)
+            ->create();
+
+        $password = $this
+            ->passwordFactory
+            ->create();
+
+        $expectedBotResult = new BotResult(
+            (clone $bot)->subscribe($subscription)
+        );
 
         $this
             ->xenforoApiResponseSimulator
@@ -68,9 +79,15 @@ final class CreateBotCommandTest extends TestCase implements ExecutesDoctrineTra
             ->ok();
 
         $this
-            ->artisan('bot:create', [
+            ->xenforoApiResponseSimulator
+            ->botSubscriptions($subscription)
+            ->create()
+            ->ok();
+
+        $this
+            ->artisan('bot:subscribe', [
                 'username' => (string)$bot->username(),
-                'password' => $password,
+                'password' => (string)$password,
             ])
             ->assertSuccessful()
             ->expectsOutputToContain(

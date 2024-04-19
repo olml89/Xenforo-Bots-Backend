@@ -3,6 +3,7 @@
 namespace Tests\Helpers\XenforoApi\Endpoints\Bots\Requests;
 
 use Database\Factories\BotFactory;
+use Database\Factories\ValueObjects\UnixTimestampFactory;
 use Faker\Generator;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotData;
@@ -17,6 +18,7 @@ final class XenforoBotDataCreator
 
     public function __construct(
         private readonly BotFactory $botFactory,
+        private readonly UnixTimestampFactory $unixTimestampFactory,
         private readonly Generator $faker,
     ) {}
 
@@ -72,7 +74,7 @@ final class XenforoBotDataCreator
             bot_id: $this->bot_id ?? (string)$this->bot->botId(),
             api_key: $this->api_key ?? (string)$this->bot->apiKey(),
             user_id: $this->user_id ?? $this->faker->numberBetween(1, 100),
-            created_at: $this->created_at ?? $this->bot->registeredAt()->timestamp()
+            created_at: $this->created_at ?? $this->unixTimestampFactory->create()->timestamp()
         );
         $this->reset();
 

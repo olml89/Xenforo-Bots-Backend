@@ -5,6 +5,7 @@ use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DoctrineServiceProv
 use olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\AppServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiConsumerServiceProvider;
+use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoSubscriptionServiceProvider;
 
 return [
 
@@ -24,5 +25,6 @@ return [
     UrlValidatorServiceProvider::class,
     XenforoApiConsumerServiceProvider::class,
     XenforoBotServiceProvider::class,
+    XenforoSubscriptionServiceProvider::class,
 
 ];

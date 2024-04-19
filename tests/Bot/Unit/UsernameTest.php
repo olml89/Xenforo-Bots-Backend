@@ -2,13 +2,23 @@
 
 namespace Tests\Bot\Unit;
 
-use Illuminate\Foundation\Testing\TestCase;
+use Database\Factories\ValueObjects\UsernameFactory;
 use Illuminate\Support\Str;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use Tests\TestCase;
 
 final class UsernameTest extends TestCase
 {
+    private readonly UsernameFactory $usernameFactory;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->usernameFactory = $this->resolve(UsernameFactory::class);
+    }
+
     public function testItDoesNotAllowEmptyUsernames(): void
     {
         $value = '';
@@ -40,6 +50,20 @@ final class UsernameTest extends TestCase
         $this->assertEquals(
             $value,
             (string)$username
+        );
+    }
+
+    public function testItChecksEquality(): void
+    {
+        $username = $this->usernameFactory->create();
+        $equalUsername = clone $username;
+        $differentUsername = $this->usernameFactory->create();
+
+        $this->assertTrue(
+            $username->equals($equalUsername)
+        );
+        $this->assertFalse(
+            $username->equals($differentUsername)
         );
     }
 }

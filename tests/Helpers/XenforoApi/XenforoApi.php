@@ -19,14 +19,9 @@ trait XenforoApi
 
         $this->app->singleton(
             XenforoApiConsumer::class,
-            function (Application $app): XenforoApiConsumer {
-                /** @var XenforoApiConsumerFactory $xenforoApiConsumerFactory */
-                $xenforoApiConsumerFactory = $app->get(XenforoApiConsumerFactory::class);
-
-                return $xenforoApiConsumerFactory->create(
-                    handlerStack:  HandlerStack::create($this->xenforoApiResponseSimulator->responses())
-                );
-            }
+            fn (): XenforoApiConsumer => $this->resolve(XenforoApiConsumerFactory::class)->create(
+                handlerStack:  HandlerStack::create($this->xenforoApiResponseSimulator->responses())
+            )
         );
     }
 }

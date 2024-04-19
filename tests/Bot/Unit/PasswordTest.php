@@ -2,13 +2,23 @@
 
 namespace Tests\Bot\Unit;
 
-use Illuminate\Foundation\Testing\TestCase;
+use Database\Factories\ValueObjects\PasswordFactory;
 use Illuminate\Support\Str;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidPasswordException;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
+use Tests\TestCase;
 
 final class PasswordTest extends TestCase
 {
+    private readonly PasswordFactory $passwordFactory;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->passwordFactory = $this->resolve(PasswordFactory::class);
+    }
+
     public function testItDoesNotAllowEmptyPasswords(): void
     {
         $value = '';
@@ -32,5 +42,19 @@ final class PasswordTest extends TestCase
             $value,
             (string)$password)
         ;
+    }
+
+    public function testItChecksEquality(): void
+    {
+        $password = $this->passwordFactory->create();
+        $equalPassword = clone $password;
+        $differentPassword = $this->passwordFactory->create();
+
+        $this->assertTrue(
+            $password->equals($equalPassword)
+        );
+        $this->assertFalse(
+            $password->equals($differentPassword)
+        );
     }
 }

@@ -3,27 +3,15 @@
 namespace olml89\XenforoBotsBackend\Subscription\Domain;
 
 use Exception;
-use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use Throwable;
 
 final class SubscriptionCreationException extends Exception
 {
-    public function __construct(string $message, ?Throwable $previous = null)
+    public function __construct(Throwable $exception)
     {
         parent::__construct(
-            message: $message,
-            previous: $previous,
-        );
-    }
-
-    public static function alreadySubscribed(Bot $bot): self
-    {
-        return new self(
-            sprintf(
-                'Bot <%s> is already subscribed to \'%s\'',
-                $bot->id(),
-                $bot->subscription()->xenforoUrl(),
-            )
+            message: $exception->getMessage(),
+            previous: $exception,
         );
     }
 }

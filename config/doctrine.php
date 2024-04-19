@@ -17,8 +17,8 @@ return [
 
     'mappings' => [
         app_path('Bot/Infrastructure/Doctrine'),
+        app_path('Subscription/Infrastructure/Doctrine'),
         //app_path('Reply/Infrastructure/Persistence'),
-        //app_path('Subscription/Infrastructure/Persistence'),
     ],
 
     'proxies' => [

@@ -18,7 +18,8 @@ final readonly class RetrieveEndpointFactory
 
         return new RetrieveEndpoint(
             responseData: $responseData,
-            responses: $responses
+            responses: $responses,
+            bot: $bot
         );
     }
 }

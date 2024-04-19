@@ -23,7 +23,7 @@ final readonly class XenforoBotData extends ApiResponseData
             bot_id: $bot['bot_id'],
             api_key: $bot['ApiKey']['api_key'],
             user_id: $bot['user_id'],
-            created_at: $bot['created_at'],
+            created_at: $bot['created_at']
         );
     }
 }
