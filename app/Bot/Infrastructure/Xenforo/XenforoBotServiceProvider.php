@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\BotActivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotDeactivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
 
 final class XenforoBotServiceProvider extends ServiceProvider
@@ -23,6 +24,10 @@ final class XenforoBotServiceProvider extends ServiceProvider
         $this->app->bind(
             BotActivator::class,
             XenforoBotActivator::class
+        );
+        $this->app->bind(
+            BotDeactivator::class,
+            XenforoBotDeactivator::class
         );
     }
 

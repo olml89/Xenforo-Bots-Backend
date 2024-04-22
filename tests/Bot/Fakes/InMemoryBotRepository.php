@@ -6,17 +6,22 @@ use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use WeakMap;
 
 final class InMemoryBotRepository implements BotRepository
 {
     /**
-     * @var Bot[]
+     * @var WeakMap<Uuid, Bot>
      */
-    private array $bots;
+    private WeakMap $bots;
 
     public function __construct(Bot ...$bots)
     {
-        $this->bots = $bots;
+        $this->bots = new WeakMap();
+
+        foreach ($bots as $bot) {
+            $this->bots[$bot->botId()] = $bot;
+        }
     }
 
     public function allSubscribed(): array
@@ -29,13 +34,7 @@ final class InMemoryBotRepository implements BotRepository
 
     public function get(Uuid $botId): ?Bot
     {
-        foreach ($this->bots as $bot) {
-            if ($bot->botId()->equals($botId)) {
-                return $bot;
-            }
-        }
-
-        return null;
+        return $this->bots[$botId] ?? null;
     }
 
     public function getByUsername(Username $username): ?Bot
@@ -51,6 +50,6 @@ final class InMemoryBotRepository implements BotRepository
 
     public function save(Bot $bot): void
     {
-        $this->bots[] = $bot;
+        $this->bots[$bot->botId()] = $bot;
     }
 }

@@ -18,7 +18,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\Bot\Mocks\BotCreatorMocker;
-use Tests\Bot\Mocks\SubscriptionCreatorMocker;
+use Tests\Bot\Mocks\BotSubscriberMocker;
 use Tests\TestCase;
 
 final class SubscribeBotUseCaseTest extends TestCase
@@ -28,7 +28,7 @@ final class SubscribeBotUseCaseTest extends TestCase
     private readonly BotFactory $botFactory;
     private readonly SubscriptionFactory $subscriptionFactory;
     private readonly BotCreatorMocker $botCreatorMocker;
-    private readonly SubscriptionCreatorMocker $subscriptionCreatorMocker;
+    private readonly BotSubscriberMocker $botSubscriberMocker;
 
     protected function setUp(): void
     {
@@ -39,7 +39,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         $this->botFactory = $this->resolve(BotFactory::class);
         $this->subscriptionFactory = $this->resolve(SubscriptionFactory::class);
         $this->botCreatorMocker = $this->resolve(BotCreatorMocker::class);
-        $this->subscriptionCreatorMocker = $this->resolve(SubscriptionCreatorMocker::class);
+        $this->botSubscriberMocker = $this->resolve(BotSubscriberMocker::class);
     }
 
     public function testItThrowsBotValidationExceptionIfInvalidUsernameIsProvided(): void
@@ -140,7 +140,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         $this->mock(
             BotSubscriber::class,
             fn (MockInterface $mock) => $this
-                ->subscriptionCreatorMocker
+                ->botSubscriberMocker
                 ->gets($bot)
                 ->returns($subscription)
                 ->mock($mock)

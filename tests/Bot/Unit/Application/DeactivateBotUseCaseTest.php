@@ -5,21 +5,21 @@ namespace Tests\Bot\Unit\Application;
 use Database\Factories\SubscribedBotFactory;
 use Database\Factories\ValueObjects\UsernameFactory;
 use Mockery\MockInterface;
-use olml89\XenforoBotsBackend\Bot\Application\Activate\ActivateBotUseCase;
-use olml89\XenforoBotsBackend\Bot\Domain\BotActivator;
+use olml89\XenforoBotsBackend\Bot\Application\Deactivate\DeactivateBotUseCase;
+use olml89\XenforoBotsBackend\Bot\Domain\BotDeactivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use Tests\Bot\Fakes\InMemoryBotRepository;
-use Tests\Bot\Mocks\BotActivatorMocker;
+use Tests\Bot\Mocks\BotDeactivatorMocker;
 use Tests\TestCase;
 
-final class ActivateBotUseCaseTest extends TestCase
+final class DeactivateBotUseCaseTest extends TestCase
 {
     private readonly UsernameFactory $usernameFactory;
     private readonly SubscribedBotFactory $subscribedBotFactory;
-    private readonly BotActivatorMocker $botActivatorMocker;
+    private readonly BotDeactivatorMocker $botDeactivatorMocker;
 
     protected function setUp(): void
     {
@@ -27,7 +27,7 @@ final class ActivateBotUseCaseTest extends TestCase
 
         $this->usernameFactory = $this->resolve(UsernameFactory::class);
         $this->subscribedBotFactory = $this->resolve(SubscribedBotFactory::class);
-        $this->botActivatorMocker = $this->resolve(BotActivatorMocker::class);
+        $this->botDeactivatorMocker = $this->resolve(BotDeactivatorMocker::class);
     }
 
     public function testItThrowsBotValidationExceptionIfInvalidUsernameIsProvided(): void
@@ -39,8 +39,8 @@ final class ActivateBotUseCaseTest extends TestCase
         );
 
         $this
-            ->resolve(ActivateBotUseCase::class)
-            ->activate($invalidUsername);
+            ->resolve(DeactivateBotUseCase::class)
+            ->deactivate($invalidUsername);
     }
 
     public function testItThrowsBotNotFoundExceptionIfABotWithAProvidedUsernameDoesNotExist(): void
@@ -57,14 +57,14 @@ final class ActivateBotUseCaseTest extends TestCase
         );
 
         $this
-            ->resolve(ActivateBotUseCase::class)
-            ->activate((string)$username);
+            ->resolve(DeactivateBotUseCase::class)
+            ->deactivate((string)$username);
     }
 
     public function testItActivatesABot(): void
     {
         $bot = $this->subscribedBotFactory->create();
-        $bot->deactivate();
+        $bot->activate();
 
         $this->app->instance(
             BotRepository::class,
@@ -72,18 +72,18 @@ final class ActivateBotUseCaseTest extends TestCase
         );
 
         $this->mock(
-            BotActivator::class,
+            BotDeactivator::class,
             fn (MockInterface $mock) => $this
-                ->botActivatorMocker
+                ->botDeactivatorMocker
                 ->gets($bot)
                 ->mock($mock)
         );
 
         $this
-            ->resolve(ActivateBotUseCase::class)
-            ->activate((string)$bot->username());
+            ->resolve(DeactivateBotUseCase::class)
+            ->deactivate((string)$bot->username());
 
-        $this->assertTrue(
+        $this->assertFalse(
             $bot->isActive()
         );
     }

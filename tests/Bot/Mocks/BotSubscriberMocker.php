@@ -6,7 +6,7 @@ use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 
-final readonly class SubscriptionCreatorMocker
+final readonly class BotSubscriberMocker
 {
     private Bot $bot;
     private Subscription $subscription;
@@ -28,7 +28,7 @@ final readonly class SubscriptionCreatorMocker
     public function mock(MockInterface $mock): void
     {
         $mock
-            ->shouldReceive('create')
+            ->shouldReceive('subscribe')
             ->once()
             ->withArgs(
                 fn (Bot $bot): bool => $bot->botId()->equals($this->bot->botId())

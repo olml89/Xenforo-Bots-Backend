@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Activate;
+namespace Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Deactivate;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
@@ -8,9 +8,9 @@ use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Tests\Helpers\XenforoApi\Endpoints\Endpoint;
 
-final readonly class ActivateEndpoint extends Endpoint
+final readonly class DeactivateEndpoint extends Endpoint
 {
-    private const string METHOD = 'POST';
+    private const string METHOD = 'DELETE';
     private const string URI = 'bots/%s/subscriptions/%s/activation';
 
     public function __construct(Subscription $subscription, MockHandler $responses)
