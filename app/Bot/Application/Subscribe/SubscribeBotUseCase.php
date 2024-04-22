@@ -5,23 +5,23 @@ namespace olml89\XenforoBotsBackend\Bot\Application\Subscribe;
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
+use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreationException;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionValidationException;
 
 final readonly class SubscribeBotUseCase
 {
     public function __construct(
         private BotRepository $botRepository,
-        private BotCreator $botCreator,
-        private SubscriptionCreator $subscriptionCreator,
+        private BotCreator    $botCreator,
+        private BotSubscriber $subscriptionCreator,
     ) {}
 
     /**
@@ -48,7 +48,7 @@ final readonly class SubscribeBotUseCase
 
             $subscription = $this
                 ->subscriptionCreator
-                ->create($bot);
+                ->subscribe($bot);
 
             $bot->subscribe($subscription);
             $this->botRepository->save($bot);

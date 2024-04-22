@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo;
+namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\ApiResponseData;
 use Psr\Http\Message\ResponseInterface;

@@ -33,7 +33,7 @@
         />
         <one-to-one
             field="subscription"
-            target-entity="olml89\XenforoBotsBackend\Subscription\Domain\Subscription"
+            target-entity="olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription"
             fetch="EAGER"
         >
             <join-column

@@ -15,7 +15,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidPasswordException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\Bot\Mocks\BotCreatorMocker;
 use Tests\Bot\Mocks\SubscriptionCreatorMocker;
@@ -138,7 +138,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         );
 
         $this->mock(
-            SubscriptionCreator::class,
+            BotSubscriber::class,
             fn (MockInterface $mock) => $this
                 ->subscriptionCreatorMocker
                 ->gets($bot)

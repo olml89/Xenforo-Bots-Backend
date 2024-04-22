@@ -4,7 +4,7 @@ namespace Tests\Bot\Mocks;
 
 use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 
 final readonly class SubscriptionCreatorMocker
 {

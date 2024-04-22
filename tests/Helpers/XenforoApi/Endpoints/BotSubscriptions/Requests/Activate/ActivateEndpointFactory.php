@@ -3,7 +3,7 @@
 namespace Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Activate;
 
 use GuzzleHttp\Handler\MockHandler;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 
 final class ActivateEndpointFactory
 {

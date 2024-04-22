@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBotsBackend\Subscription\Domain;
+namespace olml89\XenforoBotsBackend\Bot\Domain\Subscription;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;

@@ -8,8 +8,8 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionCreationException;
-use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionValidationException;
 
 final class SubscribeBotCommand extends Command
 {

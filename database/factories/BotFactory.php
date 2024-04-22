@@ -8,7 +8,6 @@ use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
 final class BotFactory
 {

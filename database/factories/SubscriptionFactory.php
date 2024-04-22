@@ -4,9 +4,9 @@ namespace Database\Factories;
 
 use Database\Factories\ValueObjects\UnixTimestampFactory;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
 final class SubscriptionFactory
 {

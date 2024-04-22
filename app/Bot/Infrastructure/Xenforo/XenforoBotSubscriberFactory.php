@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo;
+namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use Illuminate\Config\Repository as Config;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
@@ -10,7 +10,7 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\UrlValidator;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiConsumer;
 
-final readonly class XenforoBotSubscriptionCreatorFactory
+final readonly class XenforoBotSubscriberFactory
 {
     private Url $backendUrl;
     private ApiKey $backendApiKey;
@@ -32,9 +32,9 @@ final readonly class XenforoBotSubscriptionCreatorFactory
         $this->backendApiKey = ApiKey::create($config->get('app.api_key'));
     }
 
-    public function create(): XenforoBotSubscriptionCreator
+    public function create(): XenforoBotSubscriber
     {
-        return new XenforoBotSubscriptionCreator(
+        return new XenforoBotSubscriber(
             xenforoApiConsumer: $this->xenforoApiConsumer,
             backendUrl: $this->backendUrl,
             backendApiKey: $this->backendApiKey

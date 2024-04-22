@@ -3,9 +3,9 @@
 namespace Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests;
 
 use Database\Factories\SubscriptionFactory;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
-use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoBotSubscriptionCreationData;
-use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoBotSubscriptionData;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotSubscriptionCreationData;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotSubscriptionData;
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Create\XenforoBotSubscriptionCreationDataCreator;
 
 final class XenforoBotSubscriptionDataCreator

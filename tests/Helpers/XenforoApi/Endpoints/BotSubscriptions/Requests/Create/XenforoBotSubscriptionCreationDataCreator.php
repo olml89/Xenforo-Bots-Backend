@@ -4,7 +4,7 @@ namespace Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Create;
 
 use Database\Factories\ValueObjects\ApiKeyFactory;
 use Database\Factories\ValueObjects\UrlFactory;
-use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoBotSubscriptionCreationData;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotSubscriptionCreationData;
 
 final class XenforoBotSubscriptionCreationDataCreator
 {

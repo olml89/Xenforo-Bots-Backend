@@ -4,6 +4,7 @@ namespace olml89\XenforoBotsBackend\Subscription\Infrastructure\SubscriptionRetr
 
 use Illuminate\Foundation\Application;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
@@ -11,7 +12,6 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidManager;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApi;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetrievalException;
 use olml89\XenforoBotsBackend\Subscription\Domain\SubscriptionRetriever;
 

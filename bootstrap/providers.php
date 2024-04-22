@@ -27,6 +27,5 @@ return [
     UrlValidatorServiceProvider::class,
     XenforoApiConsumerServiceProvider::class,
     XenforoBotServiceProvider::class,
-    XenforoSubscriptionServiceProvider::class,
 
 ];

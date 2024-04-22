@@ -3,6 +3,7 @@
 namespace olml89\XenforoBotsBackend\Subscription\Domain;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 
 interface SubscriptionRetriever
 {

@@ -3,8 +3,8 @@
 namespace Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions;
 
 use GuzzleHttp\Handler\MockHandler;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
-use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoBotSubscriptionCreationData;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo\XenforoBotSubscriptionCreationData;
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Activate\ActivateEndpoint;
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Activate\ActivateEndpointFactory;
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Create\CreateEndpoint;

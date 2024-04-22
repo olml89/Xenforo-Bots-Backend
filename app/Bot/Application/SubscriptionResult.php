@@ -2,8 +2,8 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Application;
 
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use olml89\XenforoBotsBackend\Common\Domain\JsonSerializable;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 
 final class SubscriptionResult extends JsonSerializable
 {

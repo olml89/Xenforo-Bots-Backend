@@ -4,7 +4,7 @@ namespace Tests\Helpers\XenforoApi;
 
 use GuzzleHttp\Handler\MockHandler;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
-use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
+use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use Tests\Helpers\XenforoApi\Endpoints\Bots\BotsResource;
 use Tests\Helpers\XenforoApi\Endpoints\Bots\BotsResourceFactory;
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\BotSubscriptionsResource;
