@@ -5,7 +5,7 @@ namespace Tests\Bot\Mocks;
 use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 
-final class BotDeactivatorMocker
+final class RemoteBotActivatorMocker
 {
     private Bot $bot;
 
@@ -19,11 +19,13 @@ final class BotDeactivatorMocker
     public function mock(MockInterface $mock): void
     {
         $mock
-            ->shouldReceive('deactivate')
+            ->shouldReceive('activate')
             ->once()
             ->withArgs(
                 fn (Bot $bot): bool => $bot->botId()->equals($this->bot->botId())
             )
             ->andReturn();
+
+        $this->bot->activate();
     }
 }

@@ -3,14 +3,10 @@
 namespace olml89\XenforoBotsBackend\Bot\Application\Subscribe;
 
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
-use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotProvisionException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
-use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
-use olml89\XenforoBotsBackend\Bot\Domain\BotRetrievalException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotRetriever;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
@@ -49,11 +45,10 @@ final readonly class SubscribeBotUseCase
                 ->botProvider
                 ->provide($username, Password::create($password));
 
-            $subscription = $this
+            $this
                 ->botSubscriber
                 ->subscribe($bot);
 
-            $bot->subscribe($subscription);
             $this->botRepository->save($bot);
 
             return new BotResult($bot);

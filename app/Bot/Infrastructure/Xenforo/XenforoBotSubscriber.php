@@ -4,6 +4,7 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotSubscriber;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionValidationException;
@@ -16,7 +17,7 @@ use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoAp
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiUnprocessableEntityException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiConsumer;
 
-final readonly class XenforoBotSubscriber implements BotSubscriber
+final readonly class XenforoBotSubscriber implements RemoteBotSubscriber
 {
     public function __construct(
         private XenforoApiConsumer $xenforoApiConsumer,

@@ -15,10 +15,10 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidPasswordException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotSubscriber;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\Bot\Mocks\BotProviderMocker;
-use Tests\Bot\Mocks\BotSubscriberMocker;
+use Tests\Bot\Mocks\RemoteBotSubscriberMocker;
 use Tests\TestCase;
 
 final class SubscribeBotUseCaseTest extends TestCase
@@ -28,7 +28,7 @@ final class SubscribeBotUseCaseTest extends TestCase
     private readonly BotFactory $botFactory;
     private readonly SubscriptionFactory $subscriptionFactory;
     private readonly BotProviderMocker $botProviderMocker;
-    private readonly BotSubscriberMocker $botSubscriberMocker;
+    private readonly RemoteBotSubscriberMocker $remoteBotSubscriberMocker;
 
     protected function setUp(): void
     {
@@ -39,7 +39,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         $this->botFactory = $this->resolve(BotFactory::class);
         $this->subscriptionFactory = $this->resolve(SubscriptionFactory::class);
         $this->botProviderMocker = $this->resolve(BotProviderMocker::class);
-        $this->botSubscriberMocker = $this->resolve(BotSubscriberMocker::class);
+        $this->remoteBotSubscriberMocker = $this->resolve(RemoteBotSubscriberMocker::class);
     }
 
     public function testItThrowsBotValidationExceptionIfInvalidUsernameIsProvided(): void
@@ -138,9 +138,9 @@ final class SubscribeBotUseCaseTest extends TestCase
         );
 
         $this->mock(
-            BotSubscriber::class,
+            RemoteBotSubscriber::class,
             fn (MockInterface $mock) => $this
-                ->botSubscriberMocker
+                ->remoteBotSubscriberMocker
                 ->gets($bot)
                 ->returns($subscription)
                 ->mock($mock)

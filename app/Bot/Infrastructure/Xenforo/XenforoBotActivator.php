@@ -4,11 +4,11 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotActivationException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotActivator;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotActivator;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiConsumer;
 
-final readonly class XenforoBotActivator implements BotActivator
+final readonly class XenforoBotActivator implements RemoteBotActivator
 {
     public function __construct(
         private XenforoApiConsumer $xenforoApiConsumer,

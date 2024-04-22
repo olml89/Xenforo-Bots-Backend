@@ -6,20 +6,20 @@ use Database\Factories\SubscribedBotFactory;
 use Database\Factories\ValueObjects\UsernameFactory;
 use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Application\Activate\ActivateBotUseCase;
-use olml89\XenforoBotsBackend\Bot\Domain\BotActivator;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotActivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use Tests\Bot\Fakes\InMemoryBotRepository;
-use Tests\Bot\Mocks\BotActivatorMocker;
+use Tests\Bot\Mocks\RemoteBotActivatorMocker;
 use Tests\TestCase;
 
 final class ActivateBotUseCaseTest extends TestCase
 {
     private readonly UsernameFactory $usernameFactory;
     private readonly SubscribedBotFactory $subscribedBotFactory;
-    private readonly BotActivatorMocker $botActivatorMocker;
+    private readonly RemoteBotActivatorMocker $remoteBotActivatorMocker;
 
     protected function setUp(): void
     {
@@ -27,7 +27,7 @@ final class ActivateBotUseCaseTest extends TestCase
 
         $this->usernameFactory = $this->resolve(UsernameFactory::class);
         $this->subscribedBotFactory = $this->resolve(SubscribedBotFactory::class);
-        $this->botActivatorMocker = $this->resolve(BotActivatorMocker::class);
+        $this->remoteBotActivatorMocker = $this->resolve(RemoteBotActivatorMocker::class);
     }
 
     public function testItThrowsBotValidationExceptionIfInvalidUsernameIsProvided(): void
@@ -72,9 +72,9 @@ final class ActivateBotUseCaseTest extends TestCase
         );
 
         $this->mock(
-            BotActivator::class,
+            RemoteBotActivator::class,
             fn (MockInterface $mock) => $this
-                ->botActivatorMocker
+                ->remoteBotActivatorMocker
                 ->gets($bot)
                 ->mock($mock)
         );

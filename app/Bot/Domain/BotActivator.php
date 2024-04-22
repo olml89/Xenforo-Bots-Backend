@@ -2,10 +2,19 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-interface BotActivator
+final readonly class BotActivator
 {
+    public function __construct(
+        private RemoteBotActivator $remoteBotActivator,
+    ) {}
+
     /**
      * @throws BotActivationException
      */
-    public function activate(Bot $bot): void;
+    public function activate(Bot $bot): void
+    {
+        $this->remoteBotActivator->activate($bot);
+
+        $bot->activate();
+    }
 }

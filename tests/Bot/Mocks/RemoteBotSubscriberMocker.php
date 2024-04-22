@@ -6,7 +6,7 @@ use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 
-final readonly class BotSubscriberMocker
+final readonly class RemoteBotSubscriberMocker
 {
     private Bot $bot;
     private Subscription $subscription;

@@ -4,10 +4,11 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use olml89\XenforoBotsBackend\Bot\Domain\BotActivator;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotActivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
-use olml89\XenforoBotsBackend\Bot\Domain\BotDeactivator;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotDeactivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotSubscriber;
 
 final class XenforoBotServiceProvider extends ServiceProvider
 {
@@ -18,15 +19,15 @@ final class XenforoBotServiceProvider extends ServiceProvider
             XenforoBotProvider::class
         );
         $this->app->bind(
-            BotSubscriber::class,
+            RemoteBotSubscriber::class,
             XenforoBotSubscriber::class
         );
         $this->app->bind(
-            BotActivator::class,
+            RemoteBotActivator::class,
             XenforoBotActivator::class
         );
         $this->app->bind(
-            BotDeactivator::class,
+            RemoteBotDeactivator::class,
             XenforoBotDeactivator::class
         );
     }
@@ -49,8 +50,8 @@ final class XenforoBotServiceProvider extends ServiceProvider
         return [
             BotProvider::class,
             BotSubscriber::class,
-            BotActivator::class,
-            BotDeactivator::class,
+            RemoteBotActivator::class,
+            RemoteBotDeactivator::class,
         ];
     }
 }

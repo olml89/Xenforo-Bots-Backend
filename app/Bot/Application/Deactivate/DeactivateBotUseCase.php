@@ -4,6 +4,7 @@ namespace olml89\XenforoBotsBackend\Bot\Application\Deactivate;
 
 use olml89\XenforoBotsBackend\Bot\Domain\BotDeactivationException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotDeactivator;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotDeactivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
@@ -32,7 +33,6 @@ final readonly class DeactivateBotUseCase
             $username = Username::create($username);
             $bot = $this->botFinder->findByUsername($username);
             $this->botDeactivator->deactivate($bot);
-            $bot->deactivate();
             $this->botRepository->save($bot);
         }
         catch (ValueObjectException $e) {
