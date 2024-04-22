@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Subscription\Unit;
+namespace Tests\Bot\Unit\Infrastructure;
 
-use Database\Factories\BotFactory;
+use Database\Factories\SubscriptionFactory;
 use Illuminate\Support\Str;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\InvalidUnixTimestampException;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\InvalidUuidException;
@@ -34,9 +34,8 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
         $this->xenforoBotSubscriptionDataCreator = $this->resolve(XenforoBotSubscriptionDataCreator::class);
 
         $this->subscription = $this
-            ->resolve(BotFactory::class)
-            ->create()
-            ->subscription();
+            ->resolve(SubscriptionFactory::class)
+            ->create();
     }
 
     public function testItThrowsSubscriptionCreationExceptionIfXenforoApiIsUnreachable(): void
@@ -47,7 +46,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
             ->create()
             ->connectException('Error communicating with Server');
 
-        $xenforoApiException = XenforoApiConnectionException::create($connectException);
+        $xenforoApiException = new XenforoApiConnectionException($connectException);
 
         try {
             $this
@@ -70,7 +69,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
                 errorMessage: Str::random(),
             );
 
-        $xenforoApiException = XenforoApiUnprocessableEntityException::create($unprocessableEntityException);
+        $xenforoApiException = new XenforoApiUnprocessableEntityException($unprocessableEntityException);
 
         try {
             $this
@@ -93,7 +92,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
                 errorMessage: Str::random()
             );
 
-        $xenforoApiException = XenforoApiInternalServerErrorException::create($internalServerErrorException);
+        $xenforoApiException = new XenforoApiInternalServerErrorException($internalServerErrorException);
 
         try {
             $this
@@ -112,7 +111,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
             ->botSubscriptionId(Str::random())
             ->create();
 
-        $valueObjectException = new InvalidUuidException($xenforoBotSubscriptionData->bot_id);
+        $valueObjectException = new InvalidUuidException($xenforoBotSubscriptionData->bot_subscription_id);
 
         $this
             ->xenforoApiResponseSimulator
@@ -137,7 +136,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
             ->subscribedAt(-10000000000000)
             ->create();
 
-        $valueObjectException = new InvalidUnixTimestampException($xenforoBotSubscriptionData->subscribed_at);
+        $valueObjectException = InvalidUnixTimestampException::invalid();
 
         $this
             ->xenforoApiResponseSimulator

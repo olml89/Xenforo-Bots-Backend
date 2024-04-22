@@ -42,10 +42,10 @@ final readonly class XenforoApiConsumer
         try {
             return $this->httpClient->get(
                 uri: $endpoint,
-                options: [
+                options: array_filter([
                     'headers' => $headers,
                     'query' => $query,
-                ],
+                ]),
             );
         }
         catch (GuzzleException $e) {
@@ -56,15 +56,15 @@ final readonly class XenforoApiConsumer
     /**
      * @throws XenforoApiException
      */
-    public function post(string $endpoint, JsonSerializable $data, array $headers = []): ResponseInterface
+    public function post(string $endpoint, ?JsonSerializable $data = null, array $headers = []): ResponseInterface
     {
         try {
             return $this->httpClient->post(
                 uri: $endpoint,
-                options: [
+                options: array_filter([
                     'headers' => $headers,
                     'form_params' => $data,
-                ],
+                ]),
             );
         }
         catch (GuzzleException $e) {
@@ -80,10 +80,10 @@ final readonly class XenforoApiConsumer
         try {
             return $this->httpClient->delete(
                 uri: $endpoint,
-                options: [
+                options: array_filter([
                     'headers' => $headers,
                     'query' => $query,
-                ]
+                ])
             );
         }
         catch (GuzzleException $e) {

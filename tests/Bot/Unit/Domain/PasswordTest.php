@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Bot\Unit;
+namespace Tests\Bot\Unit\Domain;
 
 use Database\Factories\ValueObjects\PasswordFactory;
 use Illuminate\Support\Str;

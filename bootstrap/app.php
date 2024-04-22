@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\ActivateBotCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\CancelBotSubscriptionCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\SubscribeBotCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\ShowBotSubscriptionCommand;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         GenerateApiKeyCommand::class,
         CreateDatabaseCommand::class,
         SubscribeBotCommand::class,
+        ActivateBotCommand::class,
         SyncBotCommand::class,
         UpdateBotSubscriptionCommand::class,
         CancelBotSubscriptionCommand::class,

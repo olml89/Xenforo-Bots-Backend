@@ -2,7 +2,7 @@
 
 namespace Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests;
 
-use Database\Factories\BotFactory;
+use Database\Factories\SubscriptionFactory;
 use olml89\XenforoBotsBackend\Subscription\Domain\Subscription;
 use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoBotSubscriptionCreationData;
 use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoBotSubscriptionData;
@@ -20,7 +20,7 @@ final class XenforoBotSubscriptionDataCreator
 
     public function __construct(
         private readonly XenforoBotSubscriptionCreationDataCreator $xenforoBotSubscriptionCreationDataCreator,
-        private readonly BotFactory $botFactory,
+        private readonly SubscriptionFactory $subscriptionFactory,
     ) {}
 
     public function botSubscriptionId(string $bot_subscription_id): self
@@ -86,7 +86,7 @@ final class XenforoBotSubscriptionDataCreator
     public function create(): XenforoBotSubscriptionData
     {
         $this->xenforoBotSubscriptionCreationData ??= $this->xenforoBotSubscriptionCreationDataCreator->create();
-        $this->subscription ??= $this->botFactory->create()->subscription();
+        $this->subscription ??= $this->subscriptionFactory->create();
 
         $xenforoBotSubscriptionData = new XenforoBotSubscriptionData(
             bot_subscription_id: $this->bot_subscription_id ?? (string)$this->subscription->subscriptionId(),

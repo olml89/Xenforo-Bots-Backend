@@ -9,32 +9,38 @@ use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\ApiErrorResponseData
 abstract class XenforoApiResponseException extends XenforoApiException
 {
     private readonly string $errorCode;
+    private readonly array $params;
+    private readonly ?array $debug;
 
-    private function __construct(string $message, int $code, string $errorCode, GuzzleException $previous)
+    public function __construct(RequestException $guzzleRequestException)
     {
-        $this->errorCode = $errorCode;
+        $apiErrorResponseData = ApiErrorResponseData::fromResponse(
+            $guzzleRequestException->getResponse()
+        );
+
+        $this->errorCode = $apiErrorResponseData->errorCode;
+        $this->params = $apiErrorResponseData->params;
+        $this->debug = $apiErrorResponseData->debug;
 
         parent::__construct(
-            message: $message,
-            code: $code,
-            previous: $previous,
-        );
-    }
-
-    public static function create(RequestException $guzzleRequestException): static
-    {
-        $apiErrorResponseData = ApiErrorResponseData::fromResponse($guzzleRequestException->getResponse());
-
-        return new static(
             message: $apiErrorResponseData->message,
             code: $apiErrorResponseData->httpCode,
-            errorCode: $apiErrorResponseData->errorCode,
-            previous: $guzzleRequestException,
+            previous: $guzzleRequestException
         );
     }
 
     public function getErrorCode(): string
     {
         return $this->errorCode;
+    }
+
+    public function getParams(): array
+    {
+        return $this->params;
+    }
+
+    public function getDebug(): ?array
+    {
+        return $this->debug;
     }
 }

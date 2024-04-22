@@ -3,19 +3,19 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Exception\InvalidFormat;
 use Doctrine\DBAL\Types\Exception\InvalidType;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
+use Doctrine\DBAL\Types\StringType;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 
-final class UsernameType extends Type
+final class UsernameType extends StringType implements CustomType
 {
-    public const string NAME = 'username';
+    private const string NAME = 'username';
 
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
+    public static function getTypeName(): string
     {
-        return $platform->getStringTypeDeclarationSQL($column);
+        return self::NAME;
     }
 
     /**
@@ -26,8 +26,10 @@ final class UsernameType extends Type
         if (!($value instanceof Username)) {
             throw InvalidType::new(
                 value: $value,
-                toType: self::NAME,
-                possibleTypes: [Username::class],
+                toType: self::class,
+                possibleTypes: [
+                    Username::class,
+                ],
             );
         }
 
@@ -35,19 +37,19 @@ final class UsernameType extends Type
     }
 
     /**
-     * @throws InvalidFormat
-     * @throws InvalidUsernameException
+     * @throws ValueNotConvertible
      */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): Username
     {
-        if (!is_string($value)) {
-            throw InvalidFormat::new(
+        try {
+            return Username::create($value);
+        }
+        catch (InvalidUsernameException $e) {
+            throw ValueNotConvertible::new(
                 value: $value,
-                toType: Username::class,
-                expectedFormat: 'string',
+                toType: self::class,
+                previous: $e,
             );
         }
-
-        return Username::create($value);
     }
 }

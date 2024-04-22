@@ -42,4 +42,19 @@ final readonly class Bot
     {
         return $this->subscription;
     }
+
+    public function isActive(): bool
+    {
+        return $this->subscription->isActive();
+    }
+
+    public function activate(): void
+    {
+        $this->subscription->activate();
+    }
+
+    public function deactivate(): void
+    {
+        $this->subscription->deactivate();
+    }
 }

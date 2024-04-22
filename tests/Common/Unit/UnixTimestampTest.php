@@ -12,12 +12,14 @@ final class UnixTimestampTest extends TestCase
     {
         $value = -10000000000000;
 
-        $this->expectExceptionObject(new InvalidUnixTimestampException($value));
+        $this->expectExceptionObject(
+            InvalidUnixTimestampException::invalid()
+        );
 
         UnixTimestamp::create($value);
     }
 
-    public function testItCreatesUnixTimestamp(): void
+    public function testItCreatesUnixTimestampFromTimestamp(): void
     {
         $value = time();
 
@@ -25,6 +27,36 @@ final class UnixTimestampTest extends TestCase
 
         $this->assertEquals(
             $value,
+            $unixTimestamp->timestamp()
+        );
+    }
+
+    public function testItDoesNotAllowInvalidDateTimeStringsForFormats(): void
+    {
+        $value = '2024-19-04 17:10:00';
+        $format = 'Y/m/d H:i:s';
+
+        $this->expectExceptionObject(
+            InvalidUnixTimestampException::format($format, $value)
+        );
+
+        UnixTimestamp::createFromFormat($format, $value);
+    }
+
+    public function testItCreatesUnixTimestampFromValidDateTimeStringAndFormat(): void
+    {
+        // Unix epoch
+        $value = '1970/01/01 00:00:00';
+        $format = 'Y/m/d H:i:s';
+
+        $unixTimestamp = UnixTimestamp::createFromFormat($format, $value);
+
+        $this->assertEquals(
+            $value,
+            $unixTimestamp->format($format)
+        );
+        $this->assertEquals(
+            0,
             $unixTimestamp->timestamp()
         );
     }

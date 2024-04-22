@@ -4,6 +4,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Doctrine\DoctrineBotRepository;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Driver\PersistentMySQLDriver;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\ApiKeyType;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UnixTimestampType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UrlType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UsernameType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UuidType;
@@ -35,10 +36,11 @@ return [
     'filters' => [],
 
     'custom_types' => [
-        UuidType::NAME => UuidType::class,
-        ApiKeyType::NAME => ApiKeyType::class,
-        UsernameType::NAME => UsernameType::class,
-        UrlType::NAME => UrlType::class,
+        UuidType::class,
+        ApiKeyType::class,
+        UrlType::class,
+        UsernameType::class,
+        UnixTimestampType::class,
     ],
 
     'repositories' => [

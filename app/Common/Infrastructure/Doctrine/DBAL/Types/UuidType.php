@@ -5,17 +5,18 @@ namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Exception\InvalidFormat;
 use Doctrine\DBAL\Types\Exception\InvalidType;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
+use Doctrine\DBAL\Types\GuidType;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\InvalidUuidException;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
-class UuidType extends Type
+final class UuidType extends GuidType implements CustomType
 {
-    public const string NAME = 'uuid';
+    private const string NAME = 'uuid';
 
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
+    public static function getTypeName(): string
     {
-        return $platform->getGuidTypeDeclarationSQL($column);
+        return self::NAME;
     }
 
     /**
@@ -30,8 +31,10 @@ class UuidType extends Type
         if (!($value instanceof Uuid)) {
             throw InvalidType::new(
                 value: $value,
-                toType: self::NAME,
-                possibleTypes: [Uuid::class],
+                toType: self::class,
+                possibleTypes: [
+                    Uuid::class,
+                ],
             );
         }
 
@@ -39,19 +42,19 @@ class UuidType extends Type
     }
 
     /**
-     * @throws InvalidFormat
-     * @throws InvalidUuidException
+     * @throws ValueNotConvertible
      */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Uuid
     {
-        if (!is_string($value)) {
-            throw InvalidFormat::new(
+        try {
+            return Uuid::create($value);
+        }
+        catch (InvalidUuidException $e) {
+            throw ValueNotConvertible::new(
                 value: $value,
-                toType: Uuid::class,
-                expectedFormat: 'string',
+                toType: self::class,
+                previous: $e,
             );
         }
-
-        return Uuid::create($value);
     }
 }

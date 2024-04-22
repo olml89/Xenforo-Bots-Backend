@@ -32,13 +32,13 @@ final class Subscription
     public function activate(): void
     {
         $this->isActive = true;
-        $this->activationChangedAt = new UnixTimestamp();
+        $this->activationChangedAt = UnixTimestamp::now();
     }
 
     public function deactivate(): void
     {
         $this->isActive = false;
-        $this->activationChangedAt = new UnixTimestamp();
+        $this->activationChangedAt = UnixTimestamp::now();
     }
 
     public function isActive(): bool

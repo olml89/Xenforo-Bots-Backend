@@ -3,19 +3,19 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Exception\InvalidFormat;
 use Doctrine\DBAL\Types\Exception\InvalidType;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
+use Doctrine\DBAL\Types\StringType;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\InvalidApiKeyException;
 
-final class ApiKeyType extends Type
+final class ApiKeyType extends StringType implements CustomType
 {
-    public const string NAME = 'api_key';
+    private const string NAME = 'api_key';
 
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
+    public static function getTypeName(): string
     {
-        return $platform->getStringTypeDeclarationSQL($column);
+        return self::NAME;
     }
 
     /**
@@ -26,8 +26,10 @@ final class ApiKeyType extends Type
         if (!($value instanceof ApiKey)) {
             throw InvalidType::new(
                 value: $value,
-                toType: self::NAME,
-                possibleTypes: [ApiKey::class],
+                toType: self::class,
+                possibleTypes: [
+                    ApiKey::class,
+                ],
             );
         }
 
@@ -35,19 +37,19 @@ final class ApiKeyType extends Type
     }
 
     /**
-     * @throws InvalidFormat
-     * @throws InvalidApiKeyException
+     * @throws ValueNotConvertible
      */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ApiKey
     {
-        if (!is_string($value)) {
-            throw InvalidFormat::new(
+        try {
+            return ApiKey::create($value);
+        }
+        catch (InvalidApiKeyException $e) {
+            throw ValueNotConvertible::new(
                 value: $value,
-                toType: ApiKey::class,
-                expectedFormat: 'string',
+                toType: self::class,
+                previous: $e,
             );
         }
-
-        return ApiKey::create($value);
     }
 }

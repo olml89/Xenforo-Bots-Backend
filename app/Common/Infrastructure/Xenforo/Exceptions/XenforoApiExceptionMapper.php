@@ -11,12 +11,12 @@ final class XenforoApiExceptionMapper
     public function map(GuzzleException $e): XenforoApiException
     {
         if (!($e instanceof RequestException)) {
-            return XenforoApiConnectionException::create($e);
+            return new XenforoApiConnectionException($e);
         }
 
         return match ($e->getCode()) {
-            Response::HTTP_UNPROCESSABLE_ENTITY => XenforoApiUnprocessableEntityException::create($e),
-            default => XenforoApiInternalServerErrorException::create($e),
+            Response::HTTP_UNPROCESSABLE_ENTITY => new XenforoApiUnprocessableEntityException($e),
+            default => new XenforoApiInternalServerErrorException($e),
         };
     }
 }

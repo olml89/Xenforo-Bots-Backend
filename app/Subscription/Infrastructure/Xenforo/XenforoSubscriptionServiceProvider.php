@@ -12,7 +12,7 @@ final class XenforoSubscriptionServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             SubscriptionCreator::class,
-            XenforoBotSubscriptionCreator::class,
+            XenforoBotSubscriptionCreator::class
         );
     }
 

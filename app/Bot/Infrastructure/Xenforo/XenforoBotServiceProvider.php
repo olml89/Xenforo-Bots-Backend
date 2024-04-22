@@ -3,6 +3,7 @@
 namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use Illuminate\Support\ServiceProvider;
+use olml89\XenforoBotsBackend\Bot\Domain\BotActivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
 
 final class XenforoBotServiceProvider extends ServiceProvider
@@ -11,7 +12,11 @@ final class XenforoBotServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             BotCreator::class,
-            XenforoBotCreator::class,
+            XenforoBotCreator::class
+        );
+        $this->app->bind(
+            BotActivator::class,
+            XenforoBotActivator::class
         );
     }
 
@@ -19,6 +24,7 @@ final class XenforoBotServiceProvider extends ServiceProvider
     {
         return [
             BotCreator::class,
+            BotActivator::class,
         ];
     }
 }

@@ -6,12 +6,12 @@ use GuzzleHttp\Exception\GuzzleException;
 
 final class XenforoApiConnectionException extends XenforoApiException
 {
-    public static function create(GuzzleException $guzzleException): self
+    public function __construct(GuzzleException $guzzleException)
     {
-        return new self(
+        parent::__construct(
             message: $guzzleException->getMessage(),
             code: $guzzleException->getCode(),
-            previous: $guzzleException,
+            previous: $guzzleException
         );
     }
 }

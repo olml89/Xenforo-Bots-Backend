@@ -10,6 +10,8 @@ final readonly class ApiErrorResponseData extends ApiResponseData
         public int $httpCode,
         public string $errorCode,
         public string $message,
+        public array $params = [],
+        public ?array $debug = null,
     ) {}
 
     private static function unknownError(int $httpStatusCode): self
@@ -34,6 +36,8 @@ final readonly class ApiErrorResponseData extends ApiResponseData
             httpCode: $response->getStatusCode(),
             errorCode: $error['code'],
             message: $error['message'],
+            params: $error['params'],
+            debug: $json['exception'] ?? null,
         );
     }
 }

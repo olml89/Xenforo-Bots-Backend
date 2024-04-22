@@ -44,7 +44,7 @@ abstract readonly class Endpoint
         return $connectException;
     }
 
-    public function internalServerErrorException(string $errorCode, string $errorMessage): RequestException
+    public function internalServerErrorException(string $errorCode, string $errorMessage, array $params = []): RequestException
     {
         $this->responses->append(
             $internalServerErrorException = new RequestException(
@@ -57,6 +57,7 @@ abstract readonly class Endpoint
                             [
                                 'code' => $errorCode,
                                 'message' => $errorMessage,
+                                'params' => $params,
                             ],
                         ],
                     ]),

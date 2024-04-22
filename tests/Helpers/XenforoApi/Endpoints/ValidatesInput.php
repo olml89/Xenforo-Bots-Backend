@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait ValidatesInput
 {
-    public function unprocessableEntityException(string $errorCode, string $errorMessage): RequestException
+    public function unprocessableEntityException(string $errorCode, string $errorMessage, array $params = []): RequestException
     {
         $this->responses->append(
             $unprocessableEntityException = new RequestException(
@@ -21,6 +21,7 @@ trait ValidatesInput
                             [
                                 'code' => $errorCode,
                                 'message' => $errorMessage,
+                                'params' => $params,
                             ],
                         ],
                     ]),

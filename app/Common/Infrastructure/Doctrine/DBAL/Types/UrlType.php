@@ -3,8 +3,9 @@
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Exception\InvalidFormat;
 use Doctrine\DBAL\Types\Exception\InvalidType;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
+use Doctrine\DBAL\Types\StringType;
 use Illuminate\Foundation\Application;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\InvalidUrlException;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\Url;
@@ -12,9 +13,14 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Url\UrlValidator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-final class UrlType extends InjectableType
+final class UrlType extends StringType implements CustomType, InjectableType
 {
-    public const string NAME = 'url';
+    private const string NAME = 'url';
+
+    public static function getTypeName(): string
+    {
+        return self::NAME;
+    }
 
     private readonly UrlValidator $urlValidator;
 
@@ -27,11 +33,6 @@ final class UrlType extends InjectableType
         $this->urlValidator = $app->get(UrlValidator::class);
     }
 
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
-    {
-        return $platform->getStringTypeDeclarationSQL($column);
-    }
-
     /**
      * @throws InvalidType
      */
@@ -40,8 +41,10 @@ final class UrlType extends InjectableType
         if (!($value instanceof Url)) {
             throw InvalidType::new(
                 value: $value,
-                toType: self::NAME,
-                possibleTypes: [Url::class],
+                toType: self::class,
+                possibleTypes: [
+                    Url::class,
+                ],
             );
         }
 
@@ -49,19 +52,19 @@ final class UrlType extends InjectableType
     }
 
     /**
-     * @throws InvalidFormat
-     * @throws InvalidUrlException
+     * @throws ValueNotConvertible
      */
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Url
     {
-        if (!is_string($value)) {
-            throw InvalidFormat::new(
+        try {
+            return Url::create($value, $this->urlValidator);
+        }
+        catch (InvalidUrlException $e) {
+            throw ValueNotConvertible::new(
                 value: $value,
-                toType: Url::class,
-                expectedFormat: 'string',
+                toType: self::class,
+                previous: $e,
             );
         }
-
-        return Url::create($value, $this->urlValidator);
     }
 }

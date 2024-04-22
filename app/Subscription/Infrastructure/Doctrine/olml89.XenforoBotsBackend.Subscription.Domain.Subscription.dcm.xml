@@ -20,7 +20,7 @@
         <field
             name="subscribedAt"
             column="subscribed_at"
-            type="datetime_immutable"
+            type="unix_timestamp"
         />
         <field
             name="isActive"
@@ -30,7 +30,7 @@
         <field
             name="activationChangedAt"
             column="activation_changed_at"
-            type="datetime_immutable"
+            type="unix_timestamp"
         />
         <one-to-one
             field="bot"

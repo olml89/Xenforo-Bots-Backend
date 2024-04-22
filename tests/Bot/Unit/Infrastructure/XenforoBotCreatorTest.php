@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Bot\Unit;
+namespace Tests\Bot\Unit\Infrastructure;
 
 use Illuminate\Support\Str;
 use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
@@ -48,7 +48,7 @@ final class XenforoBotCreatorTest extends TestCase implements InteractsWithXenfo
             ->create($this->xenforoBotCreationData)
             ->connectException('Error communicating with Server');
 
-        $xenforoApiException = XenforoApiConnectionException::create($connectException);
+        $xenforoApiException = new XenforoApiConnectionException($connectException);
 
         try {
             $this->xenforoBotCreator->create(
@@ -72,7 +72,7 @@ final class XenforoBotCreatorTest extends TestCase implements InteractsWithXenfo
                 errorMessage: Str::random(),
             );
 
-        $xenforoApiException = XenforoApiUnprocessableEntityException::create($unprocessableEntityException);
+        $xenforoApiException = new XenforoApiUnprocessableEntityException($unprocessableEntityException);
 
         try {
             $this->xenforoBotCreator->create(
@@ -96,7 +96,7 @@ final class XenforoBotCreatorTest extends TestCase implements InteractsWithXenfo
                 errorMessage: Str::random()
             );
 
-        $xenforoApiException = XenforoApiInternalServerErrorException::create($internalServerErrorException);
+        $xenforoApiException = new XenforoApiInternalServerErrorException($internalServerErrorException);
 
         try {
             $this->xenforoBotCreator->create(

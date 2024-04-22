@@ -5,55 +5,65 @@ namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp;
 use DateTimeImmutable;
 use DateTimeZone;
 
-final class UnixTimestamp extends DatetimeImmutable
+final readonly class UnixTimestamp
 {
-    private const string DATABASE_FORMAT = 'Y-m-d H:i:s';
     private const string OUTPUT_FORMAT = 'c';
+
+    public function __construct(
+        private DateTimeImmutable $dateTime,
+    ) {}
+
+    public static function now(): self
+    {
+        return new self(new DateTimeImmutable());
+    }
 
     /**
      * @throws InvalidUnixTimestampException
      */
     public static function create(int $timestamp): self
     {
-        $dateTime = self::createFromFormat('U', (string)$timestamp);
-
-        if (!$dateTime) {
-            throw new InvalidUnixTimestampException($timestamp);
-        }
+        $unixTimestamp = self::createFromFormat('U', (string)$timestamp);
 
         $validDate = checkdate(
-            month: (int)$dateTime->format('m'),
-            day: (int)$dateTime->format('d'),
-            year: (int)$dateTime->format('Y'),
+            month: (int)$unixTimestamp->format('m'),
+            day: (int)$unixTimestamp->format('d'),
+            year: (int)$unixTimestamp->format('Y'),
         );
 
         if (!$validDate) {
-            throw new InvalidUnixTimestampException($timestamp);
+            throw InvalidUnixTimestampException::invalid();
         }
 
-        return $dateTime;
+        return $unixTimestamp;
     }
 
-    public static function createFromFormat(
-        string $format,
-        string $datetime,
-        ?DateTimeZone $timezone = null,
-    ): self|false {
-        return parent::createFromFormat($format, $datetime, $timezone);
+    /**
+     * @throws InvalidUnixTimestampException
+     */
+    public static function createFromFormat(string $format, string $datetime, ?DateTimeZone $timezone = null): self
+    {
+        $dateTime = DateTimeImmutable::createFromFormat($format, $datetime, $timezone);
+
+        if (!$dateTime) {
+            throw InvalidUnixTimestampException::format($format, $datetime);
+        }
+
+        return new self($dateTime);
+    }
+
+    public function format(string $format): string
+    {
+        return $this->dateTime->format($format);
     }
 
     public function timestamp(): int
     {
-        return (int)self::format('U');
+        return (int)$this->format('U');
     }
 
     public function toOutput(): string
     {
-        return self::format(self::OUTPUT_FORMAT);
-    }
-
-    public function toDatabase(): string
-    {
-        return self::format(self::DATABASE_FORMAT);
+        return $this->format(self::OUTPUT_FORMAT);
     }
 }

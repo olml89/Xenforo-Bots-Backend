@@ -15,6 +15,7 @@ use Illuminate\Database\Connection;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Driver\PersistentMySQLDriver;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\CustomType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\InjectableType;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Throwable;
@@ -121,8 +122,10 @@ final class DoctrineServiceProvider extends ServiceProvider
     {
         $customTypes = $this->config->get('doctrine.custom_types');
 
-        /** @var class-string<Type> $typeClass */
-        foreach ($customTypes as $typeName => $typeClass) {
+        /** @var class-string<CustomType> $typeClass */
+        foreach ($customTypes as $typeClass) {
+            $typeName = $typeClass::getTypeName();
+
             if (Type::hasType($typeName)) {
                 continue;
             }

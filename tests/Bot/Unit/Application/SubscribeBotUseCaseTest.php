@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Bot\Unit;
+namespace Tests\Bot\Unit\Application;
 
 use Database\Factories\BotFactory;
 use Database\Factories\SubscriptionFactory;
@@ -157,7 +157,7 @@ final class SubscribeBotUseCaseTest extends TestCase
             $botRepository->getByUsername($username)
         );
         $this->assertEquals(
-            new BotResult($bot),
+            $expectedBotResult,
             $botResult
         );
     }
