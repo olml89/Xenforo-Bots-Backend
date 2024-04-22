@@ -53,7 +53,7 @@ final class SubscribeBotCommandTest extends TestCase implements ExecutesDoctrine
             ->assertFailed();
     }
 
-    public function testItCreatesNewXenforoBotAndPrintsABotResult(): void
+    public function testItSubscribesAXenforoBotAndPrintsABotResult(): void
     {
         $bot = $this
             ->botFactory

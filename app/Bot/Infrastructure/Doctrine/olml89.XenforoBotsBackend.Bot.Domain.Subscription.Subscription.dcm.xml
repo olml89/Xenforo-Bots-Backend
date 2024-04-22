@@ -35,7 +35,7 @@
         <one-to-one
             field="bot"
             target-entity="olml89\XenforoBotsBackend\Bot\Domain\Bot"
-            fetch="EAGER"
+            mapped-by="subscription"
         >
             <join-column
                 name="bot_id"

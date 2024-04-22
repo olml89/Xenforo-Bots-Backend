@@ -35,6 +35,8 @@
             field="subscription"
             target-entity="olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription"
             fetch="EAGER"
+            inversed-by="bot"
+            orphan-removal="true"
         >
             <join-column
                 name="subscription_id"
