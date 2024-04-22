@@ -23,7 +23,9 @@ final class PasswordTest extends TestCase
     {
         $value = '';
 
-        $this->expectExceptionObject(new InvalidPasswordException());
+        $this->expectExceptionObject(
+            new InvalidPasswordException()
+        );
 
         Password::create($value);
     }

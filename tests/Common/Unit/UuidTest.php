@@ -13,7 +13,9 @@ final class UuidTest extends TestCase
     {
         $value = Str::random();
 
-        $this->expectExceptionObject(new InvalidUuidException($value));
+        $this->expectExceptionObject(
+            new InvalidUuidException($value)
+        );
 
         Uuid::create($value);
     }

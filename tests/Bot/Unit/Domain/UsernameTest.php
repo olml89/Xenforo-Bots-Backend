@@ -23,7 +23,9 @@ final class UsernameTest extends TestCase
     {
         $value = '';
 
-        $this->expectExceptionObject(InvalidUsernameException::empty());
+        $this->expectExceptionObject(
+            InvalidUsernameException::empty()
+        );
 
         Username::create($value);
     }
@@ -32,7 +34,9 @@ final class UsernameTest extends TestCase
     {
         $value = Str::random(51);
 
-        $this->expectExceptionObject(InvalidUsernameException::tooLong($value));
+        $this->expectExceptionObject(
+            InvalidUsernameException::tooLong($value)
+        );
 
         Username::create($value);
     }

@@ -13,7 +13,9 @@ final class ApiKeyTest extends TestCase
     {
         $value = '';
 
-        $this->expectExceptionObject(new InvalidApiKeyException($value));
+        $this->expectExceptionObject(
+            new InvalidApiKeyException($value)
+        );
 
         ApiKey::create($value);
     }
@@ -22,7 +24,9 @@ final class ApiKeyTest extends TestCase
     {
         $value = Str::random(33);
 
-        $this->expectExceptionObject(new InvalidApiKeyException($value));
+        $this->expectExceptionObject(
+            new InvalidApiKeyException($value)
+        );
 
         ApiKey::create($value);
     }
