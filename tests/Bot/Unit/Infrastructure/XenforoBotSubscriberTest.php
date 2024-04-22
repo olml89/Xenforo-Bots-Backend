@@ -18,11 +18,11 @@ use Tests\Helpers\XenforoApi\InteractsWithXenforoApi;
 use Tests\Helpers\XenforoApi\XenforoApi;
 use Tests\TestCase;
 
-final class XenforoBotSubscriptionCreatorTest extends TestCase implements InteractsWithXenforoApi
+final class XenforoBotSubscriberTest extends TestCase implements InteractsWithXenforoApi
 {
     use XenforoApi;
 
-    private readonly XenforoBotSubscriber $xenforoBotSubscriptionCreator;
+    private readonly XenforoBotSubscriber $xenforoBotSubscriber;
     private readonly XenforoBotSubscriptionDataCreator $xenforoBotSubscriptionDataCreator;
     private readonly Subscription $subscription;
 
@@ -30,7 +30,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
     {
         parent::setUp();
 
-        $this->xenforoBotSubscriptionCreator = $this->resolve(XenforoBotSubscriber::class);
+        $this->xenforoBotSubscriber = $this->resolve(XenforoBotSubscriber::class);
         $this->xenforoBotSubscriptionDataCreator = $this->resolve(XenforoBotSubscriptionDataCreator::class);
 
         $this->subscription = $this
@@ -50,7 +50,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
 
         try {
             $this
-                ->xenforoBotSubscriptionCreator
+                ->xenforoBotSubscriber
                 ->subscribe($this->subscription->bot());
         }
         catch (SubscriptionCreationException $e) {
@@ -73,7 +73,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
 
         try {
             $this
-                ->xenforoBotSubscriptionCreator
+                ->xenforoBotSubscriber
                 ->subscribe($this->subscription->bot());
         }
         catch (SubscriptionValidationException $e) {
@@ -96,7 +96,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
 
         try {
             $this
-                ->xenforoBotSubscriptionCreator
+                ->xenforoBotSubscriber
                 ->subscribe($this->subscription->bot());
         }
         catch (SubscriptionCreationException $e) {
@@ -121,7 +121,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
 
         try {
             $this
-                ->xenforoBotSubscriptionCreator
+                ->xenforoBotSubscriber
                 ->subscribe($this->subscription->bot());
         }
         catch (SubscriptionValidationException $e) {
@@ -146,7 +146,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
 
         try {
             $this
-                ->xenforoBotSubscriptionCreator
+                ->xenforoBotSubscriber
                 ->subscribe($this->subscription->bot());
         }
         catch (SubscriptionValidationException $e) {
@@ -163,7 +163,7 @@ final class XenforoBotSubscriptionCreatorTest extends TestCase implements Intera
             ->ok();
 
         $subscription = $this
-            ->xenforoBotSubscriptionCreator
+            ->xenforoBotSubscriber
             ->subscribe($this->subscription->bot());
 
         $this->assertEquals(

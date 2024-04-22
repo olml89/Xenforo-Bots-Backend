@@ -60,4 +60,18 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
             throw new BotStorageException($doctrineException);
         }
     }
+
+    /**
+     * @throws BotStorageException
+     */
+    public function delete(Bot $bot): void
+    {
+        try {
+            $this->getEntityManager()->remove($bot);
+            $this->getEntityManager()->flush();
+        }
+        catch (Throwable $doctrineException) {
+            throw new BotStorageException($doctrineException);
+        }
+    }
 }

@@ -18,4 +18,9 @@ interface BotRepository
      * @throws BotStorageException
      */
     public function save(Bot $bot): void;
+
+    /**
+     * @throws BotStorageException
+     */
+    public function delete(Bot $bot): void;
 }

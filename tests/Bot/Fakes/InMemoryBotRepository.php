@@ -52,4 +52,9 @@ final class InMemoryBotRepository implements BotRepository
     {
         $this->bots[$bot->botId()] = $bot;
     }
+
+    public function delete(Bot $bot): void
+    {
+        unset($this->bots[$bot->botId()]);
+    }
 }

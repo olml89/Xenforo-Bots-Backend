@@ -25,7 +25,8 @@ final class SubscribeBotCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Creates a Bot on the remote Xenforo platform with a BotSubscription pointing to this platform.';
+    protected $description = 'Creates a local Bot tied to a new or an already existing Bot on the remote platform,
+        and creates a remote BotSubscription of this backend to the remote Bot.';
 
     /**
      * Execute the console command.

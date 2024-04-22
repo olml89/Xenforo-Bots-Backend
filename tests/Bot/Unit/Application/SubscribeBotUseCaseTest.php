@@ -61,13 +61,7 @@ final class SubscribeBotUseCaseTest extends TestCase
 
     public function testItThrowsBotAlreadyExistsExceptionIfABotWithAProvidedUsernameAlreadyExists(): void
     {
-        $username = $this->usernameFactory->create();
-        $password = $this->passwordFactory->create();
-
-        $alreadyExistingBot = $this
-            ->botFactory
-            ->username($username)
-            ->create();
+        $alreadyExistingBot = $this->botFactory->create();
 
         $this->app->instance(
             BotRepository::class,
@@ -81,8 +75,8 @@ final class SubscribeBotUseCaseTest extends TestCase
         $this
             ->resolve(SubscribeBotUseCase::class)
             ->subscribe(
-                (string)$username,
-                (string)$password
+                (string)$alreadyExistingBot->username(),
+                (string)$this->passwordFactory->create()
             );
     }
 
@@ -105,13 +99,8 @@ final class SubscribeBotUseCaseTest extends TestCase
 
     public function testItSavesACreatedBotAndReturnsABotResult(): void
     {
-        $username = $this->usernameFactory->create();
+        $bot = $this->botFactory->create();
         $password = $this->passwordFactory->create();
-
-        $bot = $this
-            ->botFactory
-            ->username($username)
-            ->create();
 
         $subscription = $this
             ->subscriptionFactory
@@ -132,7 +121,7 @@ final class SubscribeBotUseCaseTest extends TestCase
             BotProvider::class,
             fn(MockInterface $mock) => $this
                 ->botProviderMocker
-                ->gets($username, $password)
+                ->gets($bot->username(), $password)
                 ->returns($bot)
                 ->mock($mock)
         );
@@ -149,12 +138,12 @@ final class SubscribeBotUseCaseTest extends TestCase
         $botResult = $this
             ->resolve(SubscribeBotUseCase::class)
             ->subscribe(
-                (string)$username,
+                (string)$bot->username(),
                 (string)$password
             );
 
         $this->assertNotNull(
-            $botRepository->getByUsername($username)
+            $botRepository->getByUsername($bot->username())
         );
         $this->assertEquals(
             $expectedBotResult,

@@ -11,12 +11,15 @@ use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Create\CreateEn
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Create\CreateEndpointFactory;
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Deactivate\DeactivateEndpoint;
 use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Deactivate\DeactivateEndpointFactory;
+use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Delete\DeleteEndpoint;
+use Tests\Helpers\XenforoApi\Endpoints\BotSubscriptions\Requests\Delete\DeleteEndpointFactory;
 use Tests\Helpers\XenforoApi\Endpoints\Resource;
 
 final readonly class BotSubscriptionsResource extends Resource
 {
     public function __construct(
         private CreateEndpointFactory $createEndpointFactory,
+        private DeleteEndpointFactory $deleteEndpointFactory,
         private ActivateEndpointFactory $activateEndpointFactory,
         private DeactivateEndpointFactory $deactivateEndpointFactory,
         private Subscription $subscription,
@@ -31,6 +34,14 @@ final readonly class BotSubscriptionsResource extends Resource
             responses: $this->responses,
             subscription: $this->subscription,
             requestData: $requestData
+        );
+    }
+
+    public function delete(): DeleteEndpoint
+    {
+        return $this->deleteEndpointFactory->create(
+            responses: $this->responses,
+            subscription: $this->subscription
         );
     }
 
