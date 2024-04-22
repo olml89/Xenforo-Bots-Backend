@@ -42,7 +42,6 @@ final readonly class RetrieveEndpoint extends Endpoint
                         'bot_id' => $responseData->bot_id,
                         'BotSubscriptions' => [],
                         'created_at' => $responseData->created_at,
-                        'user_id' => $responseData->user_id,
                     ],
                 ])
             )

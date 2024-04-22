@@ -5,7 +5,7 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\BotActivator;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\BotDeactivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
 
@@ -14,8 +14,8 @@ final class XenforoBotServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            BotCreator::class,
-            XenforoBotCreator::class
+            BotProvider::class,
+            XenforoBotProvider::class
         );
         $this->app->bind(
             BotSubscriber::class,
@@ -47,9 +47,10 @@ final class XenforoBotServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [
-            BotCreator::class,
+            BotProvider::class,
             BotSubscriber::class,
             BotActivator::class,
+            BotDeactivator::class,
         ];
     }
 }

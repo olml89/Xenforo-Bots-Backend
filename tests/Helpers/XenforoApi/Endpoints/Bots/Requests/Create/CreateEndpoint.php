@@ -46,7 +46,28 @@ final readonly class CreateEndpoint extends Endpoint
                         'bot_id' => $responseData->bot_id,
                         'BotSubscriptions' => [],
                         'created_at' => $responseData->created_at,
-                        'user_id' => $responseData->user_id,
+                    ],
+                ])
+            )
+        );
+
+        return $response;
+    }
+
+    public function conflict(): Response
+    {
+        $this->responses->append(
+            $response = new Response(
+                status: SymfonyResponse::HTTP_CONFLICT,
+                body: json_encode([
+                    'errors' => [
+                        [
+                            'code' => 'bot.already_exists',
+                            'message' => 'Bot already exists',
+                            'params' => [
+                                'bot_id' => $this->responseData->bot_id,
+                            ],
+                        ],
                     ],
                 ])
             )

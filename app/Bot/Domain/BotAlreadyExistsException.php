@@ -11,10 +11,13 @@ final class BotAlreadyExistsException extends Exception
         parent::__construct($message);
     }
 
-    public static function username(Username $username): self
+    public static function bot(Bot $bot): self
     {
         return new self(
-            sprintf('Bot with username \'%s\' already exists', $username)
+            sprintf('Bot with id \'%s\' and username \'%s\' already exists',
+                $bot->botId(),
+                $bot->username(),
+            )
         );
     }
 }

@@ -3,10 +3,14 @@
 namespace olml89\XenforoBotsBackend\Bot\Application\Subscribe;
 
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
+use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvisionException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
+use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRetrievalException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotRetriever;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
@@ -20,14 +24,14 @@ final readonly class SubscribeBotUseCase
 {
     public function __construct(
         private BotRepository $botRepository,
-        private BotCreator    $botCreator,
-        private BotSubscriber $subscriptionCreator,
+        private BotProvider $botProvider,
+        private BotSubscriber $botSubscriber,
     ) {}
 
     /**
-     * @throws BotValidationException
      * @throws BotAlreadyExistsException
-     * @throws BotCreationException
+     * @throws BotValidationException
+     * @throws BotProvisionException
      * @throws SubscriptionValidationException
      * @throws SubscriptionCreationException
      * @throws BotStorageException
@@ -36,18 +40,17 @@ final readonly class SubscribeBotUseCase
     {
         try {
             $username = Username::create($username);
-            $password = Password::create($password);
 
-            if (!is_null($this->botRepository->getByUsername($username))) {
-                throw BotAlreadyExistsException::username($username);
+            if (!is_null($alreadyExistingBot = $this->botRepository->getByUsername($username))) {
+                throw BotAlreadyExistsException::bot($alreadyExistingBot);
             }
 
             $bot = $this
-                ->botCreator
-                ->create($username, $password);
+                ->botProvider
+                ->provide($username, Password::create($password));
 
             $subscription = $this
-                ->subscriptionCreator
+                ->botSubscriber
                 ->subscribe($bot);
 
             $bot->subscribe($subscription);

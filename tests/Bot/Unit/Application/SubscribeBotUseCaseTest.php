@@ -10,14 +10,14 @@ use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Application\Subscribe\SubscribeBotUseCase;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidPasswordException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
 use Tests\Bot\Fakes\InMemoryBotRepository;
-use Tests\Bot\Mocks\BotCreatorMocker;
+use Tests\Bot\Mocks\BotProviderMocker;
 use Tests\Bot\Mocks\BotSubscriberMocker;
 use Tests\TestCase;
 
@@ -27,7 +27,7 @@ final class SubscribeBotUseCaseTest extends TestCase
     private readonly PasswordFactory $passwordFactory;
     private readonly BotFactory $botFactory;
     private readonly SubscriptionFactory $subscriptionFactory;
-    private readonly BotCreatorMocker $botCreatorMocker;
+    private readonly BotProviderMocker $botProviderMocker;
     private readonly BotSubscriberMocker $botSubscriberMocker;
 
     protected function setUp(): void
@@ -38,7 +38,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         $this->passwordFactory = $this->resolve(PasswordFactory::class);
         $this->botFactory = $this->resolve(BotFactory::class);
         $this->subscriptionFactory = $this->resolve(SubscriptionFactory::class);
-        $this->botCreatorMocker = $this->resolve(BotCreatorMocker::class);
+        $this->botProviderMocker = $this->resolve(BotProviderMocker::class);
         $this->botSubscriberMocker = $this->resolve(BotSubscriberMocker::class);
     }
 
@@ -59,23 +59,6 @@ final class SubscribeBotUseCaseTest extends TestCase
             );
     }
 
-    public function testItThrowsBotValidationExceptionIfInvalidPasswordIsProvided(): void
-    {
-        $username = $this->usernameFactory->create();
-        $invalidPassword = '';
-
-        $this->expectExceptionObject(
-            new BotValidationException(new InvalidPasswordException())
-        );
-
-        $this
-            ->resolve(SubscribeBotUseCase::class)
-            ->subscribe(
-                (string)$username,
-                $invalidPassword
-            );
-    }
-
     public function testItThrowsBotAlreadyExistsExceptionIfABotWithAProvidedUsernameAlreadyExists(): void
     {
         $username = $this->usernameFactory->create();
@@ -92,7 +75,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         );
 
         $this->expectExceptionObject(
-            BotAlreadyExistsException::username($username)
+            BotAlreadyExistsException::bot($alreadyExistingBot)
         );
 
         $this
@@ -100,6 +83,23 @@ final class SubscribeBotUseCaseTest extends TestCase
             ->subscribe(
                 (string)$username,
                 (string)$password
+            );
+    }
+
+    public function testItThrowsBotValidationExceptionIfInvalidPasswordIsProvided(): void
+    {
+        $username = $this->usernameFactory->create();
+        $invalidPassword = '';
+
+        $this->expectExceptionObject(
+            new BotValidationException(new InvalidPasswordException())
+        );
+
+        $this
+            ->resolve(SubscribeBotUseCase::class)
+            ->subscribe(
+                (string)$username,
+                $invalidPassword
             );
     }
 
@@ -129,9 +129,9 @@ final class SubscribeBotUseCaseTest extends TestCase
         );
 
         $this->mock(
-            BotCreator::class,
+            BotProvider::class,
             fn(MockInterface $mock) => $this
-                ->botCreatorMocker
+                ->botProviderMocker
                 ->gets($username, $password)
                 ->returns($bot)
                 ->mock($mock)

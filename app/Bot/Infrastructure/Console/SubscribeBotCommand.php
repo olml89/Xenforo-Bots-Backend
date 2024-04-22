@@ -5,7 +5,7 @@ namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Console;
 use Illuminate\Console\Command;
 use olml89\XenforoBotsBackend\Bot\Application\Subscribe\SubscribeBotUseCase;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvisionException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionCreationException;
@@ -30,9 +30,9 @@ final class SubscribeBotCommand extends Command
     /**
      * Execute the console command.
      *
-     * @throws BotValidationException
      * @throws BotAlreadyExistsException
-     * @throws BotCreationException
+     * @throws BotValidationException
+     * @throws BotProvisionException
      * @throws SubscriptionValidationException
      * @throws SubscriptionCreationException
      * @throws BotStorageException

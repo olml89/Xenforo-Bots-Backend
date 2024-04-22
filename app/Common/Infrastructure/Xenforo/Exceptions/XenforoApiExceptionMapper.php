@@ -15,6 +15,8 @@ final class XenforoApiExceptionMapper
         }
 
         return match ($e->getCode()) {
+            Response::HTTP_NOT_FOUND => new XenforoApiNotFoundException($e),
+            Response::HTTP_CONFLICT => new XenforoApiConflictException($e),
             Response::HTTP_UNPROCESSABLE_ENTITY => new XenforoApiUnprocessableEntityException($e),
             default => new XenforoApiInternalServerErrorException($e),
         };

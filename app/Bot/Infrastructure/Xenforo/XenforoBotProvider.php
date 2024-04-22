@@ -3,19 +3,20 @@
 namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreationException;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvisionException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotCreator;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiConflictException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiUnprocessableEntityException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiConsumer;
 
-final readonly class XenforoBotCreator implements BotCreator
+final readonly class XenforoBotProvider implements BotProvider
 {
     public function __construct(
         private XenforoApiConsumer $xenforoApiConsumer,
@@ -23,9 +24,9 @@ final readonly class XenforoBotCreator implements BotCreator
 
     /**
      * @throws BotValidationException
-     * @throws BotCreationException
+     * @throws BotProvisionException
      */
-    public function create(Username $username, Password $password): Bot
+    public function provide(Username $username, Password $password): Bot
     {
         try {
             $xenforoBotCreationData = new XenforoBotCreationData(
@@ -33,12 +34,7 @@ final readonly class XenforoBotCreator implements BotCreator
                 password: $password->value(),
             );
 
-            $xenforoBotData = XenforoBotData::fromResponse(
-                $this->xenforoApiConsumer->post(
-                    endpoint: 'bots',
-                    data: $xenforoBotCreationData,
-                )
-            );
+            $xenforoBotData = $this->getXenforoBotData($xenforoBotCreationData);
 
             return new Bot(
                 botId: Uuid::create($xenforoBotData->bot_id),
@@ -54,7 +50,32 @@ final readonly class XenforoBotCreator implements BotCreator
             throw new BotValidationException($e);
         }
         catch (XenforoApiException $e) {
-            throw new BotCreationException($e);
+            throw new BotProvisionException($e);
+        }
+    }
+
+    /**
+     * @throws XenforoApiException
+     */
+    private function getXenforoBotData(XenforoBotCreationData $xenforoBotCreationData): XenforoBotData
+    {
+        try {
+            return XenforoBotData::fromResponse(
+                $this->xenforoApiConsumer->post(
+                    endpoint: 'bots',
+                    data: $xenforoBotCreationData,
+                )
+            );
+        }
+        catch (XenforoApiConflictException $e) {
+            return XenforoBotData::fromResponse(
+                $this->xenforoApiConsumer->get(
+                    endpoint: sprintf(
+                        'bots/%s',
+                        $e->getParam('bot_id'),
+                    )
+                )
+            );
         }
     }
 }

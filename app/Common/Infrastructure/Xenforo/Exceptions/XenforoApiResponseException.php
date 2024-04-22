@@ -4,6 +4,7 @@ namespace olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use InvalidArgumentException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\ApiErrorResponseData;
 
 abstract class XenforoApiResponseException extends XenforoApiException
@@ -37,6 +38,19 @@ abstract class XenforoApiResponseException extends XenforoApiException
     public function getParams(): array
     {
         return $this->params;
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function getParam(string $param): mixed
+    {
+        return $this->getParams()[$param] ?? throw new InvalidArgumentException(
+            sprintf(
+                'Param \'%s\' does not exist',
+                $param,
+            )
+        );
     }
 
     public function getDebug(): ?array

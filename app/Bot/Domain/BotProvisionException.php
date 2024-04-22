@@ -5,7 +5,7 @@ namespace olml89\XenforoBotsBackend\Bot\Domain;
 use Exception;
 use Throwable;
 
-final class BotCreationException extends Exception
+final class BotProvisionException extends Exception
 {
     public function __construct(Throwable $exception)
     {

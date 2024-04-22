@@ -7,7 +7,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
 use olml89\XenforoBotsBackend\Bot\Domain\Username;
 
-final readonly class BotCreatorMocker
+final readonly class BotProviderMocker
 {
     private Username $username;
     private Password $password;
@@ -31,7 +31,7 @@ final readonly class BotCreatorMocker
     public function mock(MockInterface $mock): void
     {
         $mock
-            ->shouldReceive('create')
+            ->shouldReceive('provide')
             ->once()
             ->withArgs(
                 function (Username $username, Password $password): bool {
