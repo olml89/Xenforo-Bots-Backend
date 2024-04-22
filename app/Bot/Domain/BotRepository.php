@@ -9,7 +9,7 @@ interface BotRepository
     /**
      * @return Bot[]
      */
-    public function allSubscribed(): array;
+    public function all(): array;
 
     public function get(Uuid $botId): ?Bot;
     public function getByUsername(Username $username): ?Bot;

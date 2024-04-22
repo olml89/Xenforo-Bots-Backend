@@ -24,12 +24,18 @@ final class InMemoryBotRepository implements BotRepository
         }
     }
 
-    public function allSubscribed(): array
+    /**
+     * @return Bot[]
+     */
+    public function all(): array
     {
-        return array_map(
-            fn (Bot $bot): bool => $bot->isSubscribed(),
-            $this->bots
-        );
+        $bots = [];
+
+        foreach ($this->bots as $bot) {
+            $bots[] = $bot;
+        }
+
+        return $bots;
     }
 
     public function get(Uuid $botId): ?Bot

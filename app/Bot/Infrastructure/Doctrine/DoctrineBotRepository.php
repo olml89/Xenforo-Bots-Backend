@@ -26,13 +26,9 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
     /**
      * @return Bot[]
      */
-    public function allSubscribed(): array
+    public function all(): array
     {
-        return $this
-            ->matching(
-                new Criteria(Criteria::expr()->neq('subscription', null))
-            )
-            ->toArray();
+        return $this->findAll();
     }
 
     public function get(Uuid $botId): ?Bot

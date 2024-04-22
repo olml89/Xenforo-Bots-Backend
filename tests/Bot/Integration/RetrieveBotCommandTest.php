@@ -3,18 +3,16 @@
 namespace Tests\Bot\Integration;
 
 use Database\Factories\SubscribedBotFactory;
+use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Tests\Helpers\DoctrineTransactions;
 use Tests\Helpers\ExecutesDoctrineTransactions;
-use Tests\Helpers\XenforoApi\InteractsWithXenforoApi;
-use Tests\Helpers\XenforoApi\XenforoApi;
 use Tests\TestCase;
 
-final class ActivateBotCommandTest extends TestCase implements ExecutesDoctrineTransactions, InteractsWithXenforoApi
+final class RetrieveBotCommandTest extends TestCase implements ExecutesDoctrineTransactions
 {
     use DoctrineTransactions;
-    use XenforoApi;
 
     private readonly SubscribedBotFactory $subscribedBotFactory;
     private readonly BotRepository $botRepository;
@@ -33,40 +31,24 @@ final class ActivateBotCommandTest extends TestCase implements ExecutesDoctrineT
         $this->expectExceptionMessage('Not enough arguments (missing: "username").');
 
         $this
-            ->artisan('bot:activate')
+            ->artisan('bot:retrieve')
             ->assertFailed();
     }
 
-    public function testItActivatesABotAndPrintsASuccessfulMessage(): void
+    public function testItRetrievesABotAndPrintsABotResult(): void
     {
         $bot = $this->subscribedBotFactory->create();
-        $bot->deactivate();
         $this->botRepository->save($bot);
 
-        $this
-            ->xenforoApiResponseSimulator
-            ->botSubscriptions($bot->subscription())
-            ->activate()
-            ->ok();
+        $expectedBotResult = new BotResult($bot);
 
         $this
-            ->artisan('bot:activate', [
+            ->artisan('bot:retrieve', [
                 'username' => (string)$bot->username(),
             ])
-            ->assertSuccessful();
-
-        $this->assertTrue(
-            $this
-                ->botRepository
-                ->get($bot->botId())
-                ->isActive()
-        );
-        $this->assertDatabaseHas(
-            'subscriptions',
-            [
-                'subscription_id' => (string)$bot->subscription()->subscriptionId(),
-                'is_active' => true,
-            ]
-        );
+            ->assertSuccessful()
+            ->expectsOutputToContain(
+                (string)$expectedBotResult
+            );
     }
 }

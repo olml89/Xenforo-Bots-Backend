@@ -37,7 +37,7 @@ final class UnsubscribeBotCommandTest extends TestCase implements ExecutesDoctri
             ->assertFailed();
     }
 
-    public function testItUnsubscribesAXenforoBot(): void
+    public function testItUnsubscribesABotAndPrintsASuccessfulMessage(): void
     {
         $bot = $this->subscribedBotFactory->create();
         $this->botRepository->save($bot);

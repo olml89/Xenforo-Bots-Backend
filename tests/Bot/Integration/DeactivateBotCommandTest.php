@@ -37,7 +37,7 @@ final class DeactivateBotCommandTest extends TestCase implements ExecutesDoctrin
             ->assertFailed();
     }
 
-    public function testItDeactivatesAXenforoBot(): void
+    public function testItDeactivatesABotAndPrintsASuccessfulMessage(): void
     {
         $bot = $this->subscribedBotFactory->create();
         $bot->activate();
