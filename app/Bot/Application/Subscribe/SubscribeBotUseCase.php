@@ -49,8 +49,6 @@ final readonly class SubscribeBotUseCase
                 ->botSubscriber
                 ->subscribe($bot);
 
-            $this->botRepository->save($bot);
-
             return new BotResult($bot);
         }
         catch (ValueObjectException $e) {

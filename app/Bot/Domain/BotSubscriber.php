@@ -9,16 +9,18 @@ final readonly class BotSubscriber
 {
     public function __construct(
         private RemoteBotSubscriber $remoteBotSubscriber,
+        private BotRepository $botRepository,
     ) {}
 
     /**
      * @throws SubscriptionValidationException
      * @throws SubscriptionCreationException
+     * @throws BotStorageException
      */
     public function subscribe(Bot $bot): void
     {
         $subscription = $this->remoteBotSubscriber->subscribe($bot);
-
         $bot->subscribe($subscription);
+        $this->botRepository->save($bot);
     }
 }

@@ -17,7 +17,6 @@ final readonly class ActivateBotUseCase
     public function __construct(
         private BotFinder $botFinder,
         private BotActivator $botActivator,
-        private BotRepository $botRepository,
     ) {}
 
     /**
@@ -32,7 +31,6 @@ final readonly class ActivateBotUseCase
             $username = Username::create($username);
             $bot = $this->botFinder->findByUsername($username);
             $this->botActivator->activate($bot);
-            $this->botRepository->save($bot);
         }
         catch (ValueObjectException $e) {
             throw new BotValidationException($e);
