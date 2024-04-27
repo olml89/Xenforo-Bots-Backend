@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Database\Factories\ValueObjects\UnixTimestampFactory;
+use Database\Factories\ValueObjects\UuidFactory;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\UnixTimestamp\UnixTimestamp;
@@ -15,6 +16,7 @@ final class SubscriptionFactory
     private ?Bot $bot = null;
 
     public function __construct(
+        private readonly UuidFactory $uuidFactory,
         private readonly UnixTimestampFactory $unixTimestampFactory,
         private readonly BotFactory $botFactory,
     ) {}
@@ -50,7 +52,7 @@ final class SubscriptionFactory
     public function create(): Subscription
     {
         $subscription = new Subscription(
-            subscriptionId: $this->subscriptionId ?? Uuid::random(),
+            subscriptionId: $this->subscriptionId ?? $this->uuidFactory->create(),
             subscribedAt: $this->subscribedAt ?? $this->unixTimestampFactory->create(),
             bot: $this->bot ?? $this->botFactory->create()
         );

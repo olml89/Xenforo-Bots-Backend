@@ -2,17 +2,15 @@
 
 namespace olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Http\Responses;
 
-use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
-final class AcceptedResponse extends Response
+final class AcceptedResponse extends JsonResponse
 {
-    public function __construct(array $headers = [])
+    public function __construct()
     {
         parent::__construct(
-            content: null,
-            status: SymfonyResponse::HTTP_ACCEPTED,
-            headers: $headers,
+            status: Response::HTTP_ACCEPTED,
         );
     }
 }

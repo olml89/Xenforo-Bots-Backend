@@ -2,16 +2,8 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain\Subscription;
 
-use Exception;
-use Throwable;
+use olml89\XenforoBotsBackend\Common\Domain\Exceptions\EntityException;
 
-final class SubscriptionRemovalException extends Exception
+final class SubscriptionRemovalException extends EntityException
 {
-    public function __construct(Throwable $exception)
-    {
-        parent::__construct(
-            message: $exception->getMessage(),
-            previous: $exception,
-        );
-    }
 }

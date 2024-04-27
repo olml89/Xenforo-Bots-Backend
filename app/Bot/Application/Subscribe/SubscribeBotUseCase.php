@@ -4,8 +4,8 @@ namespace olml89\XenforoBotsBackend\Bot\Application\Subscribe;
 
 use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotProvisionException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvisionException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotSubscriber;
@@ -13,7 +13,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionValidationException;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 
 final readonly class SubscribeBotUseCase
@@ -52,7 +52,7 @@ final readonly class SubscribeBotUseCase
             return new BotResult($bot);
         }
         catch (ValueObjectException $e) {
-            throw new BotValidationException($e);
+            throw BotValidationException::fromException($e);
         }
     }
 }

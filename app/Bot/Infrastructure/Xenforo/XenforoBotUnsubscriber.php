@@ -32,7 +32,7 @@ final readonly class XenforoBotUnsubscriber implements RemoteBotUnsubscriber
             );
         }
         catch (XenforoApiException $e) {
-            throw new SubscriptionRemovalException($e);
+            throw SubscriptionRemovalException::fromException($e);
         }
     }
 }

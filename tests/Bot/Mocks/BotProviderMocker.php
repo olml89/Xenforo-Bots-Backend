@@ -5,7 +5,7 @@ namespace Tests\Bot\Mocks;
 use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 
 final readonly class BotProviderMocker
 {

@@ -2,6 +2,8 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
+
 interface BotProvider
 {
     /**

@@ -6,8 +6,8 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use Doctrine\DBAL\Types\StringType;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 
 final class UsernameType extends StringType implements CustomType
 {

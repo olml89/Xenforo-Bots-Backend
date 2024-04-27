@@ -5,8 +5,8 @@ use olml89\XenforoBotsBackend\Common\Infrastructure\ApiKeyGenerator\ApikeyGenera
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DoctrineServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Laravel\Providers\AppServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\UrlValidator\UrlValidatorServiceProvider;
+use olml89\XenforoBotsBackend\Common\Infrastructure\UuidGenerator\UuidGeneratorServiceProvider;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\XenforoApiConsumerServiceProvider;
-use olml89\XenforoBotsBackend\Subscription\Infrastructure\Xenforo\XenforoSubscriptionServiceProvider;
 
 return [
 
@@ -23,6 +23,7 @@ return [
     /*
     * Application Service Providers...
     */
+    UuidGeneratorServiceProvider::class,
     ApikeyGeneratorServiceProvider::class,
     UrlValidatorServiceProvider::class,
     XenforoApiConsumerServiceProvider::class,

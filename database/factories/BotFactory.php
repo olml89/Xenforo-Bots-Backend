@@ -4,9 +4,10 @@ namespace Database\Factories;
 
 use Database\Factories\ValueObjects\ApiKeyFactory;
 use Database\Factories\ValueObjects\UsernameFactory;
+use Database\Factories\ValueObjects\UuidFactory;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
 final class BotFactory
@@ -16,6 +17,7 @@ final class BotFactory
     private ?Username $username = null;
 
     public function __construct(
+        private readonly UuidFactory $uuidFactory,
         private readonly ApiKeyFactory $apiKeyFactory,
         private readonly UsernameFactory $usernameFactory,
     ) {}
@@ -51,7 +53,7 @@ final class BotFactory
     public function create(): Bot
     {
         $bot = new Bot(
-            botId: $this->botId ?? Uuid::random(),
+            botId: $this->botId ?? $this->uuidFactory->create(),
             apiKey: $this->apiKey ?? $this->apiKeyFactory->create(),
             username: $this->username ?? $this->usernameFactory->create()
         );

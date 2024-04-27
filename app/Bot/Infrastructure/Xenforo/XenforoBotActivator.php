@@ -32,7 +32,7 @@ final readonly class XenforoBotActivator implements RemoteBotActivator
             );
         }
         catch (XenforoApiException $e) {
-            throw new BotActivationException($e);
+            throw BotActivationException::fromException($e);
         }
     }
 }

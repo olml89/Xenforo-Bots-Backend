@@ -2,16 +2,8 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use Exception;
-use Throwable;
+use olml89\XenforoBotsBackend\Common\Domain\Exceptions\EntityValidationException;
 
-final class BotValidationException extends Exception
+final class BotValidationException extends EntityValidationException
 {
-    public function __construct(Throwable $exception)
-    {
-        parent::__construct(
-            message: $exception->getMessage(),
-            previous: $exception,
-        );
-    }
 }

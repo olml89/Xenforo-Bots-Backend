@@ -54,10 +54,10 @@ final readonly class XenforoBotSubscriber implements RemoteBotSubscriber
             );
         }
         catch (ValueObjectException|XenforoApiUnprocessableEntityException $e) {
-            throw new SubscriptionValidationException($e);
+            throw SubscriptionValidationException::fromException($e);
         }
         catch (XenforoApiException $e) {
-            throw new SubscriptionCreationException($e);
+            throw SubscriptionCreationException::fromException($e);
         }
     }
 }

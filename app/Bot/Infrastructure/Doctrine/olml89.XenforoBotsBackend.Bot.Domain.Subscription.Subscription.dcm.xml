@@ -18,14 +18,14 @@
             type="uuid"
         />
         <field
-            name="subscribedAt"
-            column="subscribed_at"
-            type="unix_timestamp"
-        />
-        <field
             name="isActive"
             column="is_active"
             type="boolean"
+        />
+        <field
+            name="subscribedAt"
+            column="subscribed_at"
+            type="unix_timestamp"
         />
         <field
             name="activationChangedAt"

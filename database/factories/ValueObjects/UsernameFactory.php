@@ -3,7 +3,7 @@
 namespace Database\Factories\ValueObjects;
 
 use Illuminate\Support\Str;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 
 final class UsernameFactory
 {

@@ -3,12 +3,12 @@
 namespace olml89\XenforoBotsBackend\Bot\Infrastructure\Xenforo;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
+use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\BotProvisionException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
-use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Xenforo\Exceptions\XenforoApiConflictException;
@@ -47,10 +47,10 @@ final readonly class XenforoBotProvider implements BotProvider
          * and for 422 UnprocessableEntity responses from Xenforo too.
          */
         catch (ValueObjectException|XenforoApiUnprocessableEntityException $e) {
-            throw new BotValidationException($e);
+            throw BotValidationException::fromException($e);
         }
         catch (XenforoApiException $e) {
-            throw new BotProvisionException($e);
+            throw BotProvisionException::fromException($e);
         }
     }
 

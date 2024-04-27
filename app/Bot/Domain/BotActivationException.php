@@ -2,16 +2,8 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use Exception;
-use Throwable;
+use olml89\XenforoBotsBackend\Common\Domain\Exceptions\EntityException;
 
-final class BotActivationException extends Exception
+final class BotActivationException extends EntityException
 {
-    public function __construct(Throwable $exception)
-    {
-        parent::__construct(
-            message: $exception->getMessage(),
-            previous: $exception,
-        );
-    }
 }

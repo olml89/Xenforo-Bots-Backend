@@ -8,7 +8,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotUnsubscriber;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionRemovalException;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 
 final readonly class UnsubscribeBotUseCase
@@ -32,7 +32,7 @@ final readonly class UnsubscribeBotUseCase
             $this->botUnsubscriber->unsubscribe($bot);
         }
         catch (ValueObjectException $e) {
-            throw new BotValidationException($e);
+            throw BotValidationException::fromException($e);
         }
     }
 }

@@ -29,7 +29,7 @@ final readonly class XenforoBotDeactivator implements RemoteBotDeactivator
             );
         }
         catch (XenforoApiException $e) {
-            throw new BotDeactivationException($e);
+            throw BotDeactivationException::fromException($e);
         }
     }
 }

@@ -2,13 +2,23 @@
 
 namespace Tests\Common\Unit;
 
-use Illuminate\Foundation\Testing\TestCase;
+use Database\Factories\ValueObjects\UuidFactory;
 use Illuminate\Support\Str;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\InvalidUuidException;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use Tests\TestCase;
 
 final class UuidTest extends TestCase
 {
+    private readonly UuidFactory $uuidFactory;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->uuidFactory = $this->resolve(UuidFactory::class);
+    }
+
     public function testItDoesNotAllowInvalidUuids(): void
     {
         $value = Str::random();
@@ -36,18 +46,11 @@ final class UuidTest extends TestCase
         );
     }
 
-    public function testItCreatesRandomUuid(): void
-    {
-        $this->expectNotToPerformAssertions();
-
-        Uuid::random();
-    }
-
     public function testItChecksEquality(): void
     {
-        $uuid = Uuid::random();
+        $uuid = $this->uuidFactory->create();
         $equalUuid = clone $uuid;
-        $differentUuid = Uuid::random();
+        $differentUuid =$this->uuidFactory->create();
 
         $this->assertTrue(
             $uuid->equals($equalUuid)

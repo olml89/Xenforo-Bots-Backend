@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBotsBackend\Bot\Domain;
+namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username;
 
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\StringValueObject;
 
@@ -15,7 +15,7 @@ final readonly class Username implements StringValueObject
      */
     public static function create(string $username): self
     {
-        self::ensureItHasBetween1And50Characters($username);
+        self::ensureItHasBetween3And50Characters($username);
 
         return new self($username);
     }
@@ -23,10 +23,10 @@ final readonly class Username implements StringValueObject
     /**
      * @throws InvalidUsernameException
      */
-    private static function ensureItHasBetween1And50Characters(string $username): void
+    private static function ensureItHasBetween3And50Characters(string $username): void
     {
-        if (strlen($username) === 0) {
-            throw InvalidUsernameException::empty();
+        if (strlen($username) < 3) {
+            throw InvalidUsernameException::tooShort($username);
         }
 
         if (strlen($username) > 50) {

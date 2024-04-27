@@ -1,0 +1,75 @@
+<?xml
+    version="1.0"
+    encoding="UTF-8"
+?>
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+    <entity
+        name="olml89\XenforoBotsBackend\Content\Domain\Content"
+        table="contents"
+    >
+        <id
+            name="contentId"
+            column="content_id"
+            type="uuid"
+        />
+        <field
+            name="scope"
+            column="scope"
+            type="text"
+            enum-type="olml89\XenforoBotsBackend\Content\Domain\ContentScope"
+        />
+        <field
+            name="externalContentId"
+            column="external_content_id"
+            type="auto_id"
+        />
+        <field
+            name="externalParentContentId"
+            column="external_parent_content_id"
+            type="auto_id"
+        />
+        <embedded
+            name="author"
+            class="olml89\XenforoBotsBackend\Content\Domain\Author"
+        />
+        <field
+            name="message"
+            column="message"
+            type="text"
+        />
+        <field
+            name="createdAt"
+            column="created_at"
+            type="unix_timestamp"
+        />
+        <field
+            name="editedAt"
+            column="edited_at"
+            type="unix_timestamp"
+        />
+        <unique-constraints>
+            <unique-constraint
+                columns="scope,external_content_id"
+                name="unique_content"
+            />
+        </unique-constraints>
+    </entity>
+    <embeddable name="author">
+        <field
+            name="authorId"
+            column="author_id"
+            type="auto_id"
+        />
+        <field
+            name="username"
+            column="author_username"
+            type="username"
+            length="50"
+        />
+    </embeddable>
+</doctrine-mapping>

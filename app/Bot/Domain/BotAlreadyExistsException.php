@@ -2,15 +2,10 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use Exception;
+use olml89\XenforoBotsBackend\Common\Domain\Exceptions\EntityAlreadyExistsException;
 
-final class BotAlreadyExistsException extends Exception
+final class BotAlreadyExistsException extends EntityAlreadyExistsException
 {
-    private function __construct(string $message)
-    {
-        parent::__construct($message);
-    }
-
     public static function bot(Bot $bot): self
     {
         return new self(

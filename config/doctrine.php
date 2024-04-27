@@ -1,9 +1,11 @@
 <?php declare(strict_types=1);
 
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Content\Domain\ContentRepository;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Doctrine\DoctrineBotRepository;
-use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Driver\PersistentMySQLDriver;
+use olml89\XenforoBotsBackend\Content\Infrastructure\Doctrine\DoctrineContentRepository;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\ApiKeyType;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\AutoIdType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UnixTimestampType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UrlType;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UsernameType;
@@ -11,14 +13,12 @@ use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DBAL\Types\UuidType
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\DiffCommand;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\ExecuteCommand;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\Migrations\Commands\MigrateCommand;
-use olml89\XenforoBotsBackend\Reply\Domain\ReplyRepository;
-use olml89\XenforoBotsBackend\Reply\Infrastructure\Persistence\DoctrineReplyRepository;
 
 return [
 
     'mappings' => [
         app_path('Bot/Infrastructure/Doctrine'),
-        //app_path('Reply/Infrastructure/Persistence'),
+        app_path('Content/Infrastructure/Doctrine'),
     ],
 
     'proxies' => [
@@ -40,11 +40,12 @@ return [
         UrlType::class,
         UsernameType::class,
         UnixTimestampType::class,
+        AutoIdType::class,
     ],
 
     'repositories' => [
         BotRepository::class => DoctrineBotRepository::class,
-        ReplyRepository::class => DoctrineReplyRepository::class,
+        ContentRepository::class => DoctrineContentRepository::class,
     ],
 
     'migrations' => [

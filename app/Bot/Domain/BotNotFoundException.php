@@ -2,16 +2,12 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use Exception;
+use olml89\XenforoBotsBackend\Common\Domain\Exceptions\EntityNotFoundException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
-final class BotNotFoundException extends Exception
+final class BotNotFoundException extends EntityNotFoundException
 {
-    private function __construct(string $message)
-    {
-        parent::__construct($message);
-    }
-
     public static function botId(Uuid $botId): self
     {
         return new self(

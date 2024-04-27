@@ -8,7 +8,7 @@ use Ramsey\Uuid\UuidInterface;
 
 final readonly class Uuid implements StringValueObject
 {
-    private function __construct(
+    public function __construct(
         private UuidInterface $uuid,
     ) {}
 
@@ -30,11 +30,6 @@ final readonly class Uuid implements StringValueObject
         if (!UuidFactory::isValid($uuid)) {
             throw new InvalidUuidException($uuid);
         }
-    }
-
-    public static function random(): self
-    {
-        return new self(UuidFactory::uuid4());
     }
 
     public function equals(Uuid $uuid): bool

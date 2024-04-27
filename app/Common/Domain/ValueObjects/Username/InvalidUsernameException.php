@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace olml89\XenforoBotsBackend\Bot\Domain;
+namespace olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username;
 
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 
@@ -11,9 +11,15 @@ final class InvalidUsernameException extends ValueObjectException
         parent::__construct($message);
     }
 
-    public static function empty(): self
+    public static function tooShort(string $username): self
     {
-        return new self('Username cannot be empty');
+        return new self(
+            sprintf(
+                'Username must have at least 3 characters length,  \'%s\' provided with %s characters',
+                $username,
+                strlen($username),
+            )
+        );
     }
 
     public static function tooLong(string $username): self

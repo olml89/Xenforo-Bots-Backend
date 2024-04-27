@@ -14,8 +14,8 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidPasswordException;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotSubscriber;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\Bot\Mocks\BotProviderMocker;
 use Tests\Bot\Mocks\RemoteBotSubscriberMocker;
@@ -48,7 +48,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         $invalidPassword = '';
 
         $this->expectExceptionObject(
-            new BotValidationException(InvalidUsernameException::empty())
+            BotValidationException::fromException(InvalidUsernameException::tooShort($invalidUsername))
         );
 
         $this
@@ -86,7 +86,7 @@ final class SubscribeBotUseCaseTest extends TestCase
         $invalidPassword = '';
 
         $this->expectExceptionObject(
-            new BotValidationException(new InvalidPasswordException())
+            BotValidationException::fromException(new InvalidPasswordException())
         );
 
         $this

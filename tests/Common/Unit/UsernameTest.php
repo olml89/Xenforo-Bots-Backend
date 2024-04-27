@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Bot\Unit\Domain;
+namespace Tests\Common\Unit;
 
 use Database\Factories\ValueObjects\UsernameFactory;
 use Illuminate\Support\Str;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use Tests\TestCase;
 
 final class UsernameTest extends TestCase
@@ -19,12 +19,12 @@ final class UsernameTest extends TestCase
         $this->usernameFactory = $this->resolve(UsernameFactory::class);
     }
 
-    public function testItDoesNotAllowEmptyUsernames(): void
+    public function testItDoesNotAllowUsernamesShorterThan3Chars(): void
     {
-        $value = '';
+        $value = Str::random(2);
 
         $this->expectExceptionObject(
-            InvalidUsernameException::empty()
+            InvalidUsernameException::tooShort($value)
         );
 
         Username::create($value);

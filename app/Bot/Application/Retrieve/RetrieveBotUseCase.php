@@ -6,8 +6,8 @@ use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
-use olml89\XenforoBotsBackend\Bot\Domain\Username;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 
 final readonly class RetrieveBotUseCase
 {
@@ -28,7 +28,7 @@ final readonly class RetrieveBotUseCase
             return new BotResult($bot);
         }
         catch (InvalidUsernameException $e) {
-            throw new BotValidationException($e);
+            throw BotValidationException::fromException($e);
         }
     }
 }

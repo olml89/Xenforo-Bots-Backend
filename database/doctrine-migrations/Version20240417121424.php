@@ -16,9 +16,9 @@ final class Version20240417121424 extends AbstractMigration
     {
         $this->addSql('
             CREATE TABLE bots (
+                bot_id CHAR(36) NOT NULL,
                 api_key VARCHAR(32) NOT NULL,
                 username VARCHAR(50) NOT NULL,
-                bot_id CHAR(36) NOT NULL,
                 subscription_id CHAR(36) DEFAULT NULL,
                 UNIQUE INDEX UNIQ_71BFF0FDC912ED9D (api_key),
                 UNIQUE INDEX UNIQ_71BFF0FDF85E0677 (username),
@@ -28,12 +28,10 @@ final class Version20240417121424 extends AbstractMigration
         ');
         $this->addSql('
             CREATE TABLE subscriptions (
-                subscribed_at DATETIME NOT NULL,
-                is_active TINYINT(1) NOT NULL,
-                activation_changed_at DATETIME NOT NULL,
                 subscription_id CHAR(36) NOT NULL,
-                bot_id CHAR(36) DEFAULT NULL,
-                UNIQUE INDEX UNIQ_4778A0192C1C487 (bot_id),
+                is_active TINYINT(1) NOT NULL,
+                subscribed_at DATETIME NOT NULL,
+                activation_changed_at DATETIME NOT NULL,
                 PRIMARY KEY(subscription_id)
             ) DEFAULT CHARACTER SET utf8mb4'
         );
@@ -42,12 +40,6 @@ final class Version20240417121424 extends AbstractMigration
             ADD CONSTRAINT FK_71BFF0FD9A1887DC
             FOREIGN KEY (subscription_id)
             REFERENCES subscriptions (subscription_id)
-        ');
-        $this->addSql('
-            ALTER TABLE subscriptions
-            ADD CONSTRAINT FK_4778A0192C1C487
-            FOREIGN KEY (bot_id)
-            REFERENCES bots (bot_id)
         ');
     }
 

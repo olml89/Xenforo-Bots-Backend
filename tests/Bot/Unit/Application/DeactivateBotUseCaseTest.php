@@ -6,11 +6,11 @@ use Database\Factories\SubscribedBotFactory;
 use Database\Factories\ValueObjects\UsernameFactory;
 use Mockery\MockInterface;
 use olml89\XenforoBotsBackend\Bot\Application\Deactivate\DeactivateBotUseCase;
-use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotDeactivator;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
+use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotDeactivator;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\Bot\Mocks\RemoteBotDeactivatorMocker;
 use Tests\TestCase;
@@ -35,7 +35,7 @@ final class DeactivateBotUseCaseTest extends TestCase
         $invalidUsername = '';
 
         $this->expectExceptionObject(
-            new BotValidationException(InvalidUsernameException::empty())
+            BotValidationException::fromException(InvalidUsernameException::tooShort($invalidUsername))
         );
 
         $this

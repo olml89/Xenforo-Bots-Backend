@@ -10,8 +10,8 @@ use olml89\XenforoBotsBackend\Bot\Application\Unsubscribe\UnsubscribeBotUseCase;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
-use olml89\XenforoBotsBackend\Bot\Domain\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotUnsubscriber;
+use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\Bot\Mocks\RemoteBotUnsubscriberMocker;
 use Tests\TestCase;
@@ -37,7 +37,7 @@ final class UnsubscribeBotUseCaseTest extends TestCase
         $invalidPassword = '';
 
         $this->expectExceptionObject(
-            new BotValidationException(InvalidUsernameException::empty())
+            BotValidationException::fromException(InvalidUsernameException::tooShort($invalidUsername))
         );
 
         $this
