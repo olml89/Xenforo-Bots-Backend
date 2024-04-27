@@ -59,17 +59,4 @@
             />
         </unique-constraints>
     </entity>
-    <embeddable name="author">
-        <field
-            name="authorId"
-            column="author_id"
-            type="auto_id"
-        />
-        <field
-            name="username"
-            column="author_username"
-            type="username"
-            length="50"
-        />
-    </embeddable>
 </doctrine-mapping>

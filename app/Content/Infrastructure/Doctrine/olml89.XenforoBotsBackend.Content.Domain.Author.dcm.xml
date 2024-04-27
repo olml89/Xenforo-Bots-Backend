@@ -13,12 +13,12 @@
     >
         <field
             name="authorId"
-            column="author_id"
+            column="id"
             type="auto_id"
         />
         <field
             name="username"
-            column="author_username"
+            column="username"
             type="username"
             length="50"
         />

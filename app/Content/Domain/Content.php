@@ -9,7 +9,7 @@ final readonly class Content
 {
     public function __construct(
         private Uuid $contentId,
-        private ContentScope  $scope,
+        private ContentScope $scope,
         private AutoId $externalContentId,
         private AutoId $externalParentContentId,
         private Author $author,
