@@ -11,7 +11,7 @@ final class ContentAlreadyExistsException extends EntityAlreadyExistsException
     {
         return new self(
             message: sprintf(
-                'Content of %s scope with id \'%s\' already exists',
+                'Content of %s scope already exists (id: %s)',
                 $content->scope()->value,
                 $content->externalContentId()
             ),

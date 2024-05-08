@@ -2,14 +2,17 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
+use olml89\XenforoBotsBackend\Bot\Domain\Personality\BehaviourStack;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\Subscription;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ApiKey\ApiKey;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Content\Domain\Content;
 
 final readonly class Bot
 {
     private Subscription $subscription;
+    private BehaviourStack $behaviourStack;
 
     public function __construct(
         private Uuid $botId,
@@ -57,5 +60,10 @@ final readonly class Bot
     public function deactivate(): void
     {
         $this->subscription->deactivate();
+    }
+
+    public function reactTo(Content $content): string
+    {
+        return $this->behaviourStack->reactTo($content);
     }
 }

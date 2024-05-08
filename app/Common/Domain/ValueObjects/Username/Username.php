@@ -26,11 +26,11 @@ final readonly class Username implements StringValueObject
     private static function ensureItHasBetween3And50Characters(string $username): void
     {
         if (strlen($username) < 3) {
-            throw InvalidUsernameException::tooShort($username);
+            throw InvalidUsernameException::tooShort(3, $username);
         }
 
         if (strlen($username) > 50) {
-            throw InvalidUsernameException::tooLong($username);
+            throw InvalidUsernameException::tooLong(50, $username);
         }
     }
 

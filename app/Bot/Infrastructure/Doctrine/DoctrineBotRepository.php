@@ -52,7 +52,7 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
             $this->getEntityManager()->flush();
         }
         catch (Throwable $doctrineException) {
-            throw new BotStorageException($doctrineException);
+            throw BotStorageException::fromException($doctrineException);
         }
     }
 
@@ -66,7 +66,7 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
             $this->getEntityManager()->flush();
         }
         catch (Throwable $doctrineException) {
-            throw new BotStorageException($doctrineException);
+            throw BotStorageException::fromException($doctrineException);
         }
     }
 }

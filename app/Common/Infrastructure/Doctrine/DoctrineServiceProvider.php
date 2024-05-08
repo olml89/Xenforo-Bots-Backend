@@ -70,15 +70,47 @@ final class DoctrineServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->bootEntityManager();
         $this->bootCustomTypes();
 
+        $entityManager = $this->bootEntityManager();
+
+        $this->bootListeners($entityManager);
+        $this->bootSubscribers($entityManager);
+
         if ($this->app->runningInConsole()) {
-            $this->bootMigrations();
+            $this->bootMigrations($entityManager);
         }
     }
 
-    private function bootEntityManager(): void
+    /**
+     * This is booted instead of registered, since our defined CustomTypes can contain dependencies that have to be
+     * previously instantiated by the application
+     *
+     * @throws Throwable
+     */
+    private function bootCustomTypes(): void
+    {
+        $customTypes = $this->config->get('doctrine.custom_types');
+
+        /** @var class-string<CustomType> $typeClass */
+        foreach ($customTypes as $typeClass) {
+            $typeName = $typeClass::getTypeName();
+
+            if (Type::hasType($typeName)) {
+                continue;
+            }
+
+            $type = new $typeClass;
+
+            if ($type instanceof InjectableType) {
+                $type->inject($this->app);
+            }
+
+            Type::getTypeRegistry()->register($typeName, $type);
+        }
+    }
+
+    private function bootEntityManager(): EntityManagerInterface
     {
         $this->app->singleton(EntityManagerInterface::class, function(Application $app): EntityManager {
             $config = ORMSetup::createXMLMetadataConfiguration(
@@ -110,37 +142,27 @@ final class DoctrineServiceProvider extends ServiceProvider
 
             return new EntityManager($connection, $config);
         });
+
+        return $this->app[EntityManagerInterface::class];
     }
 
-    /**
-     * This is booted instead of registered, since our defined CustomTypes can contain dependencies that have to be
-     * previously instantiated by the application
-     *
-     * @throws Throwable
-     */
-    private function bootCustomTypes(): void
+    public function bootListeners(EntityManagerInterface $entityManager): void
     {
-        $customTypes = $this->config->get('doctrine.custom_types');
-
-        /** @var class-string<CustomType> $typeClass */
-        foreach ($customTypes as $typeClass) {
-            $typeName = $typeClass::getTypeName();
-
-            if (Type::hasType($typeName)) {
-                continue;
+        foreach ($this->config->get('doctrine.events.listeners') as $event => $listeners) {
+            foreach ($listeners as $listener) {
+                $entityManager->getEventManager()->addEventListener($event, $listener);
             }
-
-            $type = new $typeClass;
-
-            if ($type instanceof InjectableType) {
-                $type->inject($this->app);
-            }
-
-            Type::getTypeRegistry()->register($typeName, $type);
         }
     }
 
-    private function bootMigrations(): void
+    public function bootSubscribers(EntityManagerInterface $entityManager): void
+    {
+        foreach ($this->config->get('doctrine.events.subscribers') as $subscriber) {
+            $entityManager->getEventManager()->addEventSubscriber($subscriber);
+        }
+    }
+
+    private function bootMigrations(EntityManagerInterface $entityManager): void
     {
         foreach ($this->config->get('doctrine.migrations.default.migrations_paths') as $migrationsDirectory) {
             if (!is_dir($migrationsDirectory)) {
@@ -148,14 +170,12 @@ final class DoctrineServiceProvider extends ServiceProvider
             }
         }
 
-        $this->app->singleton(DependencyFactory::class, function(Application $app): DependencyFactory {
+        $this->app->singleton(DependencyFactory::class, function() use ($entityManager): DependencyFactory {
             return DependencyFactory::fromEntityManager(
                 configurationLoader: new ConfigurationArray(
                     $this->config->get('doctrine.migrations.default')
                 ),
-                emLoader: new ExistingEntityManager(
-                    $app->get(EntityManagerInterface::class)
-                ),
+                emLoader: new ExistingEntityManager($entityManager),
             );
         });
     }

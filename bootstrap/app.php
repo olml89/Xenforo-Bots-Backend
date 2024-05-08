@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use olml89\XenforoBotsBackend\Behaviour\Infrastructure\Console\RegisterBehaviourCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\ActivateBotCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\DeactivateBotCommand;
 use olml89\XenforoBotsBackend\Bot\Infrastructure\Console\IndexBotsCommand;
@@ -32,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
         UnsubscribeBotCommand::class,
         ActivateBotCommand::class,
         DeactivateBotCommand::class,
+        RegisterBehaviourCommand::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(EnsurePlatformApiKeyIsValid::class);

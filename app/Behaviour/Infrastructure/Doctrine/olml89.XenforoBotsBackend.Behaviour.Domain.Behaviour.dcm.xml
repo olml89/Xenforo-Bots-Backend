@@ -1,0 +1,35 @@
+<?xml
+    version="1.0"
+    encoding="UTF-8"
+    ?>
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+    <entity
+        name="olml89\XenforoBotsBackend\Behaviour\Domain\Behaviour"
+        table="behaviours"
+    >
+        <id
+            name="behaviourId"
+            column="behaviour_id"
+            type="uuid"
+        />
+        <field
+            name="behaviourName"
+            column="name"
+            type="behaviourName"
+            length="50"
+            unique="true"
+        />
+        <field
+            name="behaviourPattern"
+            column="pattern"
+            type="behaviourPattern"
+            length="100"
+            unique="true"
+        />
+    </entity>
+</doctrine-mapping>

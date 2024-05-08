@@ -9,9 +9,9 @@ final class BotAlreadyExistsException extends EntityAlreadyExistsException
     public static function bot(Bot $bot): self
     {
         return new self(
-            sprintf('Bot with id \'%s\' and username \'%s\' already exists',
-                $bot->botId(),
+            sprintf('Bot with username \'%s\' already exists (id: %s)',
                 $bot->username(),
+                $bot->botId(),
             )
         );
     }

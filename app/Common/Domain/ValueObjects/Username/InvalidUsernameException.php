@@ -11,22 +11,24 @@ final class InvalidUsernameException extends ValueObjectException
         parent::__construct($message);
     }
 
-    public static function tooShort(string $username): self
+    public static function tooShort(int $minLength, string $username): self
     {
         return new self(
             sprintf(
-                'Username must have at least 3 characters length,  \'%s\' provided with %s characters',
+                'Username must have at least %s characters length,  \'%s\' provided with %s characters',
+                $minLength,
                 $username,
                 strlen($username),
             )
         );
     }
 
-    public static function tooLong(string $username): self
+    public static function tooLong(int $maxLength, string $username): self
     {
         return new self(
             sprintf(
-                'Username cannot exceed 50 characters length,  \'%s\' provided with %s characters',
+                'Username cannot exceed %s characters length,  \'%s\' provided with %s characters',
+                $maxLength,
                 $username,
                 strlen($username),
             )
