@@ -2,7 +2,6 @@
 
 namespace olml89\XenforoBotsBackend\Behaviour\Application;
 
-use olml89\XenforoBotsBackend\Behaviour\BehaviourNameOrBehaviourPatternEqualsCriteria;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourAlreadyExistsException;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourCreator;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourName;
@@ -11,6 +10,7 @@ use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourPatternManager;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourRepository;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourStorageException;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourValidationException;
+use olml89\XenforoBotsBackend\Behaviour\Domain\EqualsBehaviourNameOrEqualsBehaviourPatternSpecification;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 
 final readonly class RegisterBehaviourUseCase
@@ -38,7 +38,7 @@ final readonly class RegisterBehaviourUseCase
 
             $alreadyExistingBehaviour = $this
                 ->behaviourRepository
-                ->getOneBy(new BehaviourNameOrBehaviourPatternEqualsCriteria(
+                ->getOneBy(new EqualsBehaviourNameOrEqualsBehaviourPatternSpecification(
                     $behaviourName,
                     $behaviourPattern
                 ));

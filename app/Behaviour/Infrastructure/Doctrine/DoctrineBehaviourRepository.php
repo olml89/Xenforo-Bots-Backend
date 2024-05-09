@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use olml89\XenforoBotsBackend\Behaviour\Domain\Behaviour;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourRepository;
+use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourSpecification;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourStorageException;
 use olml89\XenforoBotsBackend\Common\Domain\Criteria\Criteria;
 use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DoctrineCriteriaConverter;
@@ -24,10 +25,14 @@ final class DoctrineBehaviourRepository extends EntityRepository implements Beha
         );
     }
 
-    public function getOneBy(Criteria $criteria): ?Behaviour
+    public function getOneBy(BehaviourSpecification $specification): ?Behaviour
     {
+        $doctrineCriteria = $this
+            ->doctrineCriteriaConverter
+            ->convert($specification->criteria());
+
         return $this
-            ->matching($this->doctrineCriteriaConverter->convert($criteria))
+            ->matching($doctrineCriteria)
             ->first() ?: null;
     }
 
