@@ -2,9 +2,11 @@
 
 namespace olml89\XenforoBotsBackend\Behaviour\Domain;
 
+use olml89\XenforoBotsBackend\Common\Domain\Criteria\Criteria;
+
 interface BehaviourRepository
 {
-    public function getByBehaviourName(BehaviourName $behaviourName): ?Behaviour;
+    public function getOneBy(Criteria $criteria): ?Behaviour;
 
     /**
      * @throws BehaviourStorageException

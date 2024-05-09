@@ -34,6 +34,11 @@ final readonly class BehaviourName implements StringValueObject
         }
     }
 
+    public function equals(BehaviourName $behaviourName): bool
+    {
+        return $this->value() === $behaviourName->value();
+    }
+
     public function value(): string
     {
         return $this->behaviourName;

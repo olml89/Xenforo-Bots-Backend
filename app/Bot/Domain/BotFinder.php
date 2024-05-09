@@ -2,7 +2,6 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
 final readonly class BotFinder
@@ -22,8 +21,10 @@ final readonly class BotFinder
     /**
      * @throws BotNotFoundException
      */
-    public function findByUsername(Username $username): Bot
+    public function findBy(BotSpecification $specification): Bot
     {
-        return $this->botRepository->getByUsername($username) ?? throw BotNotFoundException::username($username);
+        return $this
+            ->botRepository
+            ->getOneBy($specification) ?? throw BotNotFoundException::specification($specification);
     }
 }

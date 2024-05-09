@@ -2,7 +2,6 @@
 
 namespace olml89\XenforoBotsBackend\Bot\Domain;
 
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 
 interface BotRepository
@@ -13,7 +12,7 @@ interface BotRepository
     public function all(): array;
 
     public function get(Uuid $botId): ?Bot;
-    public function getByUsername(Username $username): ?Bot;
+    public function getOneBy(BotSpecification $specification): ?Bot;
 
     /**
      * @throws BotStorageException

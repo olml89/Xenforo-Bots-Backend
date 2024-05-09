@@ -4,7 +4,7 @@ namespace olml89\XenforoBotsBackend\Content\Domain;
 
 interface ContentRepository
 {
-    public function getByExternalContentId(AutoId $externalContentId, ContentScope $scope): ?Content;
+    public function getOneBy(ContentSpecification $specification): ?Content;
 
     /**
      * @throws ContentAlreadyExistsException

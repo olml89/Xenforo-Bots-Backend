@@ -10,6 +10,7 @@ use olml89\XenforoBotsBackend\Bot\Application\Unsubscribe\UnsubscribeBotUseCase;
 use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\EqualsUsernameSpecification;
 use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotUnsubscriber;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
 use Tests\Bot\Fakes\InMemoryBotRepository;
@@ -92,7 +93,9 @@ final class UnsubscribeBotUseCaseTest extends TestCase
             ->unsubscribe((string)$bot->username());
 
         $this->assertNull(
-            $botRepository->getByUsername($bot->username())
+            $botRepository->getOneBy(
+                new EqualsUsernameSpecification($bot->username())
+            )
         );
     }
 }

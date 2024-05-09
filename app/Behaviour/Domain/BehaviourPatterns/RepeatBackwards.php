@@ -5,7 +5,7 @@ namespace olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourPatterns;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourPattern;
 use olml89\XenforoBotsBackend\Content\Domain\Content;
 
-final class RepeatBackwards implements BehaviourPattern
+final class RepeatBackwards extends BehaviourPattern
 {
     public function reactTo(Content $content, string $processedMessage): string
     {

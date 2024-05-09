@@ -9,6 +9,7 @@ use olml89\XenforoBotsBackend\Bot\Application\Retrieve\RetrieveBotUseCase;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\EqualsUsernameSpecification;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\TestCase;
@@ -49,7 +50,7 @@ final class RetrieveBotUseCaseTest extends TestCase
         );
 
         $this->expectExceptionObject(
-            BotNotFoundException::username($username)
+            BotNotFoundException::specification(new EqualsUsernameSpecification($username))
         );
 
         $this

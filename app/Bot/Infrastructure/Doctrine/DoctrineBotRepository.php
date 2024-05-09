@@ -7,15 +7,18 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
+use olml89\XenforoBotsBackend\Bot\Domain\BotSpecification;
 use olml89\XenforoBotsBackend\Bot\Domain\BotStorageException;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DoctrineCriteriaConverter;
 use Throwable;
 
 final class DoctrineBotRepository extends EntityRepository implements BotRepository
 {
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly DoctrineCriteriaConverter $doctrineCriteriaConverter,
+        EntityManagerInterface $entityManager,
+    ) {
         parent::__construct(
             $entityManager,
             new ClassMetadata(Bot::class),
@@ -35,11 +38,15 @@ final class DoctrineBotRepository extends EntityRepository implements BotReposit
         return $this->find($botId);
     }
 
-    public function getByUsername(Username $username): ?Bot
+    public function getOneBy(BotSpecification $specification): ?Bot
     {
-        return $this->findOneBy([
-            'username' => $username,
-        ]);
+        $doctrineCriteria = $this
+            ->doctrineCriteriaConverter
+            ->convert($specification->criteria());
+
+        return $this
+            ->matching($doctrineCriteria)
+            ->first() ?: null;
     }
 
     /**

@@ -6,26 +6,29 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use olml89\XenforoBotsBackend\Behaviour\Domain\Behaviour;
-use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourName;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourRepository;
 use olml89\XenforoBotsBackend\Behaviour\Domain\BehaviourStorageException;
+use olml89\XenforoBotsBackend\Common\Domain\Criteria\Criteria;
+use olml89\XenforoBotsBackend\Common\Infrastructure\Doctrine\DoctrineCriteriaConverter;
 use Throwable;
 
 final class DoctrineBehaviourRepository extends EntityRepository implements BehaviourRepository
 {
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly DoctrineCriteriaConverter $doctrineCriteriaConverter,
+        EntityManagerInterface $entityManager,
+    ) {
         parent::__construct(
             $entityManager,
             new ClassMetadata(Behaviour::class),
         );
     }
 
-    public function getByBehaviourName(BehaviourName $behaviourName): ?Behaviour
+    public function getOneBy(Criteria $criteria): ?Behaviour
     {
-        return $this->findOneBy([
-            'behaviourName' => $behaviourName,
-        ]);
+        return $this
+            ->matching($this->doctrineCriteriaConverter->convert($criteria))
+            ->first() ?: null;
     }
 
     /**

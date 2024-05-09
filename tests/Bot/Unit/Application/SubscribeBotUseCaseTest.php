@@ -13,6 +13,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotAlreadyExistsException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotProvider;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\EqualsUsernameSpecification;
 use olml89\XenforoBotsBackend\Bot\Domain\InvalidPasswordException;
 use olml89\XenforoBotsBackend\Bot\Domain\RemoteBotSubscriber;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
@@ -143,7 +144,9 @@ final class SubscribeBotUseCaseTest extends TestCase
             );
 
         $this->assertNotNull(
-            $botRepository->getByUsername($bot->username())
+            $botRepository->getOneBy(
+                new EqualsUsernameSpecification($bot->username())
+            )
         );
         $this->assertEquals(
             $expectedBotResult,

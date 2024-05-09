@@ -3,10 +3,9 @@
 namespace Tests\Content\Fakes;
 
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
-use olml89\XenforoBotsBackend\Content\Domain\AutoId;
 use olml89\XenforoBotsBackend\Content\Domain\Content;
 use olml89\XenforoBotsBackend\Content\Domain\ContentRepository;
-use olml89\XenforoBotsBackend\Content\Domain\ContentScope;
+use olml89\XenforoBotsBackend\Content\Domain\ContentSpecification;
 use WeakMap;
 
 final class InMemoryContentRepository implements ContentRepository
@@ -25,10 +24,10 @@ final class InMemoryContentRepository implements ContentRepository
         }
     }
 
-    public function getByExternalContentId(AutoId $externalContentId, ContentScope $scope): ?Content
+    public function getOneBy(ContentSpecification $specification): ?Content
     {
         foreach ($this->contents as $content) {
-            if ($content->externalContentId()->equals($externalContentId) && $content->hasScope($scope)) {
+            if ($specification->isSatisfiedBy($content)) {
                 return $content;
             }
         }

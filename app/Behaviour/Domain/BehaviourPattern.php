@@ -3,8 +3,19 @@
 namespace olml89\XenforoBotsBackend\Behaviour\Domain;
 
 use olml89\XenforoBotsBackend\Content\Domain\Content;
+use Stringable;
 
-interface BehaviourPattern
+abstract class BehaviourPattern implements Stringable
 {
-    public function reactTo(Content $content, string $processedMessage): string;
+    abstract public function reactTo(Content $content, string $processedMessage): string;
+
+    public function equals(BehaviourPattern $behaviourPattern): bool
+    {
+        return (string)$this === (string)$behaviourPattern;
+    }
+
+    public function __toString(): string
+    {
+        return $this::class;
+    }
 }

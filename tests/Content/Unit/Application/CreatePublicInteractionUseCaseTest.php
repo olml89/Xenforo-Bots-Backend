@@ -9,12 +9,12 @@ use Illuminate\Support\Str;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\InvalidUuidException;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidGenerator;
 use olml89\XenforoBotsBackend\Content\Application\CreatePublicInteractionUseCase;
 use olml89\XenforoBotsBackend\Content\Domain\ContentRepository;
 use olml89\XenforoBotsBackend\Content\Domain\ContentScope;
 use olml89\XenforoBotsBackend\Content\Domain\ContentValidationException;
+use olml89\XenforoBotsBackend\Content\Domain\EqualsExternalContentIdAndEqualsScopeSpecification;
 use Tests\Bot\Fakes\InMemoryBotRepository;
 use Tests\Common\Fakes\FakeUuidGenerator;
 use Tests\Content\Fakes\InMemoryContentRepository;
@@ -113,8 +113,11 @@ final class CreatePublicInteractionUseCaseTest extends TestCase
 
         $this->assertEquals(
             $content,
-            $contentRepository->getByExternalContentId(
-                $content->externalContentId(), $content->scope()
+            $contentRepository->getOneBy(
+                new EqualsExternalContentIdAndEqualsScopeSpecification(
+                    $content->externalContentId(),
+                    $content->scope()
+                )
             )
         );
     }

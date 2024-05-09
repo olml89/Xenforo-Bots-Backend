@@ -4,7 +4,7 @@ namespace Tests\Bot\Fakes;
 
 use olml89\XenforoBotsBackend\Bot\Domain\Bot;
 use olml89\XenforoBotsBackend\Bot\Domain\BotRepository;
-use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
+use olml89\XenforoBotsBackend\Bot\Domain\BotSpecification;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\Uuid;
 use WeakMap;
 
@@ -49,10 +49,10 @@ final class InMemoryBotRepository implements BotRepository
         return null;
     }
 
-    public function getByUsername(Username $username): ?Bot
+    public function getOneBy(BotSpecification $specification): ?Bot
     {
         foreach ($this->bots as $bot) {
-            if ($bot->username()->equals($username)) {
+            if ($specification->isSatisfiedBy($bot)) {
                 return $bot;
             }
         }

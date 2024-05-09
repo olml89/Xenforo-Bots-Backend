@@ -13,6 +13,7 @@ use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Password;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionCreationException;
 use olml89\XenforoBotsBackend\Bot\Domain\Subscription\SubscriptionValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\EqualsUsernameSpecification;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\ValueObjectException;
 
@@ -37,7 +38,11 @@ final readonly class SubscribeBotUseCase
         try {
             $username = Username::create($username);
 
-            if (!is_null($alreadyExistingBot = $this->botRepository->getByUsername($username))) {
+            $alreadyExistingBot = $this
+                ->botRepository
+                ->getOneBy(new EqualsUsernameSpecification($username));
+
+            if (!is_null($alreadyExistingBot)) {
                 throw BotAlreadyExistsException::bot($alreadyExistingBot);
             }
 

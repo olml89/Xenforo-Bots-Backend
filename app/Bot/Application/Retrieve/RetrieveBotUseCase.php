@@ -6,6 +6,7 @@ use olml89\XenforoBotsBackend\Bot\Application\BotResult;
 use olml89\XenforoBotsBackend\Bot\Domain\BotFinder;
 use olml89\XenforoBotsBackend\Bot\Domain\BotNotFoundException;
 use olml89\XenforoBotsBackend\Bot\Domain\BotValidationException;
+use olml89\XenforoBotsBackend\Bot\Domain\EqualsUsernameSpecification;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\InvalidUsernameException;
 use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Username\Username;
 
@@ -23,7 +24,10 @@ final readonly class RetrieveBotUseCase
     {
         try {
             $username = Username::create($username);
-            $bot = $this->botFinder->findByUsername($username);
+
+            $bot = $this
+                ->botFinder
+                ->findBy(new EqualsUsernameSpecification($username));
 
             return new BotResult($bot);
         }

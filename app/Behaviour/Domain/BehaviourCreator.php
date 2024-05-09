@@ -7,17 +7,11 @@ use olml89\XenforoBotsBackend\Common\Domain\ValueObjects\Uuid\UuidGenerator;
 final readonly class BehaviourCreator
 {
     public function __construct(
-        private BehaviourPatternManager $behaviourPatternManager,
         private UuidGenerator $uuidGenerator,
     ) {}
 
-    /**
-     * @throws InvalidBehaviourPatternHandlerException
-     */
-    public function create(BehaviourName $behaviourName, BehaviourPatternHandler $behaviourPatternHandler): Behaviour
+    public function create(BehaviourName $behaviourName, BehaviourPattern $behaviourPattern): Behaviour
     {
-        $behaviourPattern = $this->behaviourPatternManager->get($behaviourPatternHandler);
-
         return new Behaviour(
             behaviourId: $this->uuidGenerator->generate(),
             behaviourName: $behaviourName,
